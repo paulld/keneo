@@ -1,0 +1,1 @@
+<?php$iphone = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone');$ipad = strpos($_SERVER['HTTP_USER_AGENT'], 'iPad');$android = strpos($_SERVER['HTTP_USER_AGENT'], 'Android');$blackberry = strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry');?>

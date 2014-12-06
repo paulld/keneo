@@ -1,0 +1,43 @@
+/***************************/
+/*         BY RoB          */
+/***************************/
+
+/* COULEUR ACTUELLE DU THEME : #4F6DB4 */
+
+page {
+	font-family:freeserif;
+	color:#012E4F;
+	margin: 0 2% 0 2%;
+	text-align:left;
+	}
+	
+h1 {
+	color:#012E4F;
+	letter-spacing:2px;
+	/*font-family:"Century Gothic", sans-serif;*/
+	font-size:80%;	margin:20px 0 0 0;
+	text-align:left;
+	}
+	
+h2 {
+	color:#012E4F;
+	/*font-family:"Century Gothic", sans-serif;*/
+	font-size:75%;
+	margin:10px 0 0 0;
+	text-align:left;
+	}
+	
+
+/***********  TAB ***********/
+#tdrestit {
+	font-size: 80%;
+	padding: 1px 5px 1px 5px;
+	border:1px solid #333333;
+	}
+
+	
+/***********  DIV FOOTER ***********/
+#bas {
+	margin-top:20px;
+	font-size:75%;
+	}

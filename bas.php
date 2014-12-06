@@ -1,0 +1,1 @@
+<?phpecho '<div id="bas">&copy; 2014 - Arimor Consulting GmbH<br/>Keneo Sport Solutions</div>';?>
