@@ -1,3 +1,57 @@
+//AJAX - VALTEMPS
+$(function(){
+	$('#ajax-form INPUT').autoSubmit();
+});
+
+(function($)
+{
+	$.fn.autoSubmit = function(options) {
+		return $.each(this, function() {
+			// VARIABLES: Input-specific
+			var input = $(this);
+			var column = input.attr('name');
+			// VARIABLES: Form-specific
+			var form = input.parents('form');
+			var method = form.attr('method');
+			var action = form.attr('action');
+			// VARIABLES: Where to update in database
+			var where_val = form.find('#where').val();
+			var where_col = form.find('#where').attr('name');
+			// ONBLUR: Dynamic value send through Ajax
+			input.bind('blur', function(event) {
+				// Get latest value
+				var value = input.val();
+				// AJAX: Send values
+				$.ajax({
+					url: action,
+					type: method,
+					data: {
+						val: value,
+						col: column,
+						w_col: where_col,
+						w_val: where_val
+						},
+					cache: false,
+					timeout: 10000,
+					success: function(data) {
+						// Alert if update failed
+						if (data) {
+							alert(data);
+						}
+						// Load output into a P
+						else {
+							$('#notice').text('Updated');
+							$('#notice').fadeOut().fadeIn();
+						}
+					}
+				});
+			// Prevent normal submission of form
+			return false;
+			})
+		});
+	}
+})(jQuery);
+
 //CALENDRIER
 $(function()
 {
@@ -314,6 +368,36 @@ function showCatfrs(str)
 	xmlhttp.send();
 }
 
+//Afficher le listing ou le reporting
+function showListRep(param)
+{
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("coeur").innerHTML=xmlhttp.responseText;
+		}
+	}
+	if (param == 1)
+	{
+		xmlhttp.open("GET","listing-coeur.php?filt="+param,true);
+		xmlhttp.send();
+	}
+	if (param == 2)
+	{
+		xmlhttp.open("GET","report-coeur.php?filt="+param,true);
+		xmlhttp.send();
+	}
+}
+
 //Afficher la requete du filtre dynamiquement
 function showFilterResult(param)
 {
@@ -333,6 +417,7 @@ function showFilterResult(param)
 	var v5 = document.getElementById('afffrs').value;
 	var c1 = document.getElementById('affcomp').value;
 	var c2 = document.getElementById('afftype').value;
+	var r1 = document.getElementById('affreportID').value;
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp=new XMLHttpRequest();
@@ -361,11 +446,12 @@ function showFilterResult(param)
 	var a11 = "&d3="+d3;
 	var a12 = "&d4="+d4;
 	var a13 = "&v5="+v5;
+	var a14 = "&r1="+r1;
 	if (page == 1)
 	{
 		if (param == -2)
 		{
-			var adresfull = a1.concat(a2).concat(a3).concat(a4).concat(a5).concat(a6).concat(a7).concat(a8).concat(a9).concat(a10).concat(a11).concat(a12).concat(a13);
+			var adresfull = a1.concat(a2).concat(a3).concat(a4).concat(a5).concat(a6).concat(a7).concat(a8).concat(a9).concat(a10).concat(a11).concat(a12).concat(a13).concat(a14);
 			xmlhttp.open("GET","report-req.php?"+adresfull,true);
 		}
 		if (param >= 0)
@@ -385,7 +471,7 @@ function showFilterResult(param)
 		}
 		if (param == 0)
 		{
-			var adresfull = a1.concat(a2).concat(a3).concat(a4).concat(a5).concat(a6).concat(a7).concat(a8).concat(a9).concat(a10).concat(a11).concat(a12).concat(a13);
+			var adresfull = a1.concat(a2).concat(a3).concat(a4).concat(a5).concat(a6).concat(a7).concat(a8).concat(a9).concat(a10).concat(a11).concat(a12).concat(a13).concat(a14);
 			xmlhttp.open("GET","report-req.php?"+adresfull,true);
 		}
 	}

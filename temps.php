@@ -638,12 +638,14 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					$pseudo=$_SESSION['ID'];
 				}
 			}
-			$req = "SELECT T1.ID, T2.matricule, T1.datejour, T3.description, T4.description, T5.description, T1.info, T1.valeur, T1.valtot, T4.ID, T1.ticket, T6.code, T1.recup, T1.recupValid FROM rob_temps T1 
+			$req = "SELECT T1.ID, T2.matricule, T1.datejour, T3.description, T4.description, T5.description, T1.info, T1.valeur, T1.valtot, T4.ID, T1.ticket, T6.code, T1.recup, T1.recupValid, 
+				T1.validation validation, T7.matricule userValidID FROM rob_temps T1 
 				INNER JOIN rob_user T2 ON T2.ID = T1.userID
 				INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID 
 				INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputIDl2 
 				INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputIDl3 
-				INNER JOIN rob_activite T6 ON T6.ID = T1.activID 
+				INNER JOIN rob_activite T6 ON T6.ID = T1.activID
+				INNER JOIN rob_user T7 ON T7.ID = T1.userValidID 
 				WHERE T1.userID='".$_SESSION['ID']."' AND datejour >= '$startdate' AND datejour < '$enddate'
 				ORDER BY T1.datejour, T3.description, T4.description, T5.description";
 			$reponsea = $bdd->query($req);
@@ -655,7 +657,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				while ($donneea = $reponsea->fetch())
 				{
 					if ($donneea[8] == 1) { $j = "RoB_Green.png"; } else { $j = "RoB_Orange.png"; }
-					if ($donneea[2] <= $deadline) { $l = " disabled"; $k="v"; } else 
+					if ($donneea[2] <= $deadline OR $donneea['validation'] != 0) { $l = " disabled"; $k="v"; } else 
 					{
 						$l = "";
 						if ($donneea[12] != 0 or $donneea[13] != NULL) {$k="s";} else { $k="";}
@@ -691,7 +693,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						$nbjm = $nbjm + $donneea[7];
 					echo '</td>';
 					//status
-					if ($donneea[2] <= $deadline)
+					if ($donneea[2] <= $deadline OR $donneea['validation'] != 0)
 					{
 						echo '<td id="t-container'.$i.$k.'">';
 							echo '&nbsp;<input id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise" />';

@@ -13,6 +13,7 @@ if(
 	AND isset($_GET['v5'])
 	AND isset($_GET['c1']) 
 	AND isset($_GET['c2'])
+	AND isset($_GET['r1'])
 	) 
 {
 	session_start();
@@ -29,6 +30,7 @@ if(
 	$v5 = intval($_GET['v5']);
 	$c1 = intval($_GET['c1']);
 	$c2 = intval($_GET['c2']);
+	$r1 = intval($_GET['r1']);
 }
 include("appel_db.php");
 ?>
@@ -59,27 +61,29 @@ if (isset($v4) AND $v4 != 99999) { $flt_paie = ' AND paiement = '.$v4; } else { 
 if (isset($v4) AND $v5 != 99999) { $flt_frs = ' AND frsID = '.$v5; } else { $flt_frs = ''; }
 if (isset($c1) AND $c1 != 99999) { $flt_comp = ' AND compID1 = '.$c1; } else { $flt_comp = ''; }
 if (isset($c2) AND $c2 != 99999) { $flt_type = ' AND compID2 = '.$c2; } else { $flt_type = ''; }
+if (isset($r1)) { } else { $r1 = 1; }
 
+$req = "SELECT * FROM rob_reporting WHERE ID = ".$r1;
+$reqimput = $bdd->query($req);
+$optimput = $reqimput->fetch();
+$tabcol1 = $optimput['tabCol1'];
+$tabcol2 = $optimput['tabCol2'];
+$selecttabtmp = $optimput['SELECTtmpTBL'];
+$selecttabfull = $optimput['SELECTfullTBL'];
+$reqimput->closeCursor();
 ?>
 
 <input type="hidden" id="page" name="page" value=2 />
 <!-- ================= REQUETE =============== -->
 <?php
-$reqB = "CREATE TEMPORARY TABLE IF NOT EXISTS tmp_full AS (
-	SELECT TMP1.ID, userID, activID, dateTransac, imputID1, imputID2, imputID3, imputID4, affectBudID, nature1ID, nature2ID, 
-	profilID, collaborateurID, beneficiaire, compID1, compID2, compID3, compLieu, compDate, descriptif, frsID, devis, 
-	BDC, dateFact, numFact, paiement, unitaire, quantite, total, Phase, classID, 
-	CASE WHEN TC1.factor = 1 THEN total ELSE 0 END recette,
-	CASE WHEN TC1.factor = 1 THEN 0 ELSE total END depense
+$reqB = "CREATE TEMPORARY TABLE IF NOT EXISTS tmp_full AS (SELECT ".$selecttabtmp."
 	FROM rob_journal TMP1
 	INNER JOIN rob_class TC1 ON TMP1.classID = TC1.ID 
 	WHERE ".$flt_mat.$flt_month.$flt_year.$flt_deb.$flt_fin
 	.$flt_clt.$flt_prj.$flt_act.$flt_phase.$flt_class.$flt_paie.$flt_frs.$flt_comp.$flt_type.")";
 $bdd->query($reqB);
 	
-$req1 = "SELECT T3.Description imput1, T4.Description imput2, T5.Description imput3,
-	sum(recette) recette, -sum(depense) depense, sum(recette)-sum(depense) marge, 
-	CASE WHEN sum(recette)=0 THEN 0 ELSE ((sum(recette)-sum(depense))/sum(recette))*100 END margepct FROM tmp_full T1 
+$req1 = "SELECT ".$selecttabfull." FROM tmp_full T1 
 	INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID1 
 	INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputID2 
 	INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputID3 
@@ -92,10 +96,8 @@ $bdd->query($req2);
 
 <!-- ================= RESTITUTION =============== -->
 <table id="tablerestit">
-	<tr>
-		<td id="t-containertit">Client</td><td id="t-containertit">Projet</td><td id="t-containertit">Mission</td><td id="t-containertit" align="right">Recettes</td><td id="t-containertit" align="right">D&eacute;penses</td><td id="t-containertit" align="right">Marge</td><td id="t-containertit">%</td>
-	</tr>
 	<?php
+	echo '<tr>'.$tabcol1.'</tr>';
 	$checkrep=$reponsea->rowCount();
 	$i=1;
 	$j=2;
