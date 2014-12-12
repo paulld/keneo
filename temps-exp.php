@@ -45,14 +45,30 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					->setCellValue('G1', 'Information')
 					->setCellValue('H1', 'Jour');
 
-		$req = "SELECT T2.matricule, T1.datejour, T6.Description, T3.description, T4.description, T5.description, T1.info, T1.valeur FROM rob_temps T1 
-			INNER JOIN rob_user T2 ON T2.ID = T1.userID
-			INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID 
-			INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputIDl2 
-			INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputIDl3 
-			INNER JOIN rob_activite T6 ON T6.ID = T1.activID 
-			WHERE datejour >= '$startdate' AND datejour < '$enddate'
-			ORDER BY T1.datejour, T3.description, T4.description, T5.description";
+		if ($_SESSION['id_lev_menu'] == 6)
+		{
+			$req = "SELECT T2.matricule, T1.datejour, T6.Description, T3.description, T4.description, T5.description, T1.info, T1.valeur FROM rob_temps T1 
+				INNER JOIN rob_user T2 ON T2.ID = T1.userID
+				INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID 
+				INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputIDl2 
+				INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputIDl3 
+				INNER JOIN rob_activite T6 ON T6.ID = T1.activID 
+				WHERE datejour >= '$startdate' AND datejour < '$enddate'
+				ORDER BY T1.datejour, T3.description, T4.description, T5.description";
+		} else {
+			if ($_SESSION['id_lev_menu'] == 4)
+			{
+				$req = "SELECT T2.matricule, T1.datejour, T6.Description, T3.description, T4.description, T5.description, T1.info, T1.valeur FROM rob_temps T1 
+					INNER JOIN rob_user T2 ON T2.ID = T1.userID
+					INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID 
+					INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputIDl2 
+					INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputIDl3 
+					INNER JOIN rob_activite T6 ON T6.ID = T1.activID 
+					INNER JOIN rob_user T7 ON T7.ID = T1.userID
+					WHERE T7.id_hier ='".$_SESSION['ID']."' AND datejour >= '$startdate' AND datejour < '$enddate'
+					ORDER BY T1.datejour, T3.description, T4.description, T5.description";
+			}
+		}
 		$reponsea = $bdd->query($req);
 		$checkrep=$reponsea->rowCount();
 		if ($checkrep != 0)

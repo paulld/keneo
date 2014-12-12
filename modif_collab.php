@@ -18,7 +18,7 @@ include("appel_db.php");
 			<?php
 			if (isset($_POST['IDmodif']))
 			{
-				$req = "SELECT T1.ID, T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.desc2, T8.desc4, T4.desc5, T5.desc6, T9.telephone, T9.mobile, T9.mail, T9.pays, T9.ville, T9.CP, T9.adresse, T10.recup, T10.cp, T10.rtt, T1.extstd
+				$req = "SELECT T1.ID, T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, T9.telephone, T9.mobile, T9.mail, T9.pays, T9.ville, T9.CP, T9.adresse, T10.recup, T10.cp, T10.rtt, T1.extstd
 						FROM rob_user_rights T1 
 						INNER JOIN rob_user T2 ON T1.ID = T2.ID
 						INNER JOIN rob_level T3 ON T1.id_lev_menu = T3.ID
@@ -66,42 +66,42 @@ include("appel_db.php");
 							$reponse2->closeCursor();
 							echo '</select></div>';
 						echo '<div class="small">Acc&egrave;s aux menus : <select id="w_input_75" name="user_lev">';
-							$req = "SELECT desc2, ID FROM rob_level WHERE actif = 1 AND desc2 <> ''";
+							$req = "SELECT menu, ID FROM rob_level WHERE actif = 1 AND menu <> ''";
 							$reponse2 = $bdd->query($req);
 							while ($donnee2 = $reponse2->fetch() )
 							{
-								if ($donnee2['desc2'] == $cur_nom[6]) { echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['desc2'].'</option>'; }
-								else { echo '<option value="'.$donnee2['ID'].'">'.$donnee2['desc2'].'</option>'; }
+								if ($donnee2['menu'] == $cur_nom[6]) { echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['menu'].'</option>'; }
+								else { echo '<option value="'.$donnee2['ID'].'">'.$donnee2['menu'].'</option>'; }
 							}
 							$reponse2->closeCursor();
 							echo '</select></div>';
 						echo '<div class="small">Droits sur la timesheet : <select id="w_input_75" name="tms_lev">';
-							$req = "SELECT desc4, ID FROM rob_level WHERE actif = 1 AND desc4 <> ''";
+							$req = "SELECT tms, ID FROM rob_level WHERE actif = 1 AND tms <> ''";
 							$reponse2 = $bdd->query($req);
 							while ($donnee2 = $reponse2->fetch() )
 							{
-								if ($donnee2['desc4'] == $cur_nom[7]) { echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['desc4'].'</option>'; }
-								else { echo '<option value="'.$donnee2['ID'].'">'.$donnee2['desc4'].'</option>'; }
+								if ($donnee2['tms'] == $cur_nom[7]) { echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['tms'].'</option>'; }
+								else { echo '<option value="'.$donnee2['ID'].'">'.$donnee2['tms'].'</option>'; }
 							}
 							$reponse2->closeCursor();
 							echo '</select></div>';
 						echo '<div class="small">Droits sur les frais : <select id="w_input_75" name="exp_lev">';
-							$req = "SELECT desc5, ID FROM rob_level WHERE actif = 1 AND desc5 <> ''";
+							$req = "SELECT exp, ID FROM rob_level WHERE actif = 1 AND exp <> ''";
 							$reponse2 = $bdd->query($req);
 							while ($donnee2 = $reponse2->fetch() )
 							{
-								if ($donnee2['desc5'] == $cur_nom[8]) { echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['desc5'].'</option>'; }
-								else { echo '<option value="'.$donnee2['ID'].'">'.$donnee2['desc5'].'</option>'; }
+								if ($donnee2['exp'] == $cur_nom[8]) { echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['exp'].'</option>'; }
+								else { echo '<option value="'.$donnee2['ID'].'">'.$donnee2['exp'].'</option>'; }
 							}
 							$reponse2->closeCursor();
 							echo '</select></div>';
 						echo '<div class="small">Droits sur les journaux : <select id="w_input_75" name="jrl_lev">';
-							$req = "SELECT desc6, ID FROM rob_level WHERE actif = 1 AND desc6 <> ''";
+							$req = "SELECT jrl, ID FROM rob_level WHERE actif = 1 AND jrl <> ''";
 							$reponse2 = $bdd->query($req);
 							while ($donnee2 = $reponse2->fetch() )
 							{
-								if ($donnee2['desc6'] == $cur_nom[9]) { echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['desc6'].'</option>'; }
-								else { echo '<option value="'.$donnee2['ID'].'">'.$donnee2['desc6'].'</option>'; }
+								if ($donnee2['jrl'] == $cur_nom[9]) { echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['jrl'].'</option>'; }
+								else { echo '<option value="'.$donnee2['ID'].'">'.$donnee2['jrl'].'</option>'; }
 							}
 							$reponse2->closeCursor();
 							echo '</select></div>';

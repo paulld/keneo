@@ -122,7 +122,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<td id="t-containertit" colspan="2">Actions</td>
 			</tr>
 			<?php
-			$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.desc2, T8.desc4, T4.desc5, T5.desc6, T2.actif, T2.ID
+			$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, T2.actif, T2.ID
 					FROM rob_user_rights T1 
 					INNER JOIN rob_user T2 ON T1.ID = T2.ID
 					INNER JOIN rob_level T3 ON T1.id_lev_menu = T3.ID
@@ -187,7 +187,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			</tr>
 			<?php
 			$reponse->closeCursor();			
-			$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.desc2, T8.desc4, T4.desc5, T5.desc6, T2.actif, T2.ID
+			$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, T2.actif, T2.ID
 					FROM rob_user_rights T1 
 					INNER JOIN rob_user T2 ON T1.ID = T2.ID
 					INNER JOIN rob_level T3 ON T1.id_lev_menu = T3.ID

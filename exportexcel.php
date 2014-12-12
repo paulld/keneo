@@ -2,7 +2,7 @@
 session_start();
 include("appel_db.php");
 
-if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass'])
+if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass'] AND ($_SESSION['id_lev_tms'] >= 4 OR $_SESSION['id_lev_exp'] >= 4))
 {
 	include("headerlight.php");
 	?>
@@ -16,6 +16,11 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<div id="haut">Exports Excel</div>
 	
 	<div id="coeur">
+		<?php
+		if ($_SESSION['id_lev_tms'] >= 4)
+		{
+		?>
+		<div id="sstitre">Export des temps</div>
 		<form action="temps-exp.php" method="post" target="_blank">
 			<?php
 			echo 'Export des temps du <input size="8" type="text" id="datejourdeb" name="datejourdeb" value="';
@@ -39,6 +44,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '" /> (inclu) <input id="buttonval" type="submit" Value="Extraire" name="Valider" />';
 			?> 
 		</form>
+		<?php
+		}
+		if ($_SESSION['id_lev_exp'] >= 4)
+		{
+		?>
+		<div id="sstitre">Export des frais</div>
 		<form action="frais-exp.php" method="post" target="_blank">
 			<div id="f-descriptif"><?php
 			echo 'Export des frais du <input size="8" type="text" id="datejourdeb" name="datejourdeb" value="';
@@ -69,12 +80,15 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			?> 
 			</div>
 		</form>
+		<?php
+		}
+		?>
 	</div>
 	<?php
 	include("footer.php");
 }
 else
 {
-	include("index.php");
+	header("location:accueil.php");
 }
 ?>
