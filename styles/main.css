@@ -1,0 +1,48 @@
+body {
+  /*padding-top: 40px;
+  padding-bottom: 40px;*/
+  background-color: rgba(0,0,0,.5);
+  background-image: url('assets/images/background-stadium-empty.jpg');
+  padding-top: 110px;
+}
+
+/*  HEADER  */
+
+.logo-container {
+  position: relative;
+  text-align: center;
+  /*margin-top: 2px;*/
+  color: #fff;
+}
+.logo-container img {
+  height: 65px;
+}
+.navbar.navbar-default.navbar-fixed-top {
+  height: 110px;
+  background-color: rgba(0,0,0,0);
+  border: none;
+}
+.navbar.navbar-default.navbar-fixed-top > .container {
+  border-bottom: 2px solid #fff;
+  padding: 2px 0;
+}
+
+/*  FOOTER  */
+
+.sticky-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  /*background-color: #f5f5f5;*/
+}
+.footer > .container {
+  border-top: 2px solid #fff;
+  text-align: center;
+}
+.footer p {
+  font-size: 12px;
+  color: #fff;
+  margin: 14px 0;
+}

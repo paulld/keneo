@@ -4,7 +4,8 @@ include("appel_db.php");
 include('mobnavi.php');
 
 ?>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 
 <?php
 	include("headlight.php");
