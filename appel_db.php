@@ -1,1 +1,0 @@
-<?php$DBHOST = "localhost";$DBNAME = "db489343072";$DBUSER = "root";$DBPASSWD = "root";$DBMAILBOX = "info@arimor-consulting.de";$DBREPTUTO = "TUTO";try{	$bdd = new PDO('mysql:host='.$DBHOST.';dbname='.$DBNAME, $DBUSER, $DBPASSWD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));}catch (Exception $e){	die ('Erreur : '.$e->getMessage());}?>
