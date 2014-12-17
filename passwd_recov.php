@@ -78,7 +78,7 @@ include('mobnavi.php');
 		$trav = $req->fetch();
 		if ($trav['actif'] == 1)
 		{
-			echo '<br/><img src="images/PNGADM/trav.png" title="Under maintenance"/>';
+			include("maintenance.php");
 		}
 		else
 		{
@@ -90,21 +90,41 @@ include('mobnavi.php');
 	{
 		?>
 
-		<div id="navigationMap">
-			<ul><li><a class="typ" href="index.php"><span>Retour</span></a></li></ul>
-		</div>
-		<div id="clearl"></div>
-		
-		<div id="haut">Keneo Internal Reporting - Password recovery</div>
-		<div id="coeur">
-				<form action="passwd_recov.php" method="post">
-					Mail:<input type="text" size="50" name="mail"  id="loginInputRecov"/><input id="buttonval" type="submit" Value="Envoyer" name="Envoyer" />
-				</form>
-		</div>
+		<!-- Background Image Specific to each page -->
+		<div id="background-login"></div>
+		<div id="overlay"></div>
 
-	<?php
-	}
-	include("bas.php");
-	?>
+<!-- <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="logo-container">
+      |<br><img src="assets/images/keneo-logo.svg"><br>|
+    </div>
+  </div>
+</nav> -->
+
+<div class="container" id="coeur">
+  <div class="signin-outer">
+		
+		<h1>Password recovery:</h1>
+		<div>
+			<form class="form-recovery" action="passwd_recov class="form-signin".php" method="post">
+				<input class="form-control" type="text" size="50" name="mail"  id="loginInputRecov" placeholder="Email" />
+				<input class="btn btn-lg btn-primary btn-block" id="buttonval" type="submit" Value="Envoyer" name="Envoyer" />
+			</form>
+		</div>
+		<div class="signin-recover-link">
+			<a class="typ" href="index.php">
+				<span>Retour</span>
+			</a>
+		</div>
+	</div>
+</div>
+
+		<footer id="footer" class="footer sticky-footer">
+			<?php 
+				}
+				include("bas.php"); 
+			?>
+		</footer>
 	</body>
 </html>

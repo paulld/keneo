@@ -55,8 +55,14 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		$menu->closeCursor();
  		?>
 	</ul>
-	<?php
-	include("footer.php");
+
+	<footer id="footer" class="footer sticky-footer">
+		<?php include("bas.php"); ?>
+	</footer>
+	</body>
+</html>
+
+<?php
 }
 else
 { 
