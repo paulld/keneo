@@ -7,21 +7,29 @@ body {
   margin-bottom: 40px;
 }
 
-#background-login {
+.background-image {
   position: fixed; 
   top: -50%; 
   left: -50%; 
   width: 200%; 
   height: 200%;
-  background: url('../assets/images/background-stadium-full.jpg') no-repeat center center fixed; 
   -webkit-background-size: cover;
      -moz-background-size: cover;
        -o-background-size: cover;
           background-size: cover;
   opacity: .8;
   z-index: -2;
+  background-size: cover;
 }
-#overlay {
+.background-login {
+  background: url('../assets/images/background-stadium-full.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.background-accueil {
+  background: url('../assets/images/background-stadium-empty.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -31,27 +39,88 @@ body {
   z-index: -1;
 }
 
+
 /***********************/
 /*  HEADER  */
 
-nav.navbar.navbar-default.navbar-fixed-top {
-  background-color: rgba(0,0,0,.4);
-}
-
-.logo-container {
-  position: relative;
+.nav-logo {
   text-align: center;
   color: #fff;
 }
-.logo-container img {
+.nav-logo img {
   height: 65px;
+  margin: -5px 0 5px;
 }
-.navbar.navbar-default.navbar-fixed-top {
+.nav-logo img:hover {
+  opacity: .8;
+}
+.nav-left {
+  padding-top: 25px;
+}
+.nav-left a, .nav-name a {
+  color: #fff;
+  display: block;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 300;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.nav-name a {
+  font-size: 12px;
+}
+.nav-left a:hover, .nav-name a:hover {
+  color: #ddd;
+}
+.nav-right {
+  text-align: right;
+  color: #fff;
+}
+.nav-picture-name {
+  display: inline-block;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+.nav-picture img {
+  max-width: 60px;
+  max-height: 60px;
+  border-radius: 50%;
+  border: 1px solid #979797;
+  margin: 10px 0;
+}
+.nav-picture img:hover{
+  opacity: .8;
+}
+.nav-buttons {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  padding-top: 14px;
+}
+.nav-buttons a {
+  text-decoration: none;
+  font-size: 20px;
+  display: block;
+  margin: 8px 0 0 12px;
+  color: #fff;
+}
+.nav-buttons a:hover {
+  color: #ddd;
+}
+nav.nav-fixed-top {
+  top: 0;
+  border-width: 0 0 1px;
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  min-height: 50px;
+  margin-bottom: 20px;
   height: 110px;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0,0,0,.4);
   border: none;
 }
-.navbar.navbar-default.navbar-fixed-top > .container {
+nav.nav-fixed-top > .container {
   border-bottom: 2px solid #fff;
   padding: 2px 0;
 }

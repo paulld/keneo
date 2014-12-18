@@ -43,7 +43,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	//Ecriture de la page
 	include("headerlight.php");
 	?>
-	<div id="haut">Keneo Internal Reporting</div>
+	<!-- Background Image Specific to each page -->
+	<div class="background-accueil background-image"></div>
+	<div class="overlay"></div>
+
 	<ul id="mainMenuLight">
 		<?php
 		$men= "SELECT * FROM rob_ssmenu WHERE actif=1 AND main != 0 ORDER BY main";
