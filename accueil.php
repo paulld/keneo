@@ -49,7 +49,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 
 	<ul id="mainMenuLight">
 		<?php
-		$men= "SELECT * FROM rob_ssmenu WHERE actif=1 AND main != 0 ORDER BY main";
+		$men= "SELECT * FROM rob_ssmenu WHERE actif=1 AND main != 0 AND main != 5 ORDER BY main";
  		$menu = $bdd->query($men);
  		while ($donnee = $menu->fetch())
  		{

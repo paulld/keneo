@@ -17,7 +17,8 @@
 /* LOG IN FORM */
 
 .signin-outer {
-  margin: 100px auto 50px;
+  /*margin: 100px auto 50px;*/
+  margin: 0 auto 50px;
   padding-top: 150px;
   width: 518px;
   height: 518px;

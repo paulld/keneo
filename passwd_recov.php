@@ -94,13 +94,13 @@ include('mobnavi.php');
 		<div class="background-login background-image"></div>
 		<div class="overlay"></div>
 
-		<nav class="navbar-fixed-top" role="navigation">
+		<!-- <nav class="nav-fixed-top" role="navigation">
 		  <div class="container">
-		    <div class="logo-container">
+		    <div class="logo-container text-center">
 		      |<br><img src="assets/images/keneo-logo.svg"><br>|
 		    </div>
 		  </div>
-		</nav>
+		</nav> -->
 
 		<div class="container" id="coeur">
 		  <div class="signin-outer">
