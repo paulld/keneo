@@ -43,10 +43,13 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	//Ecriture de la page
 	include("headerlight.php");
 	?>
-	<div id="haut">Keneo Internal Reporting</div>
+	<!-- Background Image Specific to each page -->
+	<div class="background-accueil background-image"></div>
+	<div class="overlay"></div>
+
 	<ul id="mainMenuLight">
 		<?php
-		$men= "SELECT * FROM rob_ssmenu WHERE actif=1 AND main != 0 ORDER BY main";
+		$men= "SELECT * FROM rob_ssmenu WHERE actif=1 AND main != 0 AND main != 5 ORDER BY main";
  		$menu = $bdd->query($men);
  		while ($donnee = $menu->fetch())
  		{
@@ -55,8 +58,14 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		$menu->closeCursor();
  		?>
 	</ul>
-	<?php
-	include("footer.php");
+
+	<footer id="footer" class="footer sticky-footer">
+		<?php include("bas.php"); ?>
+	</footer>
+	</body>
+</html>
+
+<?php
 }
 else
 { 

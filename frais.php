@@ -666,10 +666,14 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		</table>
 
 	</div>
+		
+	<footer id="footer" class="footer sticky-footer">
+		<?php include("bas.php"); ?>
+	</footer>
+	</body>
+</html>
 
-	
 <?php
-	include("footer.php");
 }
 else
 {
