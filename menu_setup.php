@@ -2,7 +2,7 @@
 session_start();
 include("appel_db.php");
 
-if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass']) 
+if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass'] AND ($_SESSION['id_lev_menu'] == 4 OR $_SESSION['id_lev_menu'] ==6)) 
 {
 	//Ecriture de la page
 	include("headerlight.php");
@@ -14,7 +14,15 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<div id="haut">DB Management</div>
 	<ul id="mainMenuDB">
 		<?php
-		$men= "SELECT * FROM rob_ssmenu WHERE actif=1 AND DB != 0 ORDER BY DB";
+		if ($_SESSION['id_lev_menu'] == 6)
+		{
+			$men= "SELECT * FROM rob_ssmenu WHERE actif=1 AND DB != 0 ORDER BY DB";
+		} else {
+			$men= "SELECT * FROM rob_ssmenu T1 
+				INNER JOIN rob_menu_rights T2 ON T1.ID = T2.ssmenu_id
+				WHERE actif=1 AND DB != 0 AND T2.menu = ".$_SESSION['id_lev_menu']."
+				ORDER BY DB";
+		}
  		$menu = $bdd->query($men);
  		while ($donnee = $menu->fetch())
  		{

@@ -2,7 +2,7 @@
 session_start();
 include("appel_db.php");
 
-if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass'])
+if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass'] AND $_SESSION['id_lev_tms'] >= 4)
 {
 	date_default_timezone_set('Europe/Paris');
 	if (isset($_POST['datejourdeb']) AND $_POST['datejourfin'])
@@ -45,7 +45,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					->setCellValue('G1', 'Information')
 					->setCellValue('H1', 'Jour');
 
-		if ($_SESSION['id_lev_menu'] == 6)
+		if ($_SESSION['id_lev_tms'] == 6)
 		{
 			$req = "SELECT T2.matricule, T1.datejour, T6.Description, T3.description, T4.description, T5.description, T1.info, T1.valeur FROM rob_temps T1 
 				INNER JOIN rob_user T2 ON T2.ID = T1.userID
@@ -56,7 +56,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				WHERE datejour >= '$startdate' AND datejour < '$enddate'
 				ORDER BY T1.datejour, T3.description, T4.description, T5.description";
 		} else {
-			if ($_SESSION['id_lev_menu'] == 4)
+			if ($_SESSION['id_lev_tms'] == 4)
 			{
 				$req = "SELECT T2.matricule, T1.datejour, T6.Description, T3.description, T4.description, T5.description, T1.info, T1.valeur FROM rob_temps T1 
 					INNER JOIN rob_user T2 ON T2.ID = T1.userID
@@ -64,7 +64,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputIDl2 
 					INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputIDl3 
 					INNER JOIN rob_activite T6 ON T6.ID = T1.activID 
-					INNER JOIN rob_user T7 ON T7.ID = T1.userID
+					INNER JOIN rob_user_rights T7 ON T7.ID = T1.userID
 					WHERE T7.id_hier ='".$_SESSION['ID']."' AND datejour >= '$startdate' AND datejour < '$enddate'
 					ORDER BY T1.datejour, T3.description, T4.description, T5.description";
 			}

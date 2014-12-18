@@ -52,7 +52,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<div id="sstitre">Export des frais</div>
 		<form action="frais-exp.php" method="post" target="_blank">
 			<div id="f-descriptif"><?php
-			echo 'Export des frais du <input size="8" type="text" id="datejourdeb" name="datejourdeb" value="';
+			echo 'Export des frais du <input size="8" type="text" id="datejourstrt" name="datejourstrt" value="';
 				if (isset($datejourdeb))
 				{
 					echo $datejourdeb;
@@ -61,7 +61,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				{
 					echo date("d/m/Y");
 				}
-				echo '" /> au <input size="8" type="text" id="datejourfin" name="datejourfin" value="';
+				echo '" /> au <input size="8" type="text" id="datejourend" name="datejourend" value="';
 				if (isset($datejourfin))
 				{
 					echo $datejourfin;

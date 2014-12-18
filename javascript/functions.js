@@ -72,6 +72,23 @@ $(function()
 		$( "#datejourdeb" ).datepicker( "option", "maxDate", selectedDate );
 	}
 	});
+	$( "#datejourstrt" ).datepicker(
+	{
+		defaultDate: "+1w",
+		changeMonth: true,
+		numberOfMonths: 2,
+		onClose: function( selectedDate ) {
+		$( "#datejourend" ).datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$( "#datejourend" ).datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		numberOfMonths: 2,
+		onClose: function( selectedDate ) {
+		$( "#datejourstrt" ).datepicker( "option", "maxDate", selectedDate );
+	}
+	});
 	$( "#dateTransac" ).datepicker();
 	$( "#datefrais" ).datepicker();
 	$( "#deadline1" ).datepicker();
@@ -282,6 +299,52 @@ function showCatEve(streve)
 	var adres3 = "&c="+strcomp;
 	var adresfull = adres1.concat(adres2).concat(adres3);
 	xmlhttp.open("GET","getcateve.php?"+adresfull,true);
+	xmlhttp.send();
+}
+
+
+//VALIDATION DES TEMPS
+//Afficher la requete du filtre dynamiquement
+function showFilterValtps(param)
+{
+	var d1 = document.getElementById('affmonth').value;
+	var d2 = document.getElementById('affyear').value;
+	var d3 = document.getElementById('datejourdeb').value;
+	var d3 = d3.substring(6,10) + d3.substring(3,5) + d3.substring(0,2);
+	var d4 = document.getElementById('datejourfin').value;
+	var d4 = d4.substring(6,10) + d4.substring(3,5) + d4.substring(0,2);
+	var p1 = document.getElementById('affclient').value;
+	var p2 = document.getElementById('affprojet').value;
+	var v1 = document.getElementById('affactivite').value;
+	var v2 = document.getElementById('affcollab').value;
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("req").innerHTML=xmlhttp.responseText;
+		}
+	}
+	var a1 = "&d1="+d1;
+	var a2 = "&d2="+d2;
+	var a3 = "&p1="+p1;
+	var a4 = "&p2="+p2;
+	var a5 = "&v1="+v1;
+	var a6 = "&v2="+v2;
+	var a7 = "&d3="+d3;
+	var a8 = "&d4="+d4;
+	if (param == 0)
+	{
+		var adresfull = a1.concat(a2).concat(a3).concat(a4).concat(a5).concat(a6).concat(a7).concat(a8);
+		xmlhttp.open("GET","valtemps-req.php?"+adresfull,true);
+	}
 	xmlhttp.send();
 }
 
