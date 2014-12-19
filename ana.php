@@ -53,7 +53,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<div id="navigationMap">
 			<ul><li><a class="typ" href="accueil.php"><img src="images/RoB_Home.png" /></a></li><li><a class="typ" href="table.php"><span>Tables</span></a></li><li><a class="typ" href="#"><span>Analytique 1</span></a></li></ul>
 		</div>
-		<table id="tablerestit">
+		<table id="tablerestit" class="table">
 			<tr>
 				<td id="t-containertit">Analytique 1</td>
 				<td id="t-containertit" colspan="2">Actions</td>
@@ -92,7 +92,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	</div><br/>
 	<div id="menu">
 		<div id="subtit">AJOUTER UN NOUVEL AXE ANALYTIQUE 1</div>
-		<table id="tablerestit">
+		<table id="tablerestit" class="table">
 			<tr>
 				<td id="t-containertit">Description</td>
 				<td id="t-containertit">Actions</td>

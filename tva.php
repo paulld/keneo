@@ -61,7 +61,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<div id="haut">Taux de TVA</div>
 
 	<div id="coeur">
-		<table id="tablerestit">
+		<table id="tablerestit" class="table">
 			<tr>
 				<td id="t-containertit">Type</td>
 				<td id="t-containertit">Taux</td>
@@ -102,7 +102,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	</div>
 
 	<div id="sstitre">Ajouter un nouveau taux</div>
-	<table id="tablerestit">
+	<table id="tablerestit" class="table">
 		<tr>
 			<td id="t-containertit">Type</td>
 			<td id="t-containertit">Taux</td>
