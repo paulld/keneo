@@ -60,7 +60,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	
 	<div id="coeur">
 		<div id="sstitre">Effectif interne</div>
-		<table id="tablerestit">
+		<table id="tablerestit" class="table">
 			<tr>
 				<td id="t-containertit">Nom</td>
 				<td id="t-containertit">Co&ucirc;t hybride</td>
@@ -103,7 +103,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			?>
 		</table>
 		<div id="sstitre">Effectif externe</div>
-		<table id="tablerestit">
+		<table id="tablerestit" class="table">
 			<tr>
 				<td id="t-containertit">Nom</td>
 				<td id="t-containertit">Co&ucirc;t hybride</td>
@@ -148,7 +148,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	</div>
 
 	<div id="sstitre">Ajouter une nouvelle combinaison</div>
-	<table id="tablerestit">
+	<table id="tablerestit" class="table">
 		<tr>
 				<td id="t-containertit">Nom</td>
 				<td id="t-containertit">Co&ucirc;t hybride</td>

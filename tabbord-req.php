@@ -50,7 +50,7 @@ $bdd->query($req3);
 
 <!-- ================= RESTITUTION =============== -->
 <div id="sstitre">R&eacute;cup&eacute;rations et cong&eacute;s</div>
-<table id="tablerestit">
+<table id="tablerestit" class="table">
 	<tr>
 		<td id="t-containertit" rowspan="2">Collaborateurs</td>
 		<td id="t-containertit" align="right">R&eacute;cup&eacute;ration</td>

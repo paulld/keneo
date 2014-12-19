@@ -139,7 +139,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		if ($imputtmp !=0 AND $errvar == 0)
 		{
 			?>
-			<table id="tablerestit">
+			<table id="tablerestit" class="table">
 				<tr>
 					<td id="t-containertit">Client</td>
 					<td id="t-containertit">Projet</td>
@@ -192,7 +192,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		</div>
 		
 		<div id="sstitre">Ajouter une nouvelle relation client-Projet</div>
-			<table id="tablerestit">
+			<table id="tablerestit" class="table">
 				<tr>
 					<td id="t-containertit">Client</td>
 					<td id="t-containertit">Projet</td>

@@ -103,7 +103,7 @@ $req = "SELECT T1.ID ID, T10.Phase Phase, T1.classID classID, T1.userID user, T1
 
 <input type="hidden" id="page" name="page" value=1 />
 <!-- ================= RESTITUTION =============== -->
-<table id="tablerestit">
+<table id="tablerestit" class="table">
 	<tr>
 		<td id="t-containertit">Phase</td><td id="t-containertit">Date</td><td id="t-containertit" >Nature</td><td id="t-containertit">Client/Projet/Mission/Cat&eacute;gorie</td><td id="t-containertit">Comp&eacute;tition/Type/&Eacute;v&eacute;nement</td><td id="t-containertit">Description</td><!--<td id="t-containertit" align="right">Unit</td><td id="t-containertit" align="right">Qt&eacute;</td>--><td id="t-containertit" align="right">Total</td><td id="t-containertit" align="center">Paiement</td><td id="t-containertit" colspan="2" align="center" width="85px">Actions</td>
 	</tr>

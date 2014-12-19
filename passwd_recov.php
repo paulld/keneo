@@ -120,11 +120,7 @@ include('mobnavi.php');
 			</div>
 		</div>
 
-		<footer id="footer" class="footer sticky-footer">
-			<?php 
-				}
-				include("bas.php"); 
-			?>
-		</footer>
-	</body>
-</html>
+		<?php 
+			}
+			include("footer.php"); 
+		?>

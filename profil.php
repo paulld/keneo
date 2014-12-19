@@ -65,7 +65,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<div id="haut">Profils</div>
 
 	<div id="coeur">
-		<table id="tablerestit">
+		<table id="tablerestit" class="table">
 			<tr>
 				<td id="t-containertit">Code</td>
 				<td id="t-containertit">Description</td>
@@ -111,7 +111,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	</div>
 
 	<div id="sstitre">Ajouter un nouveau profil</div>
-	<table id="tablerestit">
+	<table id="tablerestit" class="table">
 		<tr>
 			<td id="t-containertit">Code</td>
 			<td id="t-containertit">Description</td>

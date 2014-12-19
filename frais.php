@@ -517,7 +517,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		</table>
 		
 		<div id="sstitre"><?php echo $titrestrict; ?></div>
-		<table id="tablerestit">
+		<table id="tablerestit" class="table">
 			<tr>
 				<td id="t-containertit">Date</td><td id="t-containertit" >Nature</td><td id="t-containertit">Client/Projet/Mission/Cat&eacute;gorie</td><td id="t-containertit">Comp&eacute;tition/Type/&Eacute;v&eacute;nement</td><td id="t-containertit">Activit&eacute;</td><td id="t-containertit">Description</td><td id="t-containertit">Flag</td><td id="t-containertit" align="right">Montant TTC</td><td id="t-containertit" align="center" width="85px">Actions</td>
 			</tr>
@@ -667,13 +667,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 
 	</div>
 		
-	<footer id="footer" class="footer sticky-footer">
-		<?php include("bas.php"); ?>
-	</footer>
-	</body>
-</html>
-
-<?php
+<?php include("footer.php"); 
 }
 else
 {

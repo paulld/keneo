@@ -613,7 +613,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	</form>
 		
 	<!-- =================== RESTITUTION: TABLEAU ================= -->
-		<table id="tablerestit">
+		<table id="tablerestit" class="table">
 			<tr>
 				<td id="t-containertit" align="center" colspan="2">Date</td><td id="t-containertit">Activit&eacute;.</td><td id="t-containertit">Client</td><td id="t-containertit">Projet</td><td id="t-containertit">Mission</td><td id="t-containertit">Description</td><td id="t-containertit" width="30px">T.R.</td><td id="t-containertit" width="40px">Jours</td><td id="t-containertit" align="center" width="85px">Actions</td>
 			</tr>

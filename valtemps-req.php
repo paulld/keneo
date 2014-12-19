@@ -57,7 +57,7 @@ $result = $bdd->query($req);
 
 <!-- ================= RESTITUTION1 =============== -->
 <div id="sstitre">Temps non valid&eacute;s</div>
-<table id="tablerestit">
+<table id="tablerestit" class="table">
 	<tr>
 		<td id="t-containertit">Trigramme</td>
 		<td id="t-containertit">Date</td>
@@ -119,7 +119,7 @@ $result = $bdd->query($req);
 
 <!-- ================= RESTITUTION2 =============== -->
 <div id="sstitre">R&eacute;cup&eacute;ration en cours</div>
-<table id="tablerestit">
+<table id="tablerestit" class="table">
 	<tr>
 		<td id="t-containertit">Trigramme</td>
 		<td id="t-containertit">Date</td>
