@@ -21,11 +21,18 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	}
 	?>
     <!-- =================== SAISIE ================= -->
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="#"><span>Journal</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<ul id="navigationTable">
+    <!-- Background Image Specific to each page -->
+		<div class="background-journal background-image"></div>
+		<div class="overlay"></div>
+
+	<!-- <div id="navigationMap">
+		<ul>
+			<li><a class="typ" href="accueil.php">Home</a></li>
+			<li><a class="typ" href="#"><span>Journal</span></a></li>
+		</ul>
+	</div> -->
+
+	<ul id="navigationTable" class="list-inline">
  		<li><a class="typ" href="#" onclick="showListRep(1)"><span>Journal</span></a></li>
  		<li><a class="typ" href="journal.php" ><span>Nouveau</span></a></li>
  		<li><a class="typ" href="#" ><span>BDC</span></a></li>
@@ -35,13 +42,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<div id="clearl"></div>
 
 	<!-- =================== RESTITUTION: TABLEAU ================= -->
-	<div id="coeur" name="coeur">
+	<section class="container section-container" id="historique-journal">
+		<h1>Historique de mon Journal</h1>
 		<?php
 		include("listing-coeur.php");
 		?>
-
-	</div>
-
+	</section>
 	
 <?php
 	include("footer.php");

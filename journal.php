@@ -167,12 +167,20 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		?>
 			
 		<!-- =================== SAISIE ================= -->
-		<div id="navigationMap">
-			<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="listing.php"><span>Journal</span></a></li><li><a class="typ" href="#"><span>Cr&eacute;ation/ Modification</span></a></li></ul>
-		</div>
-		<div id="clearl"></div>
-		<div id="haut">Cr&eacute;ation/ Modification</div>
+		<!-- Background Image Specific to each page -->
+		<div class="background-journal background-image"></div>
+		<div class="overlay"></div>
 
+		<!-- <div id="navigationMap">
+			<ul>
+				<li><a class="typ" href="accueil.php">Home</a></li>
+				<li><a class="typ" href="listing.php"><span>Journal</span></a></li>
+				<li><a class="typ" href="#"><span>Cr&eacute;ation/ Modification</span></a></li>
+			</ul>
+		</div> -->
+
+	<section class="container section-container" id="saisie-journal">
+		<h1>Cr&eacute;ation/ Modification</h1>
 		<form action="journal.php" method="post">
 		<div id="coeur">
 			<div id="f-allphase">Transaction : <select name="phase" onchange="cacher(this.value)">
@@ -383,6 +391,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		{
 			echo '<div id="message">l\'enregistrement n\'a pas pu &ecirc;tre ajout&eacute;</div>';
 		}
+		?>
+	</section>
+		<?php
 		include("footer.php");
 	}
 }
