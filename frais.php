@@ -225,13 +225,17 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	?>
 		
     <!-- =================== SAISIE ================= -->
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="#"><span>Frais</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Saisir mes frais</div>
+	<!-- =================== SAISIE ================= -->
+	<!-- Background Image Specific to each page -->
+	<div class="background-frais background-image"></div>
+	<div class="overlay"></div>
 
-	
+	<!-- <div id="navigationMap">
+		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="#"><span>Frais</span></a></li></ul>
+	</div> -->
+
+	<section class="container section-container" id="saisie-frais">
+	<h1>Saisir mes frais</h1>
 	<form action="frais.php" method="post">
 	<div id="tablesaisie">
 		<div id="f-fraisl">
@@ -426,6 +430,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '<div id="message">Cette p&eacute;riode de saisie est ferm&eacute;e.</div>';
 		}
 	?> 
+	</section>
 
     <!-- =================== OPTIONS ================= -->
 	<?php
@@ -456,7 +461,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	?>
 		
 	<!-- =================== RESTITUTION: TABLEAU ================= -->
-	<div id="coeur">
+	<section class="container section-container" id="historique-frais">
+		<h1>Historique de mes frais</h1>
 		<table id="tableoption2">
 			<?php
 			//MONTH
@@ -664,8 +670,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			?>
 			
 		</table>
-
-	</div>
+	</section>
 		
 <?php include("footer.php"); 
 }

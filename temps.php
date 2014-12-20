@@ -350,12 +350,16 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	?>
 		
     <!-- =================== SAISIE ================= -->
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="#"><span>Feuille de temps</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Saisir mes temps</div>
+	<!-- Background Image Specific to each page -->
+	<div class="background-temps background-image"></div>
+	<div class="overlay"></div>
 
+	<!-- <div id="navigationMap">
+		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="#"><span>Feuille de temps</span></a></li></ul>
+	</div> -->
+
+<section class="container section-container" id="saisie-temps">
+	<h1>Saisir mes temps</h1>
 	<form action="temps.php" method="post">
 	<div id="tablesaisie">
 		<?php echo '<input type="hidden" value='.$_SESSION['ID'].' name="collaborateur" />'; ?>
@@ -535,6 +539,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '<div id="message">'.$deadreach.' enregistrement(s) n\'a(ont) pu &ecirc;tre ajout&eacute;(s). (Cette p&eacute;riode de saisie est ferm&eacute;e)</div>';
 		}
 	?> 
+</section>
 
     <!-- =================== OPTIONS ================= -->
 	<?php
@@ -561,7 +566,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	}
 	?>
     <!-- =================== RESTITUTION: PARAM ================= -->
-	<div id="coeur">
+<section class="container section-container" id="historique-temps">
+	<h1>Historique de mes temps</h1>
 	<form action="temps.php" method="post">
 		<table id="tableoption">
 		<?php
@@ -745,7 +751,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			
 		</table>
 
-	</div>
+</section>
 
 	
 <?php
