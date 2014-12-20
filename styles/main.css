@@ -61,6 +61,6 @@ body {
   font-weight: 500;
   margin: 20px 0 10px;
 }
-.table td, .table th {
-  background-color: #f0f0f0 !important;
+.table.table-striped.temp-table td, .table.table-striped.temp-table th {
+  /*background-color: #fff !important;*/
 }

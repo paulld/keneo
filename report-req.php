@@ -95,7 +95,7 @@ $bdd->query($req2);
 ?>
 
 <!-- ================= RESTITUTION =============== -->
-<table id="tablerestit" class="table">
+<table id="tablerestit" class="table table-striped temp-table">
 	<?php
 	echo '<tr>'.$tabcol1.'</tr>';
 	$checkrep=$reponsea->rowCount();

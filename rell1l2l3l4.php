@@ -151,7 +151,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	{
 		?>
 		<div id="coeur">
-			<table id="tablerestit" class="table">
+			<table id="tablerestit" class="table table-striped temp-table">
 				<tr>
 					<td id="t-containertit">Client</td>
 					<td id="t-containertit">Projet</td>
@@ -211,7 +211,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		</div>
 
 		<div id="sstitre">Ajouter une nouvelle relation Client-Projet-Mission-Categorie</div>
-		<table id="tablerestit" class="table">
+		<table id="tablerestit" class="table table-striped temp-table">
 			<tr>
 				<td id="t-containertit">Client</td>
 				<td id="t-containertit">Projet</td>
