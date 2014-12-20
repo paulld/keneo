@@ -55,6 +55,8 @@ h2 {
 }
 
 
+/* PARAM */
+
 .section-param {
   text-align: center;
 }
@@ -100,7 +102,24 @@ h2 {
   margin-top: 4px;
   margin-left: 4px;
 }
+#form-saisie-frais input, #form-saisie-frais select {
+  width: auto;
+  display: inline-block;
+  margin-right: 15px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  height: 29px;
+}
+.form-placeholder {
+  color: #555555;
+}
 
-
+.form-control {
+  display: inline-block;
+  width: auto;
+  font-size: 13px;
+  height: 29px;
+  margin-bottom: 4px;
+}
 
 

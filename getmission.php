@@ -18,8 +18,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	$checkmis = $repmis->rowCount();
 	if ($checkmis != 0)
 	{
-		echo '<select name="mission" onchange="showCategorie(this.value)">';
-		echo '<option value="none">Mission...</option>';
+		echo '<select class="form-control" name="mission" onchange="showCategorie(this.value)">';
+		echo '<option value="none">Mission</option>';
 		while ($donl3 = $repmis->fetch())
 		{
 			if ($recupinfo == 1)

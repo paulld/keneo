@@ -13,4 +13,9 @@ Add (back) the following file and folders:
 + /_tcpdf_5.0.002
 + /Classes
 
-s
+### TODO
+
++ profile picture : add to PARAM + add form to change it
++ profile picture : add to team view 
++ add trombi view ?
++ change size of buttons

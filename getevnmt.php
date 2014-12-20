@@ -16,8 +16,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	$checkmis = $repmis->rowCount();
 	if ($checkmis != 0)
 	{
-		echo '<select name="evnmt" onchange="showCatEve(this.value)">';
-		echo '<option value="none">&Eacute;v&eacute;nement...</option>';
+		echo '<select class="form-control" name="evnmt" onchange="showCatEve(this.value)">';
+		echo '<option value="none">&Eacute;v&eacute;nement</option>';
 		while ($donl3 = $repmis->fetch())
 		{
 			if ($recupinfo == 1)
