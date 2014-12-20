@@ -23,6 +23,13 @@ h1 {
   text-align: center;
   text-shadow: 1px 1px 1px #aaa;
 }
+h2 {
+  font-size: 16px;
+  color: rgba(69,157,208,1);
+  text-transform: uppercase;
+  font-weight: 300;
+  margin: 25px auto 15px;
+}
 #renouveler-mdp {
   text-align: left;
 }
@@ -54,13 +61,6 @@ h1 {
 .param-error-message {
   color: red;
 }
-.section-param h2 {
-  font-size: 16px;
-  color: rgba(69,157,208,1);
-  text-transform: uppercase;
-  font-weight: 300;
-  margin: 25px auto 15px;
-}
 .section-param p {
   font-size: 12px;
   margin-bottom: 3px;
@@ -75,3 +75,32 @@ h1 {
 .btn-param {
   margin: 20px 0;
 }
+
+
+/* TEMPS */
+
+.temps-filter, .frais-filter {
+  margin-bottom: 20px;
+}
+.temps-filter select, .frais-filter select {
+  width: 130px;
+  display: inline-block;
+  margin-right: 15px;
+}
+.temps-filter input, .frais-filter input {
+  margin-right: 15px;
+}
+.frais-filter form {
+  display: inline-block;
+}
+.temps-filter i {
+  font-size: 29px;
+  padding-top: 0;
+  position: absolute;
+  margin-top: 4px;
+  margin-left: 4px;
+}
+
+
+
+

@@ -62,7 +62,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<div id="haut">Clients management</div>
 
 	<div id="coeur">
-	<table id="tablerestit" class="table">
+	<table id="tablerestit" class="table table-striped temp-table">
 		<tr>
 			<td id="t-containertit">Client</td>
 			<td id="t-containertit">Description</td>
@@ -110,7 +110,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	</div>
 
 	<div id="sstitre">Ajouter un nouveau client</div>
-	<table id="tablerestit" class="table">
+	<table id="tablerestit" class="table table-striped temp-table">
 		<tr>
 			<td id="t-containertit">Code</td>
 			<td id="t-containertit">Client</td>

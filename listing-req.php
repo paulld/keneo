@@ -103,82 +103,95 @@ $req = "SELECT T1.ID ID, T10.Phase Phase, T1.classID classID, T1.userID user, T1
 
 <input type="hidden" id="page" name="page" value=1 />
 <!-- ================= RESTITUTION =============== -->
-<table id="tablerestit" class="table">
-	<tr>
-		<td id="t-containertit">Phase</td><td id="t-containertit">Date</td><td id="t-containertit" >Nature</td><td id="t-containertit">Client/Projet/Mission/Cat&eacute;gorie</td><td id="t-containertit">Comp&eacute;tition/Type/&Eacute;v&eacute;nement</td><td id="t-containertit">Description</td><!--<td id="t-containertit" align="right">Unit</td><td id="t-containertit" align="right">Qt&eacute;</td>--><td id="t-containertit" align="right">Total</td><td id="t-containertit" align="center">Paiement</td><td id="t-containertit" colspan="2" align="center" width="85px">Actions</td>
-	</tr>
-	<?php
-	$reponsea = $bdd->query($req);
-	$checkrep=$reponsea->rowCount();
-	$i=1;
-	$j=2;
-	if ($checkrep != 0)
-	{
-		while ($donneea = $reponsea->fetch())
+<table id="tablerestit" class="table table-striped">
+	<thead>
+		<tr>
+			<th id="t-containertit">Phase</th>
+			<th id="t-containertit">Date</th>
+			<th id="t-containertit" >Nature</th>
+			<th id="t-containertit">Client/Projet/Mission/Cat&eacute;gorie</th>
+			<th id="t-containertit">Comp&eacute;tition/Type/&Eacute;v&eacute;nement</th>
+			<th id="t-containertit">Description</th>
+			<!--<th id="t-containertit" align="right">Unit</th>-->
+			<!--<th id="t-containertit" align="right">Qt&eacute;</th>-->
+			<th id="t-containertit" align="right">Total</th>
+			<th id="t-containertit" align="center">Paiement</th>
+			<th id="t-containertit" colspan="2" align="center" width="85px">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php
+		$reponsea = $bdd->query($req);
+		$checkrep=$reponsea->rowCount();
+		$i=1;
+		$j=2;
+		if ($checkrep != 0)
 		{
-			if ($donneea['classID'] == 1) { $k = "s"; } else { if ($donneea['classID'] == 2) { $k = "r"; } else { $k = ""; } }
-			//$k = "";
-			//Phase
-			echo '<tr><td id="t-container'.$i.'">'.utf8_encode($donneea['Phase']).'</td>';
-			//date du jour
-			echo '<td id="t-container'.$i.'" width="70px">'.date("d/m/Y", strtotime($donneea['dateTransac'])).'</td>';
-			//nature
-			echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['nature1']);
-				if ($donneea['nature2ID'] != 0) { echo '<br/>&harr;'.utf8_encode($donneea['nature2']); }
-					//if ($donneea['profilID'] != 0) { echo '<br/>&nbsp;&harr;'.utf8_encode($donneea['profil']);
-					//	if ($donneea['collaborateurID'] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.utf8_encode($donneea['nom']).' '.substr(utf8_encode($donneea[27]),0,1).'.'; } } }
-			echo '</td>';
-			//clients
-			echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['imput1']);
-				if ($donneea['imputID2'] != 0) { echo '<br/>&harr;'.utf8_encode($donneea['imput2']); 
-					if ($donneea['imputID3'] != 0) { echo '<br/>&nbsp;&harr;'.utf8_encode($donneea['imput3']); } }
-					//	if ($donneea['imputID4'] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.utf8_encode($donneea['imput4']); } } }
-			echo '</td>';
-			//Compétition
-			echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['comp1']);
-				if ($donneea['compID2'] != 0) { echo '<br/>&harr;'.utf8_encode($donneea['comp2']);
-					if ($donneea['compID3'] != 0) { echo '<br/>&nbsp;&harr;'.utf8_encode($donneea['comp3']); } }
-			echo '</td>';
-			//info
-			echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['descriptif']).'</td>';
-			//popup: unitaire x quantité (débit/crédit)
-			echo '<td id="t-container'.$i.$k.'" align="right"><span style="cursor: help;" title="'.number_format($donneea['unitaire'],2,",",".").' x '.number_format($donneea['quantite'],0,",",".").' ('.$donneea['sens'].')" </span>';
-			//total
-			echo number_format($donneea['total'],2,",",".").'</td>';
-			$total=$total+$donneea['total']*$donneea['factor'];
-			//paiement
-			if ($donneea['paiement'] == 1) { echo '<td id="t-container'.$i.'" align="center">oui</td>'; } else { echo '<td id="t-container'.$i.'" align="center">non</td>'; }
-			//status
-			if ($donneea['dateTransac'] <= $deadline)
+			while ($donneea = $reponsea->fetch())
 			{
-				echo '<td id="t-container'.$i.$k.'" width="56px">';
-					echo '<form action="journal.php" method="post">';
-					echo '<input type="hidden" value="'.$donneea['ID'].'" name="modid" />';
-					echo '&nbsp;<input id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise" />';
-				echo '</form></td><td id="t-container'.$i.$k.'" width="28px">&nbp;</td></tr>';
+				if ($donneea['classID'] == 1) { $k = "s"; } else { if ($donneea['classID'] == 2) { $k = "r"; } else { $k = ""; } }
+				//$k = "";
+				//Phase
+				echo '<tr><td id="t-container'.$i.'">'.utf8_encode($donneea['Phase']).'</td>';
+				//date du jour
+				echo '<td id="t-container'.$i.'" width="70px">'.date("d/m/Y", strtotime($donneea['dateTransac'])).'</td>';
+				//nature
+				echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['nature1']);
+					if ($donneea['nature2ID'] != 0) { echo '<br/>&harr;'.utf8_encode($donneea['nature2']); }
+						//if ($donneea['profilID'] != 0) { echo '<br/>&nbsp;&harr;'.utf8_encode($donneea['profil']);
+						//	if ($donneea['collaborateurID'] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.utf8_encode($donneea['nom']).' '.substr(utf8_encode($donneea[27]),0,1).'.'; } } }
+				echo '</td>';
+				//clients
+				echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['imput1']);
+					if ($donneea['imputID2'] != 0) { echo '<br/>&harr;'.utf8_encode($donneea['imput2']); 
+						if ($donneea['imputID3'] != 0) { echo '<br/>&nbsp;&harr;'.utf8_encode($donneea['imput3']); } }
+						//	if ($donneea['imputID4'] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.utf8_encode($donneea['imput4']); } } }
+				echo '</td>';
+				//Compétition
+				echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['comp1']);
+					if ($donneea['compID2'] != 0) { echo '<br/>&harr;'.utf8_encode($donneea['comp2']);
+						if ($donneea['compID3'] != 0) { echo '<br/>&nbsp;&harr;'.utf8_encode($donneea['comp3']); } }
+				echo '</td>';
+				//info
+				echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['descriptif']).'</td>';
+				//popup: unitaire x quantité (débit/crédit)
+				echo '<td id="t-container'.$i.$k.'" align="right"><span style="cursor: help;" title="'.number_format($donneea['unitaire'],2,",",".").' x '.number_format($donneea['quantite'],0,",",".").' ('.$donneea['sens'].')" </span>';
+				//total
+				echo number_format($donneea['total'],2,",",".").'</td>';
+				$total=$total+$donneea['total']*$donneea['factor'];
+				//paiement
+				if ($donneea['paiement'] == 1) { echo '<td id="t-container'.$i.'" align="center">oui</td>'; } else { echo '<td id="t-container'.$i.'" align="center">non</td>'; }
+				//status
+				if ($donneea['dateTransac'] <= $deadline)
+				{
+					echo '<td id="t-container'.$i.$k.'" width="56px">';
+						echo '<form action="journal.php" method="post">';
+						echo '<input type="hidden" value="'.$donneea['ID'].'" name="modid" />';
+						echo '&nbsp;<input id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise" />';
+					echo '</form></td><td id="t-container'.$i.$k.'" width="28px">&nbp;</td></tr>';
+				}
+				else
+				{
+					echo '<td id="t-container'.$i.$k.'" width="56px">';
+						echo '<form action="journal.php" method="post">';
+						echo '<input type="hidden" value="'.$donneea['ID'].'" name="modid" />';
+						echo '&nbsp;<input id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise" />';
+						echo '&nbsp;<input id="btMod" type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))" />';
+					echo '</form></td>';
+					echo '<td id="t-container'.$i.$k.'" width="28px">';
+						echo '&nbsp;<input id="btSuppr" type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="if(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\')) showFilterResult('.$donneea[0].');" />';
+					echo '</td></tr>';
+				}
+				if ($i == 1) { $i = 2; } else { $i = 1; }
 			}
-			else
-			{
-				echo '<td id="t-container'.$i.$k.'" width="56px">';
-					echo '<form action="journal.php" method="post">';
-					echo '<input type="hidden" value="'.$donneea['ID'].'" name="modid" />';
-					echo '&nbsp;<input id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise" />';
-					echo '&nbsp;<input id="btMod" type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))" />';
-				echo '</form></td>';
-				echo '<td id="t-container'.$i.$k.'" width="28px">';
-					echo '&nbsp;<input id="btSuppr" type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="if(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\')) showFilterResult('.$donneea[0].');" />';
-				echo '</td></tr>';
-			}
-			if ($i == 1) { $i = 2; } else { $i = 1; }
 		}
-	}
-	$reponsea->closeCursor();
-	
-	//<!-- =================== RESTITUTION: TABLEAU SOUS TOTAL ================= -->
-	echo '<tr><td id="t-containertit" align="right" colspan="6">Total</td>';
-	echo '<td id="t-containertit" align="right">';
-	echo  number_format(($total),2,",",".");
-	echo '</td><td id="t-containertit" colspan="3">&nbsp;</td></tr>';
-	?>
-	
+		$reponsea->closeCursor();
+		
+		//<!-- =================== RESTITUTION: TABLEAU SOUS TOTAL ================= -->
+		echo '<tr><td id="t-containertit" align="right" colspan="6">Total</td>';
+		echo '<td id="t-containertit" align="right">';
+		echo  number_format(($total),2,",",".");
+		echo '</td><td id="t-containertit" colspan="3">&nbsp;</td></tr>';
+		?>
+	</tbody>
 </table>
