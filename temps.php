@@ -359,7 +359,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	</div> -->
 
 <section class="container section-container" id="saisie-temps">
-	<h1>Saisir mes temps</h1>
+	<div class="section-title">
+		<h1>Saisir mes temps</h1>
+	</div>
 	<form action="temps.php" method="post">
 	<div id="tablesaisie">
 		<?php echo '<input type="hidden" value='.$_SESSION['ID'].' name="collaborateur" />'; ?>
@@ -567,7 +569,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	?>
     <!-- =================== RESTITUTION: PARAM ================= -->
 <section class="container section-container" id="historique-temps">
-	<h1>Historique de mes temps</h1>
+	<div class="section-title">
+		<h1>Historique de mes temps</h1>
+	</div>
 	<form action="temps.php" method="post">
 		<table id="tableoption">
 		<?php
