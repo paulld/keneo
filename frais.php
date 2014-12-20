@@ -238,11 +238,11 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<div class="section-title">
 			<h1>Saisir mes frais</h1>
 		</div>
-		<form action="frais.php" method="post">
+		<form action="frais.php" method="post" id="form-saisie-frais">
 			<div id="tablesaisie">
 				<div id="f-fraisl">
-					<select name="nature2" />
-						<option value="none">Nature de frais...</option>
+					<select class="form-control" name="nature2" />
+						<option value="none">Nature de frais</option>
 						<?php
 						$reqimput = $bdd->query("SELECT ID, Description FROM rob_nature2 WHERE actif = 1 AND Compte <> '' ORDER BY Description");
 						while ($optimput = $reqimput->fetch())
@@ -257,7 +257,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						?>
 					</select>
 					<?php
-					echo ' <input size="12" type="text" name="datefrais" id="datefrais" value="';
+					echo ' <input class="form-control" size="12" type="text" name="datefrais" id="datefrais" value="';
 						if (isset($_POST['datefrais']))
 						{
 							echo $_POST['datefrais'];
@@ -270,7 +270,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							}
 							else
 							{
-								echo date("d/m/Y");
+								// echo date("d/m/Y");
+								echo 'Date';
 							}
 						}
 						echo '" />';
@@ -279,11 +280,11 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				</div>
 				<input type="hidden" id="ma_page" value="1" />
 				<div id="f-fraisr">
-					<!--Montant HT : <input type="text" size="5" name="mtht" placeholder="0.00" /><br />
-					Montant TVA : <input type="text" size="5" name="mttva" placeholder="0.00" /><br />-->
-					&euro; TTC : <input style="text-align:right" type="text" size="12" name="mtttc" placeholder="0.00" value="<?php if (isset($reprise)) { echo $rep_tota; } else { if (isset($_POST['mtttc']) AND $probldata == 1) { echo $_POST['mtttc']; } } ?>" />   
-					Taux de TVA : <select style="text-align:right" name="taux" />
-						<option value="none">TVA...</option>
+					<!--Montant HT : <input class="form-control" type="text" size="5" name="mtht" placeholder="0.00" /><br />
+					Montant TVA : <input class="form-control" type="text" size="5" name="mttva" placeholder="0.00" /><br />-->
+					<input class="form-control" style="text-align:right" type="text" size="12" name="mtttc" placeholder="Montant &euro; TTC" value="<?php if (isset($reprise)) { echo $rep_tota; } else { if (isset($_POST['mtttc']) AND $probldata == 1) { echo $_POST['mtttc']; } } ?>" />   
+					<select class="form-control" style="text-align:right" name="taux" />
+						<option value="none">Taux de TVA</option>
 						<?php
 						$reqimput = $bdd->query("SELECT * FROM rob_tva WHERE actif=1 ORDER BY taux");
 						while ($optimput = $reqimput->fetch())
@@ -299,15 +300,13 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					</select><br/>
 					<?php
 					if (isset($reprise)) { if ($rep_refa == 1) { $optsel = " checked"; } else { $optsel = ""; } } else { $optsel = ""; }
-					echo '<input type="checkbox" name="refact" value="1" title="Cochez si refacturable"'.$optsel.' />Refacturable au client';
+					echo '<input class="checkbox" type="checkbox" name="refact" value="1" title="Cochez si refacturable"'.$optsel.' />Refacturable au client';
 					?>
-					
 				</div>
-				<br/>
 				<div id="f-fraislb">
 					<div id="f-client">
-						Client : <select name="client" id="client" onchange="showProjet(this.value)">
-							<option value="none">...</option>
+						<select class="form-control" name="client" id="client" onchange="showProjet(this.value)">
+							<option value="none">Client</option>
 							<?php
 							$reqimput = $bdd->query("SELECT * FROM rob_imputl1 WHERE actif=1 ORDER BY description");
 							while ($optimput = $reqimput->fetch())
@@ -320,39 +319,43 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							}
 							$reqimput->closeCursor();
 							?>
-						</select><span id="txtHint">
-						<?php if (isset($reprise)) { $p=$rep_idl1; $m=$rep_idl2; include('getprojet.php'); } else 
-						{ if (isset($_POST['projet']) AND $probldata == 1)
-							{ $p=$_POST['client']; $m=$_POST['projet']; include('getprojet.php'); }
-						} ?></span>
+						</select>
+						<span id="txtHint">
+							<?php
+								if (isset($reprise)) {
+									$p=$rep_idl1; $m=$rep_idl2; include('getprojet.php');
+								} else {
+									if (isset($_POST['projet']) AND $probldata == 1) {
+										$p=$_POST['client']; $m=$_POST['projet']; include('getprojet.php');
+									}
+								}
+							?>
+						</span>
 					</div>
 					<div id="txtHint2">
-						<?php if (isset($reprise))
-						{
+						<?php 
+						if (isset($reprise)) {
 							$k=$rep_idl1; $m=$rep_idl2; $c=$rep_idl3; include('getmission.php');
 							echo '<span id="txtHint3">';
 							$c=$rep_idl1; $p=$rep_idl2; $m=$rep_idl3; $k=$rep_idl4; include('getcategorie.php');
-							echo '</span>';
-							
-						} else 
-						{
-							if (isset($_POST['mission']) AND isset($_POST['projet']) AND $probldata == 1)
-							{
-								$p=$_POST['client']; $m=$_POST['projet'];  $c=$_POST['mission']; include('getmission.php');
-								if (isset($_POST['categorie']))
-								{
-									echo '<span id="txtHint3">';
-									$c=$_POST['client']; $p=$_POST['projet']; $m=$_POST['mission']; $k=$_POST['categorie']; include('getcategorie.php');
-									echo '</span>';
+							echo '</span>'; } 
+							else {
+								if (isset($_POST['mission']) AND isset($_POST['projet']) AND $probldata == 1) {
+									$p=$_POST['client']; $m=$_POST['projet'];  $c=$_POST['mission']; include('getmission.php');
+									if (isset($_POST['categorie'])) {
+										echo '<span id="txtHint3">';
+										$c=$_POST['client']; $p=$_POST['projet']; $m=$_POST['mission']; $k=$_POST['categorie']; include('getcategorie.php');
+										echo '</span>';
+									}
 								}
 							}
-						}
-						?></div>
+						?>
+					</div>
 				</div>
-				<br/>
 				<div id="f-fraisrb">
 					<div id="f-client">
-						Comp&eacute;tition : <select name="competition" id="competition" onchange="showType(this.value)">
+						<select class="form-control" name="competition" id="competition" onchange="showType(this.value)">
+							<option value="00">Comp&eacute;tition</option>
 							<option value="0">Non applicable</option>
 							<?php
 							$reqimput = $bdd->query("SELECT * FROM rob_compl1 WHERE actif=1 ORDER BY description");
@@ -366,22 +369,24 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							}
 							$reqimput->closeCursor();
 							?>
-						</select><span id="txtHint4">
-						<?php if (isset($reprise)) { $p=$rep_idc1; $m=$rep_idc2; include('gettype.php'); } else 
-						{ if (isset($_POST['typecomp']) AND $probldata == 1)
-							{ $p=$_POST['competition']; $m=$_POST['typecomp']; include('gettype.php'); }
-						} ?></span>
+						</select>
+						<span id="txtHint4">
+							<?php if (isset($reprise)) { $p=$rep_idc1; $m=$rep_idc2; include('gettype.php'); } else 
+							{ if (isset($_POST['typecomp']) AND $probldata == 1)
+								{ $p=$_POST['competition']; $m=$_POST['typecomp']; include('gettype.php'); }
+							} ?>
+						</span>
 					</div>
 					<div id="txtHint5">
 						<?php if (isset($reprise)) { $c=$rep_idc1; $t=$rep_idc2; $e=$rep_idc3; include('getevnmt.php'); } else 
 						{ if (isset($_POST['evnmt']) AND isset($_POST['typecomp']) AND $probldata == 1)
 							{ $c=$_POST['competition']; $t=$_POST['typecomp'];  $e=$_POST['evnmt']; include('getevnmt.php'); }
-						} ?></div>
+						} ?>
+					</div>
 				</div>
-				<br/>
 				<div id="ActiviteHint">
-					Activit&eacute; : <select name="activite" >
-						<option value="none">S&eacute;lectionez une activit&eacute;...</option>
+					<select class="form-control" name="activite" >
+						<option value="none">S&eacute;lectionez une activit&eacute;</option>
 						<?php
 						$reqimput = $bdd->query("SELECT * FROM rob_activite WHERE actif=1 ORDER BY code");
 						while ($optimput = $reqimput->fetch())
@@ -395,20 +400,18 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						$reqimput->closeCursor();
 						?>
 					</select>
+					<input class="form-control" type="text" size="70" name="info" placeholder="Description"
+						<?php
+							if (isset($reprise)) { echo ' value="'.$rep_info.'" ';
+							} else {
+								if (isset($_POST['info']) AND $probldata == 1) { echo ' value="'.$_POST['info'].'" ';} else { echo ' value="" '; }
+							}
+						?>
+					/>
 				</div>
-				<div id="f-descriptif">
-					Description : <input type="text" size="70" name="info" 
-					<?php
-						if (isset($reprise)) { echo ' value="'.$rep_info.'" />';
-						} else {
-							if (isset($_POST['info']) AND $probldata == 1) { echo ' value="'.$_POST['info'].'" />';} else { echo ' value=""'; }
-						}
-					?>
-				</div>
-				<br/>
 				<div id="f-valider">
 					<?php
-					echo '<input id="buttonval" type="submit" Value="Enregistrer" name="Valider" />';
+					echo '<input class="btn btn-primary" id="buttonval" type="submit" Value="Enregistrer" name="Valider" />';
 					?> 
 				</div>
 			</div>
@@ -470,7 +473,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<div class="frais-filter">
 			<?php
 			//MONTH
-			echo '<form action="frais.php" method="post"><select id="w_input_titrepartie" class="form-control" name="affmonth" />';
+			echo '<form action="frais.php" method="post"><select class="form-control" id="w_input_titrepartie" name="affmonth" />';
 			$i=1;
 			while ($i < 13)
 			{
@@ -510,17 +513,17 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '<input type="hidden" name="affcoll" value='.$_SESSION['ID'].' />';
 			
 			//VISUALISER SES FRAIS
-			echo '<input type="submit" id="buttonval" class="btn btn-default" name="toutfrais" value="Visualiser tous les frais"></form>';
+			echo '<input type="submit" id="buttonval" class="btn btn-primary" name="toutfrais" value="Visualiser tous les frais"></form>';
 			
 			if ($txtsitu == 1) {
 				//RECHARGE LA PAGE
 				echo '<form action="frais.php" method="post">';
-				echo '<input id="w_input_90val" class="btn btn-default" type="submit" Value="Voir les frais en attente" />';
+				echo '<input id="w_input_90val" class="btn btn-primary" type="submit" Value="Voir les frais en attente" />';
 				echo '</form>';
 			} else {
 				//CREER NOTE DE FRAIS
 				echo '<form action="frais-pdf.php" method="post" target="_blank">';
-				echo '<input type="hidden" name="matricule" value="'.$matricule.'" /><input id="w_input_90val" type="submit" class="btn btn-default" Value="Cr&eacute;er la note des frais en attente" name="frais-pdf" onclick="return(confirm(\'En cr&eacute;ant votre PDF, vous allez g&eacute;n&eacute;rer un num&eacute;ro de frais pour tout vos frais en cours, non flagg&eacute;. \'))" />';
+				echo '<input type="hidden" name="matricule" value="'.$matricule.'" /><input id="w_input_90val" type="submit" class="btn btn-primary" Value="Cr&eacute;er la note des frais en attente" name="frais-pdf" onclick="return(confirm(\'En cr&eacute;ant votre PDF, vous allez g&eacute;n&eacute;rer un num&eacute;ro de frais pour tout vos frais en cours, non flagg&eacute;. \'))" />';
 				echo '</form>'; }
 			echo '</div>'; ?>
 		</div>

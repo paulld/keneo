@@ -15,8 +15,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	$checkpro = $reppro->rowCount();
 	if ($checkpro != 0)
 	{
-		echo '<select name="typecomp" id="typecomp" onchange="showEvnmt(this.value)">';
-		echo '<option value="none">Type...</option>';
+		echo '<select class="form-control" name="typecomp" id="typecomp" onchange="showEvnmt(this.value)">';
+		echo '<option value="none">Type</option>';
 		while ($donpro = $reppro->fetch())
 		{
 			if ($recupinfo == 1)
