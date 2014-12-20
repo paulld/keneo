@@ -46,18 +46,34 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<!-- Background Image Specific to each page -->
 	<div class="background-accueil background-image"></div>
 	<div class="overlay"></div>
-
-	<ul id="mainMenuLight">
-		<?php
-		$men= "SELECT * FROM rob_ssmenu WHERE actif=1 AND main != 0 AND main != 5 ORDER BY main";
- 		$menu = $bdd->query($men);
- 		while ($donnee = $menu->fetch())
- 		{
-			echo '<li><a class="typ" href="'.$donnee['lien'].'"><span>'.$donnee['desc1'].'</span></a></li>';
-		}
-		$menu->closeCursor();
- 		?>
-	</ul>
+	
+	<div id="mainMenuLight" class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+				<div class="row">
+					<?php
+					$men= "SELECT * FROM rob_ssmenu WHERE actif=1 AND main != 0 AND main != 5 ORDER BY main";
+			 		$menu = $bdd->query($men);
+			 		while ($donnee = $menu->fetch())
+			 		{
+						echo '<div class="col-xs-6">';
+						echo '<div class="menu-item-outer">';
+						echo '<a href="'.$donnee['lien'].'"><span class="menu-link"></span></a>';
+						if ($donnee['desc1'] == "Temps") {echo '<i class="fa fa-history"></i><p>Mes Temps</p>';}
+						else if ($donnee['desc1'] == "Frais") {echo '<i class="fa fa-credit-card"></i><p>Mes Frais</p>';}
+						else if ($donnee['desc1'] == "Journal") {echo '<i class="fa fa-file-text"></i><p>Mon Journal</p>';}
+						else if ($donnee['desc1'] == "Team") {echo '<i class="fa fa-users"></i><p>L\'Équipe</p>';}
+						else if ($donnee['desc1'] == "Param") {echo '<i class="fa fa-cog"></i><p>Mon Profil</p>';}
+						else echo '<p class="menu-no-icon">'.$donnee['desc1'].'</p>';
+						echo '</div>';
+						echo '</div>';
+					}
+					$menu->closeCursor();
+			 		?>
+		 		</div>
+	 		</div>
+ 		</div>
+	</div>
 
 <?php include("footer.php"); 
 }
