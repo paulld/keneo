@@ -44,6 +44,23 @@ body {
 /***********************/
 /*  HEADER  */
 
+nav.nav-fixed-top {
+  top: 0;
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  max-height: 110px;
+  margin-bottom: 20px;
+  height: 110px;
+  background-color: rgba(0,0,0,.4);
+  border: none;
+}
+nav.nav-fixed-top > .container {
+  border-bottom: 2px solid #fff;
+  padding: 2px 0;
+  height: 111px;
+}
 .nav-logo {
   text-align: center;
   color: #fff;
@@ -55,39 +72,46 @@ body {
 .nav-logo img:hover {
   opacity: .8;
 }
-.nav-left {
-  padding-top: 25px;
+.nav-left i, .nav-buttons i {
+  font-size: 17px;
+  width: 23px;
 }
-.nav-left a, .nav-name a {
+.nav-left-top {
+  height: 63px;
+  padding-top: 6px;
+}
+.nav-left a, .nav-name a, .nav-buttons a {
   color: #fff;
   display: block;
   text-transform: uppercase;
   text-decoration: none;
   font-weight: 300;
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-size: 13px;
+  margin-top: 10px;
+  text-shadow: 1px 1px 1px #000;
 }
-.nav-name a {
-  font-size: 12px;
-}
-.nav-left a:hover, .nav-name a:hover {
+.nav-left a:hover, .nav-name a:hover, .nav-buttons a:hover {
   color: #ddd;
 }
 .nav-right {
   text-align: right;
-  color: #fff;
 }
-.nav-picture-name {
+.nav-picture, .nav-buttons {
   display: inline-block;
-  font-weight: 300;
-  text-transform: uppercase;
+}
+.nav-buttons {
+  vertical-align: top;
+  text-align: right;
+  padding-top: 10px;
+  margin-left: 5px;
 }
 .nav-picture img {
-  max-width: 60px;
-  max-height: 60px;
+  max-width: 63px;
+  max-height: 63px;
+  min-width: 63px;
+  min-height: 63px;
   border-radius: 50%;
-  border: 1px solid #979797;
-  margin: 10px 0;
+  margin-top: 10px;
           filter: grayscale(100%);
           filter: url(#greyscale);
           filter: gray;
@@ -96,42 +120,10 @@ body {
 .nav-picture img:hover{
   opacity: .8;
 }
-.nav-buttons {
-  display: inline-block;
-  vertical-align: top;
-  text-align: center;
-  padding-top: 30px;
+.nav-name a {
+  margin-top: 7px;
 }
-.nav-buttons a {
-  text-decoration: none;
-  font-size: 20px;
-  display: block;
-  margin-left: 12px;
-  color: #fff;
-}
-.nav-buttons a:first-child {
-  margin-bottom: 16px;
-}
-.nav-buttons a:hover {
-  color: #ddd;
-}
-nav.nav-fixed-top {
-  top: 0;
-  border-width: 0 0 1px;
-  position: fixed;
-  right: 0;
-  left: 0;
-  z-index: 1030;
-  min-height: 50px;
-  margin-bottom: 20px;
-  height: 110px;
-  background-color: rgba(0,0,0,.4);
-  border: none;
-}
-nav.nav-fixed-top > .container {
-  border-bottom: 2px solid #fff;
-  padding: 2px 0;
-}
+
 
 /***********************/
 /*  FOOTER  */
