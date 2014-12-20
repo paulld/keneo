@@ -43,7 +43,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 
 	<!-- =================== RESTITUTION: TABLEAU ================= -->
 	<section class="container section-container" id="historique-journal">
-		<h1>Historique de mon Journal</h1>
+		<div class="section-title">
+			<h1>Historique de mon Journal</h1>
+		</div>
 		<?php
 		include("listing-coeur.php");
 		?>

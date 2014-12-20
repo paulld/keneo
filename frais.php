@@ -235,7 +235,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	</div> -->
 
 	<section class="container section-container" id="saisie-frais">
-	<h1>Saisir mes frais</h1>
+	<div class="section-title">
+		<h1>Saisir mes frais</h1>
+	</div>
 	<form action="frais.php" method="post">
 	<div id="tablesaisie">
 		<div id="f-fraisl">
@@ -462,7 +464,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		
 	<!-- =================== RESTITUTION: TABLEAU ================= -->
 	<section class="container section-container" id="historique-frais">
-		<h1>Historique de mes frais</h1>
+		<div class="section-title">
+			<h1>Historique de mes frais</h1>
+		</div>
 		<table id="tableoption2">
 			<?php
 			//MONTH

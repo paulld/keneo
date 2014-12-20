@@ -180,7 +180,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		</div> -->
 
 	<section class="container section-container" id="saisie-journal">
-		<h1>Cr&eacute;ation/ Modification</h1>
+		<div class="section-title">
+			<h1>Cr&eacute;ation/ Modification</h1>
+		</div>
 		<form action="journal.php" method="post">
 		<div id="coeur">
 			<div id="f-allphase">Transaction : <select name="phase" onchange="cacher(this.value)">
