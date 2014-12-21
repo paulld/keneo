@@ -9,7 +9,7 @@
 }
 .menu-item-outer:hover {
   background-color: rgba(255,255,255,1);
-  color: hsla(202,67%,50%,1)
+  color: hsla(202,67%,50%,1);
   box-shadow: rgba(255, 255, 255, .3) 1px 1px 0px;
 }
 .menu-item-outer i {

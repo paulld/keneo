@@ -74,7 +74,16 @@
 background-color: rgb(250, 255, 240) !important;
 }
 .signin-recover-link {
-  margin-top: 10px;
+  margin-top: 15px;
+}
+.signin-recover-link a {
+  text-decoration: none;
+  color: rgba(255,255,255,.95);
+  font-size: 15px;
+  font-style: italic;
+}
+.signin-recover-link a:hover {
+  color: rgba(255,255,255,.8);
 }
 .signin-outer h1 {
   color: #fff;
