@@ -103,19 +103,23 @@ include('mobnavi.php');
 		</nav> -->
 
 		<div class="container" id="coeur">
-		  <div class="signin-outer">
-				
-				<h1>R&eacute;cup&eacute;rer son mot de passe:</h1>
-				<div>
-					<form class="form-recovery" action="passwd_recov class="form-signin".php" method="post">
-						<input class="form-control" type="text" size="50" name="mail"  id="loginInputRecov" placeholder="Email" />
-						<input class="btn btn-lg btn-primary btn-block" id="buttonval" type="submit" Value="Envoyer" name="Envoyer" />
-					</form>
-				</div>
-				<div class="signin-recover-link">
-					<a class="typ" href="index.php">
-						<span>Retour</span>
-					</a>
+			<div class="row">
+		    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+				  <div class="signin-outer">
+						
+						<h1>R&eacute;cup&eacute;rer son mot de passe:</h1>
+						<div>
+							<form class="form-recovery" action="passwd_recov class="form-signin".php" method="post">
+								<input class="form-control" type="text" size="50" name="mail"  id="loginInputRecov" placeholder="Email" />
+								<input class="btn btn-lg btn-primary btn-block" id="buttonval" type="submit" Value="Envoyer" name="Envoyer" />
+							</form>
+						</div>
+						<div class="signin-recover-link">
+							<a class="typ" href="index.php">
+								<span>Retour</span>
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
