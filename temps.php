@@ -368,7 +368,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<div id="f-timeframe">
 					<?php
 					echo '<input type="hidden" name="datedemande" value="' . date("Y") . '-' . date("m") . '-' . date("d") . '" />';
-					echo 'Enregistrer du <input size="8" type="text" id="datejourdeb" name="datejourdeb" value="';
+					echo 'Enregistrer du <input class="form-control form-control-small form-control-centered" size="8" type="text" id="datejourdeb" name="datejourdeb" value="';
 						if (isset($_POST['datejourdeb']))
 						{
 							echo $_POST['datejourdeb'];
@@ -380,7 +380,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								echo $rep_dajr;
 							}
 						}
-						echo '" /> au <input size="8" type="text" id="datejourfin" name="datejourfin" value="';
+						echo '" /> au <input class="form-control form-control-small form-control-centered" size="8" type="text" id="datejourfin" name="datejourfin" value="';
 						if (isset($_POST['datejourfin']))
 						{
 							echo $_POST['datejourfin'];
@@ -392,9 +392,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								echo $rep_dajr;
 							}
 						}
-						echo '" /> (inclu), ';
+						echo '" /> (inclus), ';
 					?> 
-					<select name="heure" />
+					<select class="form-control form-control-small form-control-centered" name="heure" />
 						<option value="0"></option>
 						<?php
 						if (isset($reprise))
@@ -419,20 +419,18 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						<?php } } ?>
 					</select> d'occupation moyenne journali&egrave;re.
 				</div>
-				<div id="clearl"></div>
 				<div id="f-descriptif">
 					<?php
 						if (isset($reprise)) { if ($rep_tick == 1) {$cbbox = " checked"; } else { $cbbox = ""; }
 						} else {
 						if (isset($_POST['ticket']) AND $probldata == 1) { $cbbox = " checked"; } else { $cbbox = ""; }
 					} ?>
-					<input type="checkbox"<?php echo $cbbox; ?> name="ticket" title="Repas pris, par journ&eacute;e de la plage d&eacute;finie ci-dessus, donnant droit &agrave; un ticket restaurant" /> Ticket restaurant (T.R.)
+					<input class="checkbox" type="checkbox"<?php echo $cbbox; ?> name="ticket" title="Repas pris, par journ&eacute;e de la plage d&eacute;finie ci-dessus, donnant droit &agrave; un ticket restaurant" /> Ticket restaurant (T.R.)
 				</div>
-				<br/>
 				<div id="f-fraislb">
 					<div id="f-client">
-						Client : <select name="client" id="client" onchange="showProjet(this.value)">
-							<option value="none">...</option>
+						<select class="form-control form-control-small" name="client" id="client" onchange="showProjet(this.value)">
+							<option value="none">Client</option>
 							<?php
 							$reqimput = $bdd->query("SELECT * FROM rob_imputl1 WHERE actif=1 ORDER BY description");
 							while ($optimput = $reqimput->fetch())
@@ -458,10 +456,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							{ $p=$_POST['client']; $m=$_POST['projet'];  $c=$_POST['mission']; include('getmission.php'); }
 						} ?></div>
 				</div>
-				<br/>
 				<div id="ActiviteHint">
-					Activit&eacute; : <select name="activite" >
-						<option value="none">S&eacute;lectionez une activit&eacute;...</option>
+					<select class="form-control form-control-small" name="activite" >
+						<option value="none">S&eacute;lectionez une activit&eacute;</option>
 						<?php
 						$reqimput = $bdd->query("SELECT * FROM rob_activite WHERE actif=1 ORDER BY code");
 						while ($optimput = $reqimput->fetch())
@@ -475,38 +472,27 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						$reqimput->closeCursor();
 						?>
 					</select>
-				</div>
-				<div id="f-descriptif">
-					Description : <input type="text" size="70" name="info" 
-					<?php
-						if (isset($_POST['info']))
-						{
-							echo ' value="'.$_POST['info'].'" />';
-						}
-						else
-						{
-							if (isset($_POST['modinfo']))
-							{
-								echo ' value="'.$_POST['modinfo'].'" />';
-							}
-							else
-							{
-								if (isset($reprise))
-								{
-									echo ' value="'.$rep_info.'" />';
-								}
-								else
-								{
-									echo 'placeholder="information libre" />';
+					<input class="form-control form-control-small" type="text" size="70" name="info" placeholder="Description" 
+						<?php
+							if (isset($_POST['info'])) {
+								echo ' value="'.$_POST['info'].'" ';
+							} else {
+								if (isset($_POST['modinfo'])) {
+									echo ' value="'.$_POST['modinfo'].'" ';
+								} else {
+									if (isset($reprise)) {
+										echo ' value="'.$rep_info.'" ';
+									} else {
+										echo 'placeholder="information libre" ';
+									}
 								}
 							}
-						}
-					?>
+						?>
+					/>
 				</div>
-				<br/>
 				<div id="f-valider">
 					<?php
-					echo '<input id="buttonval" type="submit" Value="Enregistrer" name="Valider" />';
+					echo '<input class="btn btn-small btn-primary" id="buttonval" type="submit" Value="Enregistrer" name="Valider" />';
 					?> 
 				</div>
 			</div>
@@ -576,7 +562,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<form action="temps.php" method="post">
 			<?php
 			//MONTH
-			echo '<select id="w_input_titrepartie" name="affmonth" class="form-control">';
+			echo '<select class="form-control form-control-small" id="w_input_titrepartie" name="affmonth" class="form-control form-control-small">';
 			$i=1;
 			while ($i < 13)
 			{
@@ -596,7 +582,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '</select>';
 			
 			//YEAR
-			echo '<select id="w_input_titrepartie" name="affyear" class="form-control">';
+			echo '<select class="form-control form-control-small" id="w_input_titrepartie" name="affyear" class="form-control form-control-small">';
 			$reponsey = $bdd->query("SELECT * FROM rob_period ORDER BY year");
 			while ($option = $reponsey->fetch())
 			{
@@ -614,7 +600,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			
 			//MATRICULE
 			echo '<input type="hidden" name="affcoll" value='.$_SESSION['ID'].' />';
-			echo '<input type="submit" id="buttonval" class="btn btn-default" value="Mettre a jour">';
+			echo '<input type="submit" id="buttonval" class="btn btn-small btn-primary" value="Mettre a jour">';
 			?>
 			<a href="temps-pdf.php?month=<?php echo $month; ?>&amp;year=<?php echo $year; ?>&amp;matricule=<?php echo $matricule; ?>" target="_blank"><i class="fa fa-file-pdf-o" title="<?php echo 'Extraire '.$month.'.'.$year.' sous PDF'; ?>"></i></a>
 		</form>
@@ -715,16 +701,16 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						if ($donneea[2] <= $deadline OR $donneea['validation'] != 0)
 						{
 							echo '<td id="t-container'.$i.$k.'">';
-								echo '&nbsp;<input id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise" />';
+								echo '&nbsp;<input class="btn btn-small btn-default" id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise" />';
 							echo '</td></form></tr>';
 						}
 						else
 						{
 							echo '<td id="t-container'.$i.$k.'">';
-								//echo '&nbsp;<input id="btValid" type="submit" title="Valider les modifications" Value="V" name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps et/ou le ticket restaurant de cette ligne?\'))" />';
-								echo '&nbsp;<input id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise" />';
-								echo '&nbsp;<input id="btMod" type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))" />';
-								echo '&nbsp;<input id="btSuppr" type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))" />';
+								//echo '&nbsp;<input class="btn btn-small btn-default" id="btValid" type="submit" title="Valider les modifications" Value="V" name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps et/ou le ticket restaurant de cette ligne?\'))" />';
+								echo '&nbsp;<input class="btn btn-small btn-default" id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise" />';
+								echo '&nbsp;<input class="btn btn-small btn-default" id="btMod" type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))" />';
+								echo '&nbsp;<input class="btn btn-small btn-default" id="btSuppr" type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))" />';
 							echo '</td></form></tr>';
 						}
 						if ($i == 1) { $i = 2; } else { $i = 1; }
@@ -747,7 +733,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					while ($donnee = $reponse->fetch())
 					{
 						echo '<tr><td align="right" colspan="10"><i>';
-								echo 'dont '.$donnee[0].' : '.$donnee[1].' jours<br/>';
+								echo 'dont '.$donnee[0].' : '.$donnee[1].' jours';
 						echo '</td><td colspan="2">&nbsp;</td></tr>';
 					}
 				}

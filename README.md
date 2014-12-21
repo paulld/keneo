@@ -19,3 +19,4 @@ Add (back) the following file and folders:
 + profile picture : add to team view 
 + add trombi view ?
 + change size of buttons
++ utf-8
