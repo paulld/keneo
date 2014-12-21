@@ -24,7 +24,7 @@ nav.nav-fixed-top > .container {
 }
 .nav-logo img {
   height: 65px;
-  margin: -5px 0 5px;
+  margin: -6px 0 4px;
 }
 .nav-logo img:hover {
   opacity: .8;
