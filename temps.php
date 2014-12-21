@@ -504,31 +504,31 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<?php
 			if ($comptprblmmod != 0)
 			{
-				echo '<div id="message">La modification des temps n\'a pas pu &ecirc;tre aport&eacute;e (le total exc&eacute;derait 1 journ&eacute;e pour ce jour)</div>';
+				echo '<div id="message" class="form-error-message">La modification des temps n\'a pas pu &ecirc;tre aport&eacute;e (le total exc&eacute;derait 1 journ&eacute;e pour ce jour)</div>';
 			}
 			if ($comptprblm != 0)
 			{
-				echo '<div id="message">'.$comptprblm.' enregistrement(s) n\'a(ont) pu &ecirc;tre ajout&eacute;(s). (temps restant par journ&eacute;e insuffisant ou week-end)</div>';
+				echo '<div id="message" class="form-error-message">'.$comptprblm.' enregistrement(s) n\'a(ont) pu &ecirc;tre ajout&eacute;(s). (temps restant par journ&eacute;e insuffisant ou week-end)</div>';
 			}
 			if ($comptprblmrec != 0)
 			{
-				echo '<div id="message">'.$comptprblmrec.' enregistrement(s) n\'a(ont) pu &ecirc;tre ajout&eacute;(s). Vous ne disposez pas d\'assez de journ&eacute;es de r&eacute;cup&eacute;ration</div>';
+				echo '<div id="message" class="form-error-message">'.$comptprblmrec.' enregistrement(s) n\'a(ont) pu &ecirc;tre ajout&eacute;(s). Vous ne disposez pas d\'assez de journ&eacute;es de r&eacute;cup&eacute;ration</div>';
 			}
 			if ($comptchg != 0)
 			{
-				echo '<div id="message">Certain champs n\'ont pas &eacute;t&eacute; remplis. Votre saisie n\'a pas &eacute;t&eacute; enregistr&eacute;e</div>';
+				echo '<div id="message" class="form-error-message">Certain champs n\'ont pas &eacute;t&eacute; remplis. Votre saisie n\'a pas &eacute;t&eacute; enregistr&eacute;e</div>';
 			}
 			if ($recupmsg != 0)
 			{
-				echo '<div id="message">'.$recupmsg.' jour(s) de '.$typabs.' impacte(nt) votre total de suivi des jours sp&eacute;ciaux <a href="passwd.php" >[voir]</a></div>';
+				echo '<div id="message" class="form-error-message">'.$recupmsg.' jour(s) de '.$typabs.' impacte(nt) votre total de suivi des jours sp&eacute;ciaux <a href="passwd.php" >[voir]</a></div>';
 			}
 			if ($recupmsguse != 0)
 			{
-				echo '<div id="message">'.$recupmsguse.' jour(s) de r&eacute;cup&eacute;ration ont &eacute;t&eacute; utilis&eacute;(s) <a href="passwd.php" >[voir]</a></div>';
+				echo '<div id="message" class="form-error-message">'.$recupmsguse.' jour(s) de r&eacute;cup&eacute;ration ont &eacute;t&eacute; utilis&eacute;(s) <a href="passwd.php" >[voir]</a></div>';
 			}
 			if ($deadreach != 0)
 			{
-				echo '<div id="message">'.$deadreach.' enregistrement(s) n\'a(ont) pu &ecirc;tre ajout&eacute;(s). (Cette p&eacute;riode de saisie est ferm&eacute;e)</div>';
+				echo '<div id="message" class="form-error-message">'.$deadreach.' enregistrement(s) n\'a(ont) pu &ecirc;tre ajout&eacute;(s). (Cette p&eacute;riode de saisie est ferm&eacute;e)</div>';
 			}
 		?> 
 	</section>
@@ -672,7 +672,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							if ($donneea[12] != 0 or $donneea[13] != NULL) {$k="s";} else { $k="";}
 						}
 						//date du jour
-						echo '<tr><td id="t-container'.$i.$k.'" width="50px"><img src="images/'.$j.'" />&nbsp;'.date("D", strtotime($donneea[2])).'</td>';
+						echo '<tr>';
+						echo '<td id="t-container'.$i.$k.'" width="50px"><img src="images/'.$j.'" />&nbsp;'.date("D", strtotime($donneea[2])).'</td>';
 						echo '<td id="t-container'.$i.$k.'" width="70px">'.date("d/m/Y", strtotime($donneea[2])).'</td>';
 						//collaborateur
 						echo '<td id="t-container'.$i.$k.'">'.$donneea[11].'</td>';
@@ -686,11 +687,18 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						echo '<td id="t-container'.$i.$k.'">'.$donneea[6].'</td>';
 						//ticket
 						$tmptick='';
-						if ($donneea[10] == 1) { $tmptick=' checked'; }
-						echo '<form action="temps.php" method="post">';
-						echo '<td id="t-container'.$i.$k.'"><input type="checkbox" name="modticket"'.$tmptick./*$l.*/' disabled /></td>';
+						if ($donneea[10] == 1) { 
+							$tmptick=' checked'; 
+						}
+						echo '<td id="t-container'.$i.$k.'">';
+							echo '<input type="checkbox" name="modticket"'.$tmptick./*$l.*/' disabled />';
+						echo '</td>';
 						//valeur
 						echo '<td id="t-container'.$i.$k.'">'.$donneea[7].'</td>';
+						// echo '</td>';
+						//status
+						echo '<td id="t-container'.$i.$k.'">';
+						echo '<form action="temps.php" method="post" class="duplicate-edit-remove">';
 							echo '<input type="hidden" value="'.$pseudo.'" name="affcoll" />';
 							echo '<input type="hidden" value="'.$year.'" name="affyear" />';
 							echo '<input type="hidden" value="'.$month.'" name="affmonth" />';
@@ -700,23 +708,17 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							echo '<input type="hidden" value="'.$donneea[8].'" name="oldtotval" />';
 							echo '<input type="hidden" value="'.$donneea[9].'" name="imputID2" />';
 							$nbjm = $nbjm + $donneea[7];
-						echo '</td>';
-						//status
-						if ($donneea[2] <= $deadline OR $donneea['validation'] != 0)
-						{
-							echo '<td id="t-container'.$i.$k.'">';
-								echo '&nbsp;<input class="btn btn-small btn-default" id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise" />';
-							echo '</td></form></tr>';
-						}
-						else
-						{
-							echo '<td id="t-container'.$i.$k.'">';
-								//echo '&nbsp;<input class="btn btn-small btn-default" id="btValid" type="submit" title="Valider les modifications" Value="V" name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps et/ou le ticket restaurant de cette ligne?\'))" />';
-								echo '&nbsp;<input class="btn btn-small btn-default" id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise" />';
-								echo '&nbsp;<input class="btn btn-small btn-default" id="btMod" type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))" />';
-								echo '&nbsp;<input class="btn btn-small btn-default" id="btSuppr" type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))" />';
-							echo '</td></form></tr>';
-						}
+							if ($donneea[2] <= $deadline OR $donneea['validation'] != 0) {
+									echo '<button class="btn btn-small btn-default" id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-trash-o"></i></button>';
+								// echo '</td></form></tr>';
+							} else {
+								// echo '<td id="t-container'.$i.$k.'">';
+									//echo '<button class="btn btn-small btn-default" id="btValid" type="submit" title="Valider les modifications" Value="V" name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps et/ou le ticket restaurant de cette ligne?\'))"></button>';
+									echo '<button class="btn btn-small btn-default" id="btMod" type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>';
+									echo '<button class="btn btn-small btn-default" id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+									echo '<button class="btn btn-small btn-default" id="btSuppr" type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>';
+							}
+						echo '</td></form></tr>';
 						if ($i == 1) { $i = 2; } else { $i = 1; }
 					}
 					echo '<tr><td id="t-containertit" align="right" colspan="9"><strong>Total '.$month.'.'.$year.' : '.$nbjm.' jours</strong></td><td id="t-containertit">&nbsp;</td></tr>';
