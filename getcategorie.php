@@ -17,7 +17,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	$checkcat = $repcat->rowCount();
 	if ($checkcat != 0)
 	{
-		echo '<select class="form-control" name="categorie">';
+		echo '<select class="form-control form-control-small" name="categorie">';
 		echo '<option value="none">Cat&eacute;gorie</option>';
 		while ($donl4 = $repcat->fetch())
 		{

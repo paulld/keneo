@@ -1,0 +1,69 @@
+/* DATEPICKER */
+
+.ui-widget-content {
+  background: rgba(255,255,255,.9);
+}
+.ui-widget-header {
+  border: none; 
+  background: hsla(202,67%,50%,1);
+}
+.ui-state-default, 
+.ui-widget-content .ui-state-default, 
+.ui-widget-header .ui-state-default {
+  background: #f6f6f6;
+  color: hsla(202,67%,50%,1);
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+  border: 1px solid hsla(202,67%,40%,1);
+  background: hsla(202,67%,50%,1);
+  font-weight: bold;
+  color: #fff;
+}
+.ui-state-hover .ui-icon,
+.ui-state-focus .ui-icon {
+  background-image: url("images/ui-icons_ffffff_256x240.png");
+}
+
+.ui-state-highlight, 
+.ui-widget-content .ui-state-highlight, 
+.ui-widget-header .ui-state-highlight {
+  border: 1px solid hsla(202,67%,50%,1);
+  background: #fff;
+  color: #000;
+}
+.ui-state-active, 
+.ui-widget-content .ui-state-active, 
+.ui-widget-header .ui-state-active {
+  border: 1px solid hsla(202,67%,55%,1);
+  background: hsla(202,67%,65%,1);
+  font-weight: bold;
+  color: #fff;
+}
+
+.ui-corner-all.ui-state-hover {
+  background: rgba(255,255,255,.1);
+  top: 2px;
+} 
+.ui-corner-all.ui-state-hover.ui-datepicker-prev-hover {
+  left: 2px;
+}
+.ui-corner-all.ui-state-hover.ui-datepicker-next-hover {
+  right: 2px;
+}
+
+.btn-primary {
+  background: hsla(202,67%,50%,1);
+  border-color: hsla(202,67%,45%,1);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: hsla(202,67%,35%,1);
+  border-color: hsla(202,67%,30%,1);
+}
+
+

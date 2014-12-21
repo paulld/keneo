@@ -53,42 +53,53 @@ $(function(){
 })(jQuery);
 
 //CALENDRIER
-$(function()
-{
-	$( "#datejourdeb" ).datepicker(
-	{
-		defaultDate: "+1w",
-		changeMonth: true,
-		numberOfMonths: 2,
+$(function() {
+	$( "#datejourdeb" ).datepicker({
+		defaultDate: "0",
+		changeMonth: false,
+		numberOfMonths: 1,
+		dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+	  monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+		firstDay: 1,
 		onClose: function( selectedDate ) {
-		$( "#datejourfin" ).datepicker( "option", "minDate", selectedDate );
+			$( "#datejourfin" ).datepicker( "option", "minDate", selectedDate );
 		}
 	});
 	$( "#datejourfin" ).datepicker({
-		defaultDate: "+1w",
-		changeMonth: true,
-		numberOfMonths: 2,
+		defaultDate: "0",
+		changeMonth: false,
+		numberOfMonths: 1,
+		dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+	  monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+		firstDay: 1,
 		onClose: function( selectedDate ) {
-		$( "#datejourdeb" ).datepicker( "option", "maxDate", selectedDate );
-	}
+			$( "#datejourdeb" ).datepicker( "option", "maxDate", selectedDate );
+		}
 	});
-	$( "#datejourstrt" ).datepicker(
-	{
-		defaultDate: "+1w",
-		changeMonth: true,
-		numberOfMonths: 2,
+
+	$( "#datejourstrt" ).datepicker({
+		defaultDate: "0",
+		changeMonth: false,
+		numberOfMonths: 1,
+		dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+	  monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+		firstDay: 1,
 		onClose: function( selectedDate ) {
-		$( "#datejourend" ).datepicker( "option", "minDate", selectedDate );
+			$( "#datejourend" ).datepicker( "option", "minDate", selectedDate );
 		}
 	});
 	$( "#datejourend" ).datepicker({
-		defaultDate: "+1w",
-		changeMonth: true,
-		numberOfMonths: 2,
+		defaultDate: "0",
+		changeMonth: false,
+		numberOfMonths: 1,
+		dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+	  monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+		firstDay: 1,
 		onClose: function( selectedDate ) {
-		$( "#datejourstrt" ).datepicker( "option", "maxDate", selectedDate );
-	}
+			$( "#datejourstrt" ).datepicker( "option", "maxDate", selectedDate );
+		}
 	});
+
 	$( "#dateTransac" ).datepicker();
 	$( "#datefrais" ).datepicker();
 	$( "#deadline1" ).datepicker();

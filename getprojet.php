@@ -15,7 +15,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	$checkpro = $reppro->rowCount();
 	if ($checkpro != 0)
 	{
-		echo '<select class="form-control" id="projet" name="projet" onchange="showMission(this.value)">';
+		echo '<select class="form-control form-control-small" id="projet" name="projet" onchange="showMission(this.value)">';
 		echo '<option value="none">Projet</option>';
 		while ($donpro = $reppro->fetch())
 		{
