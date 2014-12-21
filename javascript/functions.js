@@ -935,3 +935,13 @@ function showCurrEve(curreve)
 	xmlhttp.send();
 }
 
+
+// SHOW/HIDE INPUT FORM (SAISI TEMPS, SAISIR FRAIS...)
+
+$(document).ready(function(){
+  $(document).on('click', '#toggle-title', function(e){
+  	console.log('hihi');
+  	$( "#toggle-content" ).slideToggle( "slow", function() {});
+  	$('#toggle-title i.fa').toggleClass('fa-chevron-down').toggleClass('fa-chevron-up');
+  });
+});

@@ -234,11 +234,15 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="#"><span>Frais</span></a></li></ul>
 	</div> -->
 
-	<section class="container section-container" id="saisie-frais">
-		<div class="section-title">
-			<h1>Saisir mes frais</h1>
+	<section class="container section-container section-toggle" id="saisie-frais">
+		<div class="section-title" id="toggle-title">
+			<h1>
+				<i class="fa fa-chevron-down"></i>
+				Saisir mes frais
+				<i class="fa fa-chevron-down"></i>
+			</h1>
 		</div>
-		<form action="frais.php" method="post" id="form-saisie-frais">
+		<form action="frais.php" method="post" id="toggle-content" style="display: none;">
 			<div id="tablesaisie">
 				<div id="f-fraisl">
 					<select class="form-control form-control-small" name="nature2" />
