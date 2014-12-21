@@ -358,11 +358,15 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="#"><span>Feuille de temps</span></a></li></ul>
 	</div> -->
 
-	<section class="container section-container" id="saisie-temps">
-		<div class="section-title">
-			<h1>Saisir mes temps</h1>
+	<section class="container section-container section-toggle" id="saisie-temps">
+		<div class="section-title toggle-botton-margin" id="toggle-title">
+			<h1>
+				<i class="fa fa-chevron-down"></i>
+				Saisir mes temps
+				<i class="fa fa-chevron-down"></i>
+			</h1>
 		</div>
-		<form action="temps.php" method="post">
+		<form action="temps.php" method="post" id="toggle-content" style="display: none;">
 			<div id="tablesaisie">
 				<?php echo '<input type="hidden" value='.$_SESSION['ID'].' name="collaborateur" />'; ?>
 				<div id="f-timeframe">
