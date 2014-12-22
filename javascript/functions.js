@@ -54,12 +54,24 @@ $(function(){
 
 //CALENDRIER
 $(function() {
+	var daysShortFr = [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ];
+	var monthsFr = [ "Janvier", "F&eacute;vrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Ao&ucirc;t", "Septembre", "Octobre", "Novembre", "D&eacute;cembre" ];
+
+	var datepickerOptions = {
+		defaultDate: "0",
+		changeMonth: false,
+		numberOfMonths: 1,
+		dayNamesMin: daysShortFr,
+	  monthNames: monthsFr,
+		firstDay: 1
+	}
+
 	$( "#datejourdeb" ).datepicker({
 		defaultDate: "0",
 		changeMonth: false,
 		numberOfMonths: 1,
-		dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
-	  monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+		dayNamesMin: daysShortFr,
+	  monthNames: monthsFr,
 		firstDay: 1,
 		onClose: function( selectedDate ) {
 			$( "#datejourfin" ).datepicker( "option", "minDate", selectedDate );
@@ -69,8 +81,8 @@ $(function() {
 		defaultDate: "0",
 		changeMonth: false,
 		numberOfMonths: 1,
-		dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
-	  monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+		dayNamesMin: daysShortFr,
+	  monthNames: monthsFr,
 		firstDay: 1,
 		onClose: function( selectedDate ) {
 			$( "#datejourdeb" ).datepicker( "option", "maxDate", selectedDate );
@@ -81,8 +93,8 @@ $(function() {
 		defaultDate: "0",
 		changeMonth: false,
 		numberOfMonths: 1,
-		dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
-	  monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+		dayNamesMin: daysShortFr,
+	  monthNames: monthsFr,
 		firstDay: 1,
 		onClose: function( selectedDate ) {
 			$( "#datejourend" ).datepicker( "option", "minDate", selectedDate );
@@ -92,19 +104,20 @@ $(function() {
 		defaultDate: "0",
 		changeMonth: false,
 		numberOfMonths: 1,
-		dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
-	  monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+		dayNamesMin: daysShortFr,
+	  monthNames: monthsFr,
 		firstDay: 1,
 		onClose: function( selectedDate ) {
 			$( "#datejourstrt" ).datepicker( "option", "maxDate", selectedDate );
 		}
 	});
 
-	$( "#dateTransac" ).datepicker();
-	$( "#datefrais" ).datepicker();
-	$( "#deadline1" ).datepicker();
-	$( "#deadline2" ).datepicker();
-	$( "#deadline3" ).datepicker();
+
+	$( "#dateTransac" ).datepicker(datepickerOptions);
+	$( "#datefrais" ).datepicker(datepickerOptions);
+	$( "#deadline1" ).datepicker(datepickerOptions);
+	$( "#deadline2" ).datepicker(datepickerOptions);
+	$( "#deadline3" ).datepicker(datepickerOptions);
 });
 
 
