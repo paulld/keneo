@@ -62,7 +62,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						if ($donnee['desc1'] == "Temps") {echo '<i class="fa fa-history"></i><p>Mes Temps</p>';}
 						else if ($donnee['desc1'] == "Frais") {echo '<i class="fa fa-credit-card"></i><p>Mes Frais</p>';}
 						else if ($donnee['desc1'] == "Journal") {echo '<i class="fa fa-file-text"></i><p>Mon Journal</p>';}
-						else if ($donnee['desc1'] == "Team") {echo '<i class="fa fa-users"></i><p>L\'Équipe</p>';}
+						else if ($donnee['desc1'] == "Team") {echo '<i class="fa fa-users"></i><p>L&apos;&Eacute;quipe</p>';}
 						else if ($donnee['desc1'] == "Param") {echo '<i class="fa fa-cog"></i><p>Mon Profil</p>';}
 						else echo '<p class="menu-no-icon">'.$donnee['desc1'].'</p>';
 						echo '</div>';

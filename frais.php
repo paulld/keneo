@@ -521,7 +521,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			
 			if ($txtsitu == 1) {
 				//RECHARGE LA PAGE
-				echo '<form action="frais.php" method="post">';
+				echo '<form action="frais.php" method="post" class="form-right">';
 				echo '<input id="w_input_90val" class="btn btn-small btn-primary" type="submit" Value="Voir les frais en attente" />';
 				echo '</form>';
 			} else {
