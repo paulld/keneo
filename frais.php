@@ -230,10 +230,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<div class="background-frais background-image"></div>
 	<div class="overlay"></div>
 
-	<!-- <div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="#"><span>Frais</span></a></li></ul>
-	</div> -->
-
 	<section class="container section-container section-toggle" id="saisie-frais">
 		<div class="section-title" id="toggle-title">
 			<h1>
@@ -243,8 +239,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			</h1>
 		</div>
 		<form action="frais.php" method="post" id="toggle-content" style="display: none;">
-			<div id="tablesaisie">
-				<div id="f-fraisl">
+			<div>
+				<div>
 					<select class="form-control form-control-small" name="nature2" />
 						<option value="none">Nature de frais</option>
 						<?php
@@ -283,7 +279,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					?> 
 				</div>
 				<input type="hidden" id="ma_page" value="1" />
-				<div id="f-fraisr">
+				<div>
 					<!--Montant HT : <input class="form-control form-control-small" type="text" size="5" name="mtht" placeholder="0.00" /><br />
 					Montant TVA : <input class="form-control form-control-small" type="text" size="5" name="mttva" placeholder="0.00" /><br />-->
 					<input class="form-control form-control-small" style="text-align:right" type="text" size="12" name="mtttc" placeholder="Montant &euro; TTC" value="<?php if (isset($reprise)) { echo $rep_tota; } else { if (isset($_POST['mtttc']) AND $probldata == 1) { echo $_POST['mtttc']; } } ?>" />   
@@ -307,8 +303,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					echo '<input class="checkbox" type="checkbox" name="refact" value="1" title="Cochez si refacturable"'.$optsel.' />Refacturable au client';
 					?>
 				</div>
-				<div id="f-fraislb">
-					<div id="f-client">
+				<div>
+					<div>
 						<select class="form-control form-control-small" name="client" id="client" onchange="showProjet(this.value)">
 							<option value="none">Client</option>
 							<?php
@@ -356,8 +352,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						?>
 					</div>
 				</div>
-				<div id="f-fraisrb">
-					<div id="f-client">
+				<div>
+					<div>
 						<select class="form-control form-control-small" name="competition" id="competition" onchange="showType(this.value)">
 							<option value="00">Comp&eacute;tition</option>
 							<option value="0">Non applicable</option>
@@ -413,9 +409,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						?>
 					/>
 				</div>
-				<div id="f-valider">
+				<div>
 					<?php
-					echo '<input class="btn btn-small btn-primary" id="buttonval" type="submit" Value="Enregistrer" name="Valider" />';
+					echo '<input class="btn btn-small btn-primary" type="submit" Value="Enregistrer" name="Valider" />';
 					?> 
 				</div>
 			</div>
@@ -424,19 +420,19 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<?php
 			if ($comptchg != 0)
 			{
-				echo '<div id="message" class="form-error-message">La combinaison client et/ou comp&eacute;tition n\'est pas bonne ou le type de frais/ activit&eacute; n\'a pas &eacute;t&eacute; s&eacute;lectionn&eacute;. Votre saisie n\'a pas &eacute;t&eacute; enregistr&eacute;e</div>';
+				echo '<div class="form-error-message">La combinaison client et/ou comp&eacute;tition n\'est pas bonne ou le type de frais/ activit&eacute; n\'a pas &eacute;t&eacute; s&eacute;lectionn&eacute;. Votre saisie n\'a pas &eacute;t&eacute; enregistr&eacute;e</div>';
 			}
 			if ($comptprblm == 1)
 			{
-				echo '<div id="message" class="form-error-message">Le client, la date, la comp&eacute;tition et/ou une combinaison de montants n\'a pas &eacute;t&eacute; saisie</div>';
+				echo '<div class="form-error-message">Le client, la date, la comp&eacute;tition et/ou une combinaison de montants n\'a pas &eacute;t&eacute; saisie</div>';
 			}
 			if ($tauxprblm != 0)
 			{
-				echo '<div id="message" class="form-error-message">Le taux calcul&eacute; ('.$tauxMT.') &agrave; partir de votre saisie ne correspond pas &agrave; un taux officiel</div>';
+				echo '<div class="form-error-message">Le taux calcul&eacute; ('.$tauxMT.') &agrave; partir de votre saisie ne correspond pas &agrave; un taux officiel</div>';
 			}
 			if ($deadreach != 0)
 			{
-				echo '<div id="message" class="form-error-message">Cette p&eacute;riode de saisie est ferm&eacute;e.</div>';
+				echo '<div class="form-error-message">Cette p&eacute;riode de saisie est ferm&eacute;e.</div>';
 			}
 		?> 
 	</section>
@@ -477,7 +473,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<div class="frais-filter">
 			<?php
 			//MONTH
-			echo '<form action="frais.php" method="post"><select class="form-control form-control-small" id="w_input_titrepartie" name="affmonth" />';
+			echo '<form action="frais.php" method="post"><select class="form-control form-control-small" name="affmonth" />';
 			$i=1;
 			while ($i < 13)
 			{
@@ -497,7 +493,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '</select>';
 			
 			//YEAR
-			echo '<select id="w_input_titrepartie" class="form-control form-control-small" name="affyear">';
+			echo '<select class="form-control form-control-small" name="affyear">';
 			$reponsey = $bdd->query("SELECT * FROM rob_period ORDER BY year");
 			while ($option = $reponsey->fetch())
 			{
@@ -517,34 +513,35 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '<input type="hidden" name="affcoll" value='.$_SESSION['ID'].' />';
 			
 			//VISUALISER SES FRAIS
-			echo '<input type="submit" id="buttonval" class="btn btn-small btn-primary" name="toutfrais" value="Visualiser tous les frais"></form>';
+			echo '<input type="submit" class="btn btn-small btn-primary" name="toutfrais" value="Visualiser tous les frais"></form>';
 			
 			if ($txtsitu == 1) {
 				//RECHARGE LA PAGE
 				echo '<form action="frais.php" method="post" class="form-right">';
-				echo '<input id="w_input_90val" class="btn btn-small btn-primary" type="submit" Value="Voir les frais en attente" />';
+				echo '<input class="btn btn-small btn-primary" type="submit" Value="Voir les frais en attente" />';
 				echo '</form>';
 			} else {
 				//CREER NOTE DE FRAIS
 				echo '<form action="frais-pdf.php" method="post" target="_blank" class="form-right">';
-				echo '<input type="hidden" name="matricule" value="'.$matricule.'" /><input id="w_input_90val" type="submit" class="btn btn-small btn-primary" Value="Cr&eacute;er la note des frais en attente" name="frais-pdf" onclick="return(confirm(\'En cr&eacute;ant votre PDF, vous allez g&eacute;n&eacute;rer un num&eacute;ro de frais pour tout vos frais en cours, non flagg&eacute;. \'))" />';
+				echo '<input type="hidden" name="matricule" value="'.$matricule.'" /><input type="submit" class="btn btn-small btn-primary" Value="Cr&eacute;er la note des frais en attente" name="frais-pdf" onclick="return(confirm(\'En cr&eacute;ant votre PDF, vous allez g&eacute;n&eacute;rer un num&eacute;ro de frais pour tout vos frais en cours, non flagg&eacute;. \'))" />';
 				echo '</form>'; }
 			echo '</div>'; ?>
 		</div>
 		
 		<h2><?php echo $titrestrict; ?></h2>
-		<table id="tablerestit" class="table table-striped">
+		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th id="t-containertit">Date</th>
-					<th id="t-containertit" >Nature</th>
-					<th id="t-containertit">Client/Projet/Mission/Cat&eacute;gorie</th>
-					<th id="t-containertit">Comp&eacute;tition/Type/&Eacute;v&eacute;nement</th>
-					<th id="t-containertit">Activit&eacute;</th>
-					<th id="t-containertit">Description</th>
-					<th id="t-containertit">Flag</th>
-					<th id="t-containertit" align="right">Montant TTC</th>
-					<th id="t-containertit" align="center" width="85px">Actions</th>
+					<th>Date</th>
+					<th></th>
+					<th>Nature</th>
+					<th>Client/Projet/Mission/Cat&eacute;gorie</th>
+					<th>Comp&eacute;tition/Type/&Eacute;v&eacute;nement</th>
+					<th>Activit&eacute;</th>
+					<th>Description</th>
+					<th>Flag</th>
+					<th align="right">Montant TTC</th>
+					<th align="center" width="80px">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -590,45 +587,51 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					ORDER BY T1.datejour, T11.Description, T3.code, T4.code";
 				$reponsea = $bdd->query($req);
 				$checkrep=$reponsea->rowCount();
-				$i=1;
-				$j=2;
+
 				if ($checkrep != 0)
 				{
 					while ($donneea = $reponsea->fetch())
 					{
-						if ($donneea[8] == 1) { $j = "RoB_Green.png"; } else { $j = "RoB_Orange.png"; }
-						if ($donneea[2] <= $deadline OR $donneea[21] != '' OR $donneea[22] == 2) { $l = " disabled"; $k="v"; } else { $l = ""; $k = "";}
+						if ($donneea[2] <= $deadline OR $donneea[21] != '' OR $donneea[22] == 2) { 
+							$l = " disabled"; 
+							$highlight ="v"; 
+						} else { 
+							$l = ""; 
+							$highlight = "no-highlight";
+						}
+						
+						echo '<tr class="tr-'.$highlight.'">';
+						echo '<td>'.date("d/m/Y", strtotime($donneea[2])).'</td>';
 						//date du jour
-						echo '<tr>';
-						echo '<td id="t-container'.$i.$k.'" width="70px">'.date("d/m/Y", strtotime($donneea[2])).'</td>';
-						echo '<td id="t-container'.$i.$k.'">';
 						//refact
-						if ($donneea[14] == 1)
-						{ echo '<img src="images/RoB_Green.png" title="Refacturable" />'; } else
-						{ echo '<img src="images/RoB_Red.png" title="Non refacturable" />'; }
+						if ($donneea[14] == 1) {
+							echo '<td><i class="fa fa-circle fa-circle-validate" title="Refacturable"></i></td>';
+						} else { 
+							echo '<td><i class="fa fa-circle fa-circle-no-validate" title="Non refacturable"></i></td>';
+						}
 						//nature2
-						echo $donneea[15].'</td>';
+						echo '<td>'.$donneea[15].'</td>';
 						//clients
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[3];
+						echo '<td>'.$donneea[3];
 							if ($donneea[16] != 0) { echo '<br/>&harr;'.$donneea[4];
 								if ($donneea[17] != 0) { echo '<br/>&nbsp;&harr;'.$donneea[5];
 									if ($donneea[18] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.$donneea[6]; } } }
 						echo '</td>';
 						//Compétition
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[7];
+						echo '<td>'.$donneea[7];
 							if ($donneea[19] != 0) { echo '<br/>&harr;'.$donneea[8];
 								if ($donneea[20] != 0) { echo '<br/>&nbsp;&harr;'.$donneea[9].'</td>'; } }
 						echo '</td>';
 						//activité
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[23].'</td>';
+						echo '<td>'.$donneea[23].'</td>';
 						//info
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[10].'</td>';
+						echo '<td>'.$donneea[10].'</td>';
 						//flag
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[21].'</td>';
+						echo '<td>'.$donneea[21].'</td>';
 						//valeurs
-						echo '<td id="t-container'.$i.$k.'" align="right">'.$donneea[13].'</td>';
+						echo '<td align="right">'.$donneea[13].'</td>';
 						//status
-						echo '<td id="t-container'.$i.$k.'">';
+						echo '<td>';
 						echo '<form action="frais.php" method="post" class="duplicate-edit-remove">';
 							//echo '<input type="text" size="5" value="'.$donneea[11].'" name="modht" />HT<br/>';
 							echo '<input type="hidden" value="'.$pseudo.'" name="affcoll" />';
@@ -642,17 +645,17 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							// echo '<input type="text" size="5" value="'.$donneea[12].'" name="mdtva" />TVA<br/>';
 							// echo '<input type="text" size="5" value="'.$donneea[13].'" name="modttc" />TTC</td>';
 							if ($donneea[2] <= $deadline OR $donneea[22] == 2) {
-								echo '<button id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+								echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
 								// echo '</form></td></tr>';
 							} else {
 								if ($donneea[21] != '') {
-									echo '<button id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
-									echo '<button id="btMod" type="submit" Value="V" title="D&eacute;v&eacute;rouiller cette note de frais" name="deverr" onclick="return(confirm(\'Etes-vous sur de vouloir d&eacute;v&eacute;rouiller l\int&eacute;gralit&eacute; de cette note de frais?\'))"><i class="fa fa-unlock"></i></button>';
+									echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+									echo '<button type="submit" Value="V" title="D&eacute;v&eacute;rouiller cette note de frais" name="deverr" onclick="return(confirm(\'Etes-vous sur de vouloir d&eacute;v&eacute;rouiller l\int&eacute;gralit&eacute; de cette note de frais?\'))"><i class="fa fa-unlock"></i></button>';
 								} else {
-									//echo '<td id="t-container'.$i.$k.'"><button id="w_input_90val" type="submit" Value="Mod." name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps de cette ligne?\'))" /><br/>';
-									echo '<button id="btMod" type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>';
-									echo '<button id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
-									echo '<button id="btSuppr" type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>';
+									//echo '<td><button type="submit" Value="Mod." name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps de cette ligne?\'))" /><br/>';
+									echo '<button type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>';
+									echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+									echo '<button type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>';
 								}
 							}
 						echo '</form></td></tr>';
@@ -670,12 +673,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				{
 					while ($donnee = $reponse->fetch())
 					{
-						echo '<tr><td id="t-containertit" align="right" colspan="7">Total</td>';
-						echo '<td id="t-containertit" align="right">';
+						echo '<tr><td align="right" colspan="7">Total</td>';
+						echo '<td align="right">';
 						//echo $donnee[0].' HT<br/>';
 						//echo $donnee[1].' TVA<br/>';
 						echo $donnee[2];
-						echo '</td><td id="t-containertit">&nbsp;</td></tr>';
+						echo '</td><td>&nbsp;</td></tr>';
 					}
 				}
 				$reponse->closeCursor();
