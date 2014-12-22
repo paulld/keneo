@@ -252,17 +252,17 @@ tr.tr-highlight {
   margin: 0 12px;
   font-size: 18px;
 }
-#toggle-title {
+#toggle-title, #toggle-title2 {
   cursor: pointer;
   margin-bottom: 0;
 }
-#toggle-title:hover {
+#toggle-title:hover, #toggle-title2:hover {
   background: #fff;
 }
 .section-toggle {
   padding-bottom: 0;
 }
-#toggle-content {
+#toggle-content, #toggle-content2 {
   margin-top: 20px;
   margin-bottom: 20px;
 }

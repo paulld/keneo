@@ -953,9 +953,12 @@ function showCurrEve(curreve)
 
 $(document).ready(function(){
   $(document).on('click', '#toggle-title', function(e){
-  	console.log('hihi');
   	$( "#toggle-content" ).slideToggle( "slow", function() {});
   	$('#toggle-title i.fa').toggleClass('fa-chevron-down').toggleClass('fa-chevron-up');
+  });
+  $(document).on('click', '#toggle-title2', function(e){
+  	$( "#toggle-content2" ).slideToggle( "slow", function() {});
+  	$('#toggle-title2 i.fa').toggleClass('fa-chevron-down').toggleClass('fa-chevron-up');
   });
 });
 
