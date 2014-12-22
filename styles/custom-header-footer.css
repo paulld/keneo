@@ -69,10 +69,10 @@ nav.nav-fixed-top > .container {
   min-height: 63px;
   border-radius: 50%;
   margin-top: 10px;
-          filter: grayscale(100%);
+/*          filter: grayscale(100%);
           filter: url(#greyscale);
           filter: gray;
-  -webkit-filter: grayscale(1);
+  -webkit-filter: grayscale(1);*/
 }
 .nav-picture img:hover{
   opacity: .8;
@@ -115,6 +115,11 @@ nav.nav-fixed-top > .container {
   }
   .nav-left, .nav-right {
     width: 50%;
+  }
+}
+@media (max-width: 640px) {
+  .nav-picture img {
+    display: none;
   }
 }
 

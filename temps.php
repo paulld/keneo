@@ -462,7 +462,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				</div>
 				<div id="ActiviteHint">
 					<select class="form-control form-control-small" name="activite" >
-						<option value="none">S&eacute;lectionez une activit&eacute;</option>
+						<option value="none">S&eacute;lectionnez une activit&eacute;</option>
 						<?php
 						$reqimput = $bdd->query("SELECT * FROM rob_activite WHERE actif=1 ORDER BY code");
 						while ($optimput = $reqimput->fetch())
@@ -615,7 +615,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<thead>
 				<tr>
 					<th id="t-containertit" align="center" colspan="2">Date</th>
-					<th id="t-containertit">Activit&eacute;.</th>
+					<th id="t-containertit">Activit&eacute;</th>
 					<th id="t-containertit">Client</th>
 					<th id="t-containertit">Projet</th>
 					<th id="t-containertit">Mission</th>
