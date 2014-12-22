@@ -958,3 +958,31 @@ $(document).ready(function(){
   	$('#toggle-title i.fa').toggleClass('fa-chevron-down').toggleClass('fa-chevron-up');
   });
 });
+
+// CHANGE PROFILE PICTURE
+
+$(document).on('change', '.btn-file :file', function() {
+  var input = $(this),
+    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+  input.trigger('fileselect', [numFiles, label]);
+});
+$(document).ready( function() {
+  $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+    $('#new-picture-label').text(label);
+  });
+});
+
+
+// TEAM - SHOW / HIDE TROMBI OR TABLE VIEW
+
+$(document).ready( function() {
+  $('#effectif-buttons button').on('click', function() {
+    $('#effectif-interne-table').toggle();
+    $('#effectif-interne-trombi').toggle();
+    $('#effectif-externe-table').toggle();
+    $('#effectif-externe-trombi').toggle();
+    $('#effectif-buttons button').attr("disabled",false);
+    $(this).attr("disabled",true);
+  });
+});
