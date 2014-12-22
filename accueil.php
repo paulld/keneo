@@ -52,11 +52,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
 				<div class="row">
 					<?php
-					$men= "SELECT * FROM rob_ssmenu WHERE actif=1 AND main != 0 AND main != 5 ORDER BY main";
+					$men= "SELECT * FROM rob_ssmenu WHERE actif=1 AND main != 0 ORDER BY main";
 			 		$menu = $bdd->query($men);
 			 		while ($donnee = $menu->fetch())
 			 		{
 						echo '<div class="col-xs-6">';
+
 						echo '<div class="menu-item-outer">';
 						echo '<a href="'.$donnee['lien'].'"><span class="menu-link"></span></a>';
 						if ($donnee['desc1'] == "Temps") {echo '<i class="fa fa-history"></i><p>Mes Temps</p>';}
@@ -66,6 +67,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						else if ($donnee['desc1'] == "Param") {echo '<i class="fa fa-cog"></i><p>Mon Profil</p>';}
 						else echo '<p class="menu-no-icon">'.$donnee['desc1'].'</p>';
 						echo '</div>';
+
 						echo '</div>';
 					}
 					$menu->closeCursor();
