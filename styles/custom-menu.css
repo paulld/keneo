@@ -54,3 +54,29 @@
   left: 0;
   z-index: 1;
 }
+
+
+/* HOMEPAGE MENU - ICONS */
+
+/* NB: Icons in main menu are loaded with: class="fa fa-'.$donnee['ID'].'" */
+/* To add new icons: */
+/* 1- Find it on http://fortawesome.github.io/Font-Awesome/icons/ */
+/* 2- Copy the css 'font-awesome.css' and add it here with the ID name */
+
+.fa-5:before {
+  /* use fa-history icon */
+  content: "\f1da";
+}
+.fa-6:before {
+  /* use fa-credit-card icon */
+  content: "\f09d";
+}
+.fa-13:before {
+  /* use fa-file-text icon */
+  content: "\f15c";
+}
+.fa-8:before {
+  /* uses fa-users icon */
+  content: "\f0c0";
+}
+

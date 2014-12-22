@@ -57,17 +57,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			 		while ($donnee = $menu->fetch())
 			 		{
 						echo '<div class="col-xs-6">';
-
-						echo '<div class="menu-item-outer">';
-						echo '<a href="'.$donnee['lien'].'"><span class="menu-link"></span></a>';
-						if ($donnee['desc1'] == "Temps") {echo '<i class="fa fa-history"></i><p>Mes Temps</p>';}
-						else if ($donnee['desc1'] == "Frais") {echo '<i class="fa fa-credit-card"></i><p>Mes Frais</p>';}
-						else if ($donnee['desc1'] == "Journal") {echo '<i class="fa fa-file-text"></i><p>Mon Journal</p>';}
-						else if ($donnee['desc1'] == "Team") {echo '<i class="fa fa-users"></i><p>L&apos;&Eacute;quipe</p>';}
-						else if ($donnee['desc1'] == "Param") {echo '<i class="fa fa-cog"></i><p>Mon Profil</p>';}
-						else echo '<p class="menu-no-icon">'.$donnee['desc1'].'</p>';
-						echo '</div>';
-
+							echo '<div class="menu-item-outer">';
+								echo '<a href="'.$donnee['lien'].'"><span class="menu-link"></span></a>';
+								echo '<i class="fa fa-'.$donnee['ID'].'"></i><p>'.$donnee['desc1'].'</p>';
+							echo '</div>';
 						echo '</div>';
 					}
 					$menu->closeCursor();
