@@ -537,7 +537,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<thead>
 				<tr>
 					<th id="t-containertit">Date</th>
-					<th id="t-containertit" >Nature</th>
+					<th id="t-containertit"></th>
+					<th id="t-containertit">Nature</th>
 					<th id="t-containertit">Client/Projet/Mission/Cat&eacute;gorie</th>
 					<th id="t-containertit">Comp&eacute;tition/Type/&Eacute;v&eacute;nement</th>
 					<th id="t-containertit">Activit&eacute;</th>
@@ -590,45 +591,51 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					ORDER BY T1.datejour, T11.Description, T3.code, T4.code";
 				$reponsea = $bdd->query($req);
 				$checkrep=$reponsea->rowCount();
-				$i=1;
-				$j=2;
+
 				if ($checkrep != 0)
 				{
 					while ($donneea = $reponsea->fetch())
 					{
-						if ($donneea[8] == 1) { $j = "RoB_Green.png"; } else { $j = "RoB_Orange.png"; }
-						if ($donneea[2] <= $deadline OR $donneea[21] != '' OR $donneea[22] == 2) { $l = " disabled"; $k="v"; } else { $l = ""; $k = "";}
+						if ($donneea[2] <= $deadline OR $donneea[21] != '' OR $donneea[22] == 2) { 
+							$l = " disabled"; 
+							$highlight ="v"; 
+						} else { 
+							$l = ""; 
+							$highlight = "no-highlight";
+						}
+						
+						echo '<tr class="tr-'.$highlight.'">';
+						echo '<td>'.date("d/m/Y", strtotime($donneea[2])).'</td>';
 						//date du jour
-						echo '<tr>';
-						echo '<td id="t-container'.$i.$k.'" width="70px">'.date("d/m/Y", strtotime($donneea[2])).'</td>';
-						echo '<td id="t-container'.$i.$k.'">';
 						//refact
-						if ($donneea[14] == 1)
-						{ echo '<img src="images/RoB_Green.png" title="Refacturable" />'; } else
-						{ echo '<img src="images/RoB_Red.png" title="Non refacturable" />'; }
+						if ($donneea[14] == 1) {
+							echo '<td><i class="fa fa-circle fa-circle-validate" title="Refacturable"></i></td>';
+						} else { 
+							echo '<td><i class="fa fa-circle fa-circle-no-validate" title="Non refacturable"></i></td>';
+						}
 						//nature2
-						echo $donneea[15].'</td>';
+						echo '<td>'.$donneea[15].'</td>';
 						//clients
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[3];
+						echo '<td>'.$donneea[3];
 							if ($donneea[16] != 0) { echo '<br/>&harr;'.$donneea[4];
 								if ($donneea[17] != 0) { echo '<br/>&nbsp;&harr;'.$donneea[5];
 									if ($donneea[18] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.$donneea[6]; } } }
 						echo '</td>';
 						//Compétition
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[7];
+						echo '<td>'.$donneea[7];
 							if ($donneea[19] != 0) { echo '<br/>&harr;'.$donneea[8];
 								if ($donneea[20] != 0) { echo '<br/>&nbsp;&harr;'.$donneea[9].'</td>'; } }
 						echo '</td>';
 						//activité
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[23].'</td>';
+						echo '<td>'.$donneea[23].'</td>';
 						//info
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[10].'</td>';
+						echo '<td>'.$donneea[10].'</td>';
 						//flag
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[21].'</td>';
+						echo '<td>'.$donneea[21].'</td>';
 						//valeurs
-						echo '<td id="t-container'.$i.$k.'" align="right">'.$donneea[13].'</td>';
+						echo '<td align="right">'.$donneea[13].'</td>';
 						//status
-						echo '<td id="t-container'.$i.$k.'">';
+						echo '<td>';
 						echo '<form action="frais.php" method="post" class="duplicate-edit-remove">';
 							//echo '<input type="text" size="5" value="'.$donneea[11].'" name="modht" />HT<br/>';
 							echo '<input type="hidden" value="'.$pseudo.'" name="affcoll" />';
@@ -649,7 +656,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 									echo '<button id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
 									echo '<button id="btMod" type="submit" Value="V" title="D&eacute;v&eacute;rouiller cette note de frais" name="deverr" onclick="return(confirm(\'Etes-vous sur de vouloir d&eacute;v&eacute;rouiller l\int&eacute;gralit&eacute; de cette note de frais?\'))"><i class="fa fa-unlock"></i></button>';
 								} else {
-									//echo '<td id="t-container'.$i.$k.'"><button id="w_input_90val" type="submit" Value="Mod." name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps de cette ligne?\'))" /><br/>';
+									//echo '<td><button id="w_input_90val" type="submit" Value="Mod." name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps de cette ligne?\'))" /><br/>';
 									echo '<button id="btMod" type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>';
 									echo '<button id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
 									echo '<button id="btSuppr" type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>';

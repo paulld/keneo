@@ -557,6 +557,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
+    
+
     <!-- =================== RESTITUTION: PARAM ================= -->
 <section class="container section-container" id="historique-temps">
 	<div class="section-title">
@@ -614,6 +616,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<table id="tablerestit" class="table table-striped">
 			<thead>
 				<tr>
+					<th id="t-containertit"></th>
 					<th id="t-containertit" align="center" colspan="2">Date</th>
 					<th id="t-containertit">Activit&eacute;</th>
 					<th id="t-containertit">Client</th>
@@ -659,45 +662,56 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					ORDER BY T1.datejour, T3.description, T4.description, T5.description";
 				$reponsea = $bdd->query($req);
 				$checkrep=$reponsea->rowCount();
-				$i=1;
-				$j=2;
+				
 				if ($checkrep != 0)
 				{
 					while ($donneea = $reponsea->fetch())
 					{
-						if ($donneea[8] == 1) { $j = "RoB_Green.png"; } else { $j = "RoB_Orange.png"; }
-						if ($donneea[2] <= $deadline OR $donneea['validation'] != 0) { $l = " disabled"; $k="v"; } else 
-						{
+						if ($donneea[8] == 1) {
+							$val = "validate";
+						} else {
+							$val = "no-validate";
+						}
+						if ($donneea[2] <= $deadline OR $donneea['validation'] != 0) { 
+							$l = " disabled"; $highlight="v"; 
+						} else {
 							$l = "";
-							if ($donneea[12] != 0 or $donneea[13] != NULL) {$k="s";} else { $k="";}
+							if ($donneea[12] != 0 or $donneea[13] != NULL) {
+								$highlight="highlight";
+							} else { 
+								$highlight="no-highlight";
+							}
 						}
 						//date du jour
-						echo '<tr>';
-						echo '<td id="t-container'.$i.$k.'" width="50px"><img src="images/'.$j.'" />&nbsp;'.date("D", strtotime($donneea[2])).'</td>';
-						echo '<td id="t-container'.$i.$k.'" width="70px">'.date("d/m/Y", strtotime($donneea[2])).'</td>';
+						echo '<tr class="tr-'.$highlight.'">';
+						//green or orange
+						echo '<td><i class="fa fa-circle fa-circle-'.$val.'"></i></td>';
+						//date
+						echo '<td>'.date("D", strtotime($donneea[2])).'</td>';
+						echo '<td>'.date("d/m/Y", strtotime($donneea[2])).'</td>';
 						//collaborateur
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[11].'</td>';
+						echo '<td>'.$donneea[11].'</td>';
 						//clients
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[3].'</td>';
+						echo '<td>'.$donneea[3].'</td>';
 						//projet
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[4].'</td>';
+						echo '<td>'.$donneea[4].'</td>';
 						//mission
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[5].'</td>';
+						echo '<td>'.$donneea[5].'</td>';
 						//info
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[6].'</td>';
+						echo '<td>'.$donneea[6].'</td>';
 						//ticket
 						$tmptick='';
 						if ($donneea[10] == 1) { 
 							$tmptick=' checked'; 
 						}
-						echo '<td id="t-container'.$i.$k.'">';
+						echo '<td>';
 							echo '<input type="checkbox" name="modticket"'.$tmptick./*$l.*/' disabled />';
 						echo '</td>';
 						//valeur
-						echo '<td id="t-container'.$i.$k.'">'.$donneea[7].'</td>';
+						echo '<td>'.$donneea[7].'</td>';
 						// echo '</td>';
 						//status
-						echo '<td id="t-container'.$i.$k.'">';
+						echo '<td>';
 						echo '<form action="temps.php" method="post" class="duplicate-edit-remove">';
 							echo '<input type="hidden" value="'.$pseudo.'" name="affcoll" />';
 							echo '<input type="hidden" value="'.$year.'" name="affyear" />';
@@ -712,7 +726,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 									echo '<button class="btn btn-small btn-default" id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-trash-o"></i></button>';
 								// echo '</td></form></tr>';
 							} else {
-								// echo '<td id="t-container'.$i.$k.'">';
+								// echo '<td>';
 									//echo '<button class="btn btn-small btn-default" id="btValid" type="submit" title="Valider les modifications" Value="V" name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps et/ou le ticket restaurant de cette ligne?\'))"></button>';
 									echo '<button class="btn btn-small btn-default" id="btMod" type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>';
 									echo '<button class="btn btn-small btn-default" id="btRep" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';

@@ -191,6 +191,15 @@ p.new-picture-label {
 
 /* HISTORIQUE TEMPS, FRAIS... */
 
+.table>thead>tr>th,
+.table>tbody>tr>th,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>tbody>tr>td,
+.table>tfoot>tr>td {
+  vertical-align: middle;
+}
+
 .duplicate-edit-remove button {
   border: none;
   background: none;
@@ -225,7 +234,17 @@ p.new-picture-label {
   text-align: center;
   margin: 7px auto;
 }
-
+tr.tr-highlight {
+  color: #d9534f;
+}
+.fa.fa-circle.fa-circle-validate {
+  color: #4cae4c;
+  font-size: 11px;
+}
+.fa.fa-circle.fa-circle-no-validate {
+  color: #f0ad4e;
+  font-size: 11px;
+}
 
 /* TOGGLE UP/DOWN SECTION */
 
