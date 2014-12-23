@@ -983,8 +983,9 @@ $(document).ready( function() {
   $('#effectif-buttons button').on('click', function() {
     $('#effectif-interne-table').toggle();
     $('#effectif-interne-trombi').toggle();
-    $('#effectif-externe-table').toggle();
-    $('#effectif-externe-trombi').toggle();
+    // NB: to activate trombi for effectif externe, uncomment these 2 lines and in lit_collab.php, move the "display:none" from trombi to table
+    // $('#effectif-externe-table').toggle();
+    // $('#effectif-externe-trombi').toggle();
     $('#effectif-buttons button').attr("disabled",false);
     $(this).attr("disabled",true);
   });

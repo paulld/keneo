@@ -729,9 +729,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 									echo '<button class="btn btn-small btn-default" type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>';
 							}
 						echo '</td></form></tr>';
-						if ($i == 1) { $i = 2; } else { $i = 1; }
 					}
-					echo '<tr><td align="right" colspan="9"><strong>Total '.$month.'.'.$year.' : '.$nbjm.' jours</strong></td><td>&nbsp;</td></tr>';
+					echo '<tr><td align="right" colspan="10"><strong>Total '.$month.'.'.$year.' : '.$nbjm.' jours</strong></td><td>&nbsp;</td></tr>';
 				}
 				$reponsea->closeCursor();
 				

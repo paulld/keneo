@@ -84,6 +84,32 @@ input.checkbox {
 }
 
 
+/* NAVBAR WITH TABS (TRANSACTION...) */
+
+.nav-tabs-outer {
+  padding: 0;
+  margin-bottom: 20px;
+}
+.nav-tabs-outer .nav.nav-tabs li {
+  background-color: rgba(0,0,0,.4);
+}
+.nav-tabs-outer .nav.nav-tabs li a {
+  border: none;
+  color: #fff;
+}
+.nav-tabs-outer .nav.nav-tabs li.active {
+  background: transparent;
+}
+.nav-tabs-outer .nav.nav-tabs .active a,
+.nav-tabs-outer .nav.nav-tabs a:hover {
+  background: rgba(240,240,240,.9);
+  border: none;
+  color: hsla(202,67%,50%,1);
+}
+
+
+
+
 /* PARAM */
 
 .section-param {
@@ -301,7 +327,7 @@ tr.tr-highlight {
 .row-trombi p {
   margin: 6px 0 0;
   height: 40px;
-  overflow: scroll;
+  overflow: hidden;
 }
 .effectif-buttons .row > div:nth-child(1) {
   text-align: right;
