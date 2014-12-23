@@ -533,8 +533,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<thead>
 				<tr>
 					<th>Date</th>
-					<th></th>
-					<th>Nature</th>
+					<th colspan="2">Nature</th>
 					<th>Client/Projet/Mission/Cat&eacute;gorie</th>
 					<th>Comp&eacute;tition/Type/&Eacute;v&eacute;nement</th>
 					<th>Activit&eacute;</th>
@@ -673,7 +672,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				{
 					while ($donnee = $reponse->fetch())
 					{
-						echo '<tr><td align="right" colspan="7">Total</td>';
+						echo '<tr><td align="right" colspan="8">Total</td>';
 						echo '<td align="right">';
 						//echo $donnee[0].' HT<br/>';
 						//echo $donnee[1].' TVA<br/>';

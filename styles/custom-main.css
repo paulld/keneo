@@ -42,6 +42,10 @@ body {
   background: url('../assets/images/background-bike.jpg') no-repeat center center fixed;
   background-size: cover;
 }
+.background-transactions {
+  background: url('../assets/images/background-mountain.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 .overlay {
   position: fixed;
   top: 0;

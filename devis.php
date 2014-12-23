@@ -8,13 +8,22 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	?>
 		
     <!-- =================== SAISIE ================= -->
-	<!-- Background Image Specific to each page -->
-	<div class="background-frais background-image"></div>
+<!-- Background Image Specific to each page -->
+	<div class="background-transactions background-image"></div>
 	<div class="overlay"></div>
+
+<div class="container nav-tabs-outer" id="mainMenuDB">
+	<ul class="nav nav-tabs nav-justified">
+		<li><a role="presentation" href="menu_transac.php"><span>Vue d'Ensemble</span></a></li>
+		<li class="active"><a role="presentation" href="#"><span>Devis</span></a></li>
+		<li><a role="presentation" href="#"><span>Bons de commandes</span></a></li>
+		<li><a role="presentation" href="#"><span>Journal</span></a></li>
+	</ul>
+</div>
 
 	<section class="container section-container" id="saisie-frais">
 		<div class="section-title">
-			<h1>Créer une ligne de devis</h1>
+			<h1>Cr&eacute;er une ligne de devis</h1>
 		</div>
 		<form action="devis.php" method="post" id="form-saisie-frais">
 			<div id="tablesaisie">
