@@ -362,7 +362,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<i class="fa fa-chevron-down"></i>
 			</h1>
 		</div>
-		<form action="temps.php" method="post" id="toggle-content" style="display: none;">
+		<form action="temps.php" method="post" id="toggle-content" style="<?php if (isset($_POST['Reprise'])) { } else { echo 'display: none;'; } ?>">
 			<div>
 				<?php echo '<input type="hidden" value='.$_SESSION['ID'].' name="collaborateur" />'; ?>
 				<div>

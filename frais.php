@@ -225,7 +225,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	?>
 		
     <!-- =================== SAISIE ================= -->
-	<!-- =================== SAISIE ================= -->
 	<!-- Background Image Specific to each page -->
 	<div class="background-frais background-image"></div>
 	<div class="overlay"></div>
@@ -238,7 +237,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<i class="fa fa-chevron-down"></i>
 			</h1>
 		</div>
-		<form action="frais.php" method="post" id="toggle-content" style="display: none;">
+		<form action="frais.php" method="post" id="toggle-content" style="<?php if (isset($_POST['Reprise'])) { } else { echo 'display: none;'; } ?>">
 			<div>
 				<div>
 					<select class="form-control form-control-small" name="nature2" />
@@ -410,9 +409,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					/>
 				</div>
 				<div>
-					<?php
-					echo '<input class="btn btn-small btn-primary" type="submit" Value="Enregistrer" name="Valider" />';
-					?> 
+					<input class="btn btn-small btn-primary" type="submit" Value="Enregistrer" name="Valider" />
 				</div>
 			</div>
 		</form>
