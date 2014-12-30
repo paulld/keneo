@@ -78,6 +78,50 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			}
 		}
 	}
+	else
+	{
+		if (isset($_POST['Reprise']) OR isset($_POST['Modif']))
+		{
+			$rep_id = $_POST['modid'];
+			$req = "SELECT imputID1, imputID2, imputID3, imputID4, compID1, compID2, compID3, descriptif, nature1ID, dateTransac, unitaire, quantite, total, devisNum, devisVersion FROM rob_devis T1
+				WHERE userID='".$_SESSION['ID']."' AND T1.ID = '$rep_id'";
+			$repreq = $bdd->query($req);
+			$checkrow=$repreq->rowCount();
+			if ($checkrow != 0)
+			{
+				$reprise = $_POST['modid'];
+				$repdon = $repreq->fetch();
+				$rep_idl1 = $repdon[0];
+				$rep_idl2 = $repdon[1];
+				$rep_idl3 = $repdon[2];
+				$rep_idl4 = $repdon[3];
+				$rep_idc1 = $repdon[4];
+				$rep_idc2 = $repdon[5];
+				$rep_idc3 = $repdon[6];
+				$rep_info = $repdon[7];
+				$rep_nat1 = $repdon[8];
+				$rep_dajr = date("d/m/Y",strtotime($repdon[9]));
+				$rep_unit = $repdon[10];
+				$rep_nbre = $repdon[11];
+				$rep_tota = $repdon[12];
+				$rep_devisNum = $repdon[13];
+				//$rep_devisVers = $repdon[14];
+			}
+			$repreq->closeCursor();
+		}
+		if (isset($_POST['Suppr']) OR isset($_POST['Modif']))
+		{
+			$idenr = $_POST['modid'];
+			//if ($deadline < $datejourtmp)
+			//{
+				$bdd->query("DELETE FROM rob_devis WHERE ID='$idenr' LIMIT 1");
+			//}
+			//else
+			//{
+			//	$deadreach = $deadreach + 1;
+			//}
+		}
+	}
 	?>
 		
     <!-- =================== SAISIE ================= -->
@@ -161,9 +205,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							}
 						?>
 					/>
-					<input class="form-control form-control-small" type="text" size="10" id="frsCtUnit" name="frsCtUnit" onchange="frscalc()" title="UnitHT" placeholder="UnitHT"<?php if (isset($idenr)) { echo ' value="'.$runitaire.'"'; } ?> /> x 
-					<input class="form-control form-control-small" type="text" size="5" id="frsQty" name="frsQty" onchange="frscalc()" title="Qt" placeholder="Qt"<?php if (isset($idenr)) { echo ' value="'.$rquantite.'"'; } else { echo ' value="1"'; } ?> /> = 
-					<input class="form-control form-control-small" type="text" size="10" id="frstot" name="frstot" title="TotalHT" placeholder="TotalHT"<?php if (isset($idenr)) { echo ' value="'.$rtotal.'"'; } ?> disabled />
+					<input class="form-control form-control-small" type="text" size="10" id="frsCtUnit" name="frsCtUnit" onchange="frscalc()" title="UnitHT" placeholder="UnitHT"<?php if (isset($reprise)) { echo ' value="'.$rep_unit.'"'; } ?> /> x 
+					<input class="form-control form-control-small" type="text" size="5" id="frsQty" name="frsQty" onchange="frscalc()" title="Qt" placeholder="Qt"<?php if (isset($reprise)) { echo ' value="'.$rep_nbre.'"'; } else { echo ' value="1"'; } ?> /> = 
+					<input class="form-control form-control-small" type="text" size="10" id="frstot" name="frstot" title="TotalHT" placeholder="TotalHT"<?php if (isset($reprise)) { echo ' value="'.$rep_tota.'"'; } ?> disabled />
 						<input type="hidden" id="frsCtTotHT" name="frsCtTotHT" readonly="readonly"<?php if (isset($idenr)) { echo ' value="'.$rtotal.'"'; } ?> />
 				</div>
 				<div>
@@ -286,7 +330,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<div class="frais-filter">
 			<?php
 			//MONTH
-			echo '<form action="devis.php" method="post"><select class="form-control" id="w_input_titrepartie" name="affmonth" />';
+			echo '<form action="devis.php" method="post"><select class="form-control form-control-small" name="affmonth" />';
 			$i=1;
 			while ($i < 13)
 			{
@@ -306,7 +350,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '</select>';
 			
 			//YEAR
-			echo '<select id="w_input_titrepartie" class="form-control" name="affyear">';
+			echo '<select class="form-control form-control-small" name="affyear">';
 			$reponsey = $bdd->query("SELECT * FROM rob_period ORDER BY year");
 			while ($option = $reponsey->fetch())
 			{
@@ -329,8 +373,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '<input type="submit" id="buttonval" class="btn btn-primary" name="toutdevis" value="Visualiser tous les devis"></form>';
 			
 			//EDITER LE DEVIS
-			echo '<form action="devis-pdf.php" method="post">';
-				echo '<select class="form-control" name="devisNumRest" />';
+			echo '<form action="devis-pdf.php" method="post" class="form-right">';
+				echo '<select class="form-control form-control-small" name="devisNumRest" />';
 					$reqimput = $bdd->query("SELECT DISTINCT devisNum FROM rob_devis WHERE actif = 1 ORDER BY devisNum DESC");
 					while ($optimput = $reqimput->fetch())
 					{
@@ -338,11 +382,11 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					}
 					$reqimput->closeCursor();
 				echo '</select>';
-				echo '<select class="form-control" name="devisVersRest" />';
-					$reqimput = $bdd->query("SELECT DISTINCT devisVers FROM rob_devis WHERE actif = 1 ORDER BY devisVers DESC");
+				echo '<select class="form-control form-control-small" name="devisVersRest" />';
+					$reqimput = $bdd->query("SELECT DISTINCT devisVersion FROM rob_devis WHERE actif = 1 ORDER BY devisVersion DESC");
 					while ($optimput = $reqimput->fetch())
 					{
-						echo '<option value='.$optimput['devisVers'].$optsel.'>'.$optimput['devisVers'].'</option>';
+						echo '<option value='.$optimput['devisVersion'].$optsel.'>'.$optimput['devisVersion'].'</option>';
 					}
 					$reqimput->closeCursor();
 				echo '</select>';
@@ -354,19 +398,125 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<table id="tablerestit" class="table table-striped">
 			<thead>
 				<tr>
+					<th id="t-containertit">N° de devis</th>
+					<th id="t-containertit">Version</th>
+					<th id="t-containertit">Client/ Projet/ Mission/ Cat&eacute;gorie</th>
+					<th id="t-containertit">Comp&eacute;tition/ Type/ &Eacute;v&eacute;nement</th>
 					<th id="t-containertit">Date</th>
-					<th id="t-containertit" >Nature</th>
-					<th id="t-containertit">Client/Projet/Mission/Cat&eacute;gorie</th>
-					<th id="t-containertit">Comp&eacute;tition/Type/&Eacute;v&eacute;nement</th>
-					<th id="t-containertit">Activit&eacute;</th>
+					<th id="t-containertit">Nature</th>
 					<th id="t-containertit">Description</th>
-					<th id="t-containertit">Flag</th>
-					<th id="t-containertit" align="right">Montant TTC</th>
+					<th id="t-containertit" align="right">Co&ucirc;t unitaire HT</th>
+					<th id="t-containertit" align="right">Nombre</th>
+					<th id="t-containertit" align="right">Total HT</th>
 					<th id="t-containertit" align="center" width="85px">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
+				<?php
+				$nbjm = 0;
+				$startdate = $year.'-'.$month.'-01';
+				if ($month < 12) { $tmpmonth = $month + 1; $tmpyear = $year; } else {$tmpmonth = 1; $tmpyear = $year + 1; }
+				if ($tmpmonth < 10) { $tmpmonth = "0".$tmpmonth; }
+				$enddate = $tmpyear.'-'.$tmpmonth.'-01';
+				if (isset($_POST['collaborateur']))
+				{
+					$pseudo=$_POST['collaborateur'];
+				}
+				else
+				{
+					if (isset($_POST['affcoll']))
+					{
+						$pseudo=$_POST['affcoll'];
+					}
+					else
+					{
+						$pseudo=$_SESSION['ID'];
+					}
+				}
+				if (isset($_POST['toutdevis'])) { $txtrestrict=" AND datejour >= '$startdate' AND datejour < '$enddate'"; 
+				} else { $txtrestrict=" AND T1.validation < 2"; }
+				$req = "SELECT T1.ID ID, T2.matricule userID, T1.dateTransac dateTransac, 
+					T3.Description client, T4.Description projet, T5.Description mission, T6.Description categorie, 
+					T7.Description type, T8.Description competition, T9.Description evenement, T11.Description nature1, 
+					T1.descriptif descriptif, T1.unitaire unitaire, T1.quantite quantite, T1.total total, T1.devisNum devisNum, T1.devisVersion devisVersion,
+					T4.ID projetID, T5.ID missionID, T6.ID categorieID, T8.ID competitionID, T9.ID evenementID FROM rob_devis T1 
+					INNER JOIN rob_user T2 ON T2.ID = T1.userID
+					INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID1 
+					INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputID2 
+					INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputID3 
+					INNER JOIN rob_imputl4 T6 ON T6.ID = T1.imputID4 
+					INNER JOIN rob_compl1 T7 ON T7.ID = T1.compID1 
+					INNER JOIN rob_compl2 T8 ON T8.ID = T1.compID2 
+					INNER JOIN rob_compl3 T9 ON T9.ID = T1.compID3 
+					INNER JOIN rob_nature1 T11 ON T11.ID = T1.nature1ID
+					WHERE T1.userID='$pseudo'".$txtrestrict."
+					ORDER BY T1.devisNum DESC, T1.devisVersion DESC, T3.code, T4.code, T11.Description";
+				$reponsea = $bdd->query($req);
+				$checkrep=$reponsea->rowCount();
 
+				if ($checkrep != 0)
+				{
+					while ($donneea = $reponsea->fetch())
+					{
+						//if ($donneea[2] <= $deadline OR $donneea[21] != '' OR $donneea[22] == 2) { 
+						//	$l = " disabled"; 
+						//	$highlight ="v"; 
+						//} else { 
+							$l = ""; 
+							$highlight = "no-highlight";
+						//}
+						
+						echo '<tr class="tr-'.$highlight.'">';
+						echo '<td>'.$donneea['devisNum'].'</td>';
+						echo '<td>'.$donneea['devisVersion'].'</td>';
+						//clients
+						echo '<td>'.$donneea['client'];
+							if ($donneea['projetID'] != 0) { echo '<br/>&harr;'.$donneea['projet'];
+								if ($donneea['missionID'] != 0) { echo '<br/>&nbsp;&harr;'.$donneea['mission'];
+									if ($donneea['categorieID'] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.$donneea['categorie']; } } }
+						echo '</td>';
+						//Compétition
+						echo '<td>'.$donneea['type'];
+							if ($donneea['competitionID'] != 0) { echo '<br/>&harr;'.$donneea['competition'];
+								if ($donneea['evenementID'] != 0) { echo '<br/>&nbsp;&harr;'.$donneea['evenement'].'</td>'; } }
+						echo '</td>';
+						//date du jour
+						echo '<td>'.date("d/m/Y", strtotime($donneea['dateTransac'])).'</td>';
+						//nature1
+						echo '<td>'.$donneea['nature1'].'</td>';
+						//info
+						echo '<td>'.$donneea['descriptif'].'</td>';
+						//valeurs
+						echo '<td align="right">'.$donneea['unitaire'].'</td>';
+						echo '<td align="right">'.$donneea['quantite'].'</td>';
+						echo '<td align="right">'.$donneea['total'].'</td>';
+						//status
+						echo '<td>';
+						echo '<form action="devis.php" method="post" class="duplicate-edit-remove">';
+							echo '<input type="hidden" value="'.$pseudo.'" name="affcoll" />';
+							echo '<input type="hidden" value="'.$year.'" name="affyear" />';
+							echo '<input type="hidden" value="'.$month.'" name="affmonth" />';
+							echo '<input type="hidden" value="'.$donneea['ID'].'" name="modid" />';
+							//if ($donneea[2] <= $deadline OR $donneea[22] == 2) {
+							//	echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+								// echo '</form></td></tr>';
+							//} else {
+							//	if ($donneea[21] != '') {
+							//		echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+							//		echo '<button type="submit" Value="V" title="D&eacute;v&eacute;rouiller cette note de frais" name="deverr" onclick="return(confirm(\'Etes-vous sur de vouloir d&eacute;v&eacute;rouiller l\int&eacute;gralit&eacute; de cette note de frais?\'))"><i class="fa fa-unlock"></i></button>';
+							//	} else {
+									//echo '<td><button type="submit" Value="Mod." name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps de cette ligne?\'))" /><br/>';
+									echo '<button type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>';
+									echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+									echo '<button type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>';
+							//	}
+							//}
+						echo '</form></td></tr>';
+						if ($i == 1) { $i = 2; } else { $i = 1; }
+					}
+				}
+				$reponsea->closeCursor();
+				?>
 			</tbody>
 		</table>
 	</section>
