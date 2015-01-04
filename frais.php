@@ -237,8 +237,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<i class="fa fa-chevron-down"></i>
 			</h1>
 		</div>
-		<form action="frais.php" method="post" id="toggle-content" style="<?php if (isset($_POST['Reprise'])) { } else { echo 'display: none;'; } ?>">
-			<div>
+		<form action="frais.php" method="post" id="toggle-content" style="<?php if (isset($_POST['Reprise']) || isset($_POST['Modif'])) { } else { echo 'display: none;'; } ?>">
+			<div class="form-inner">
 				<div>
 					<select class="form-control form-control-small" name="nature2" />
 						<option value="none">Nature de frais</option>
@@ -257,25 +257,19 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					</select>
 					<?php
 					echo ' <input class="form-control form-control-small" size="12" type="text" name="datefrais" id="datefrais" value="';
-						if (isset($_POST['datefrais']))
-						{
+						if (isset($_POST['datefrais'])) {
 							echo $_POST['datefrais'];
-						}
-						else
-						{
-							if (isset($reprise))
-							{
+						} else {
+							if (isset($reprise)) {
 								echo $rep_dajr;
-							}
-							else
-							{
+							} else {
 								// echo date("d/m/Y");
 								echo 'Date';
 							}
 						}
-						echo '" />';
-					echo '<input type="hidden" value='.$_SESSION['ID'].' name="collaborateur" />';
+					echo '" />';
 					?> 
+					<input type="hidden" value='.$_SESSION['ID'].' name="collaborateur" />
 				</div>
 				<input type="hidden" id="ma_page" value="1" />
 				<div>
@@ -302,36 +296,34 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					echo '<input class="checkbox" type="checkbox" name="refact" value="1" title="Cochez si refacturable"'.$optsel.' />Refacturable au client';
 					?>
 				</div>
-				<div>
-					<div>
-						<select class="form-control form-control-small" name="client" id="client" onchange="showProjet(this.value)">
-							<option value="none">Client</option>
-							<?php
-							$reqimput = $bdd->query("SELECT * FROM rob_imputl1 WHERE actif=1 ORDER BY description");
-							while ($optimput = $reqimput->fetch())
-							{
-								if (isset($reprise)) { if ($rep_idl1 == $optimput['ID']) { $optsel = " selected"; } else { $optsel = ""; }
-								} else {
-								if (isset($_POST['client']) AND $probldata == 1) { if ($_POST['client'] == $optimput['ID']) {$optsel = " selected"; } else { $optsel = ""; }
-								} else { $optsel = "";} }
-								echo '<option value='.$optimput['ID'].$optsel.'>'.$optimput['description'].'</option>';
-							}
-							$reqimput->closeCursor();
-							?>
-						</select>
-						<span id="txtHint">
-							<?php
-								if (isset($reprise)) {
-									$p=$rep_idl1; $m=$rep_idl2; include('getprojet.php');
-								} else {
-									if (isset($_POST['projet']) AND $probldata == 1) {
-										$p=$_POST['client']; $m=$_POST['projet']; include('getprojet.php');
-									}
+				<div class="form-divider">
+					<select class="form-control form-control-small" name="client" id="client" onchange="showProjet(this.value)">
+						<option value="none">Client</option>
+						<?php
+						$reqimput = $bdd->query("SELECT * FROM rob_imputl1 WHERE actif=1 ORDER BY description");
+						while ($optimput = $reqimput->fetch())
+						{
+							if (isset($reprise)) { if ($rep_idl1 == $optimput['ID']) { $optsel = " selected"; } else { $optsel = ""; }
+							} else {
+							if (isset($_POST['client']) AND $probldata == 1) { if ($_POST['client'] == $optimput['ID']) {$optsel = " selected"; } else { $optsel = ""; }
+							} else { $optsel = "";} }
+							echo '<option value='.$optimput['ID'].$optsel.'>'.$optimput['description'].'</option>';
+						}
+						$reqimput->closeCursor();
+						?>
+					</select>
+					<span id="txtHint">
+						<?php
+							if (isset($reprise)) {
+								$p=$rep_idl1; $m=$rep_idl2; include('getprojet.php');
+							} else {
+								if (isset($_POST['projet']) AND $probldata == 1) {
+									$p=$_POST['client']; $m=$_POST['projet']; include('getprojet.php');
 								}
-							?>
-						</span>
-					</div>
-					<div id="txtHint2">
+							}
+						?>
+					</span>
+					<span id="txtHint2">
 						<?php 
 						if (isset($reprise)) {
 							$k=$rep_idl1; $m=$rep_idl2; $c=$rep_idl3; include('getmission.php');
@@ -349,41 +341,39 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								}
 							}
 						?>
-					</div>
+					</span>
 				</div>
-				<div>
-					<div>
-						<select class="form-control form-control-small" name="competition" id="competition" onchange="showType(this.value)">
-							<option value="00">Comp&eacute;tition</option>
-							<option value="0">Non applicable</option>
-							<?php
-							$reqimput = $bdd->query("SELECT * FROM rob_compl1 WHERE actif=1 ORDER BY description");
-							while ($optimput = $reqimput->fetch())
-							{
-								if (isset($reprise)) { if ($rep_idc1 == $optimput['ID']) { $optsel = " selected"; } else { $optsel = ""; }
-								} else {
-								if (isset($_POST['competition']) AND $probldata == 1) { if ($_POST['competition'] == $optimput['ID']) {$optsel = " selected"; } else { $optsel = ""; }
-								} else { $optsel = "";} }
-								echo '<option value='.$optimput['ID'].$optsel.'>'.$optimput['description'].'</option>';
-							}
-							$reqimput->closeCursor();
-							?>
-						</select>
-						<span id="txtHint4">
-							<?php if (isset($reprise)) { $p=$rep_idc1; $m=$rep_idc2; include('gettype.php'); } else 
-							{ if (isset($_POST['typecomp']) AND $probldata == 1)
-								{ $p=$_POST['competition']; $m=$_POST['typecomp']; include('gettype.php'); }
-							} ?>
-						</span>
-						<span id="txtHint5">
-							<?php if (isset($reprise)) { $c=$rep_idc1; $t=$rep_idc2; $e=$rep_idc3; include('getevnmt.php'); } else 
-							{ if (isset($_POST['evnmt']) AND isset($_POST['typecomp']) AND $probldata == 1)
-								{ $c=$_POST['competition']; $t=$_POST['typecomp'];  $e=$_POST['evnmt']; include('getevnmt.php'); }
-							} ?>
-						</span>
-					</div>
+				<div class="form-divider">
+					<select class="form-control form-control-small" name="competition" id="competition" onchange="showType(this.value)">
+						<option value="00">Comp&eacute;tition</option>
+						<option value="0">Non applicable</option>
+						<?php
+						$reqimput = $bdd->query("SELECT * FROM rob_compl1 WHERE actif=1 ORDER BY description");
+						while ($optimput = $reqimput->fetch())
+						{
+							if (isset($reprise)) { if ($rep_idc1 == $optimput['ID']) { $optsel = " selected"; } else { $optsel = ""; }
+							} else {
+							if (isset($_POST['competition']) AND $probldata == 1) { if ($_POST['competition'] == $optimput['ID']) {$optsel = " selected"; } else { $optsel = ""; }
+							} else { $optsel = "";} }
+							echo '<option value='.$optimput['ID'].$optsel.'>'.$optimput['description'].'</option>';
+						}
+						$reqimput->closeCursor();
+						?>
+					</select>
+					<span id="txtHint4">
+						<?php if (isset($reprise)) { $p=$rep_idc1; $m=$rep_idc2; include('gettype.php'); } else 
+						{ if (isset($_POST['typecomp']) AND $probldata == 1)
+							{ $p=$_POST['competition']; $m=$_POST['typecomp']; include('gettype.php'); }
+						} ?>
+					</span>
+					<span id="txtHint5">
+						<?php if (isset($reprise)) { $c=$rep_idc1; $t=$rep_idc2; $e=$rep_idc3; include('getevnmt.php'); } else 
+						{ if (isset($_POST['evnmt']) AND isset($_POST['typecomp']) AND $probldata == 1)
+							{ $c=$_POST['competition']; $t=$_POST['typecomp'];  $e=$_POST['evnmt']; include('getevnmt.php'); }
+						} ?>
+					</span>
 				</div>
-				<div id="ActiviteHint">
+				<div id="ActiviteHint" class="form-divider">
 					<select class="form-control form-control-small" name="activite" >
 						<option value="none">S&eacute;lectionez une activit&eacute;</option>
 						<?php

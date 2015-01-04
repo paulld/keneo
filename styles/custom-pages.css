@@ -115,9 +115,12 @@ input.checkbox {
 .section-param {
   text-align: center;
 }
-.section-param .param-error-message {
-  color: red;
+.section-param .param-message {
+  color: green;
   margin-bottom: 24px;
+}
+.param-error-message {
+  color: red;
 }
 .section-param p {
   font-size: 12px;
@@ -188,6 +191,19 @@ p.new-picture-label {
 
 /* TEMPS */
 
+.form-inner {
+  text-align: center;
+}
+.form-divider {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  margin: 0 30px;
+}
+@media (max-width: 768px) {
+  .form-divider {
+    margin: 0;
+  }
+}
 .temps-filter, .frais-filter {
   margin-bottom: 20px;
 }
