@@ -1,1 +1,1 @@
-<div class="container">  <p>&copy; 2015 - Arimor Consulting GmbH - Keneo Sport Solutions</p></div>
+<div class="container">  <p>&copy; <?php echo date("Y") ?> - Arimor Consulting GmbH - Keneo Sport Solutions</p></div>
