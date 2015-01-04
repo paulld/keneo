@@ -9,7 +9,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	?>
 	
 <!-- Background Image Specific to each page -->
-	<!-- <div class="background-accueil background-image"></div> -->
+	<div class="background-db-management background-image"></div>
 	<div class="overlay"></div>
 	
 	<div id="mainMenuDB" class="container">

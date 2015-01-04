@@ -143,7 +143,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<h1>Cr&eacute;er une ligne de devis</h1>
 		</div>
 		<form action="devis.php" method="post" id="form-saisie-frais">
-			<div>
+			<div class="form-inner">
 				<div>
 					<?php
 					echo ' <input class="form-control form-control-small" size="12" type="text" name="dateTransac" id="dateTransac" value="';
@@ -181,7 +181,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					</select>
 					<input type="hidden" id="ma_page" value="0" />
 				</div>
-				<div>
+				<div class="form-divider">
 					<select class="form-control form-control-small" name="nature1" />
 						<option value="none">Nature de prestation</option>
 						<?php
@@ -205,12 +205,16 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							}
 						?>
 					/>
-					<input class="form-control form-control-small" type="text" size="10" id="frsCtUnit" name="frsCtUnit" onchange="frscalc()" title="UnitHT" placeholder="UnitHT"<?php if (isset($reprise)) { echo ' value="'.$rep_unit.'"'; } ?> /> x 
-					<input class="form-control form-control-small" type="text" size="5" id="frsQty" name="frsQty" onchange="frscalc()" title="Qt" placeholder="Qt"<?php if (isset($reprise)) { echo ' value="'.$rep_nbre.'"'; } else { echo ' value="1"'; } ?> /> = 
-					<input class="form-control form-control-small" type="text" size="10" id="frstot" name="frstot" title="TotalHT" placeholder="TotalHT"<?php if (isset($reprise)) { echo ' value="'.$rep_tota.'"'; } ?> disabled />
-						<input type="hidden" id="frsCtTotHT" name="frsCtTotHT" readonly="readonly"<?php if (isset($idenr)) { echo ' value="'.$rtotal.'"'; } ?> />
 				</div>
 				<div>
+					<input class="form-control form-control-small" type="text" size="10" id="frsCtUnit" name="frsCtUnit" onkeyup="frscalc()" title="UnitHT" placeholder="Unit HT"<?php if (isset($reprise)) { echo ' value="'.$rep_unit.'"'; } ?> />
+					<span class="form-operator">x</span>
+					<input class="form-control form-control-small" type="text" size="5" id="frsQty" name="frsQty" onkeyup="frscalc()" title="Qt" placeholder="Quantit&eacute;"<?php if (isset($reprise)) { echo ' value="'.$rep_nbre.'"'; } else { echo ' value="1"'; } ?> />
+					<span class="form-operator">=</span>
+					<input class="form-control form-control-small" type="text" size="10" id="frstot" name="frstot" title="TotalHT" placeholder="Total HT" <?php if (isset($reprise)) { echo ' value="'.$rep_tota.'"'; } ?> disabled />
+					<input type="hidden" id="frsCtTotHT" name="frsCtTotHT" readonly="readonly"<?php if (isset($idenr)) { echo ' value="'.$rtotal.'"'; } ?> />
+				</div>
+				<div class="form-divider">
 					<select class="form-control form-control-small" name="client" id="client" onchange="showProjet(this.value)">
 						<option value="none">Client</option>
 						<?php
@@ -237,27 +241,27 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							}
 						?>
 					</span>
-				</div>
-				<div id="txtHint2">
-					<?php 
-					if (isset($reprise)) {
-						$k=$rep_idl1; $m=$rep_idl2; $c=$rep_idl3; include('getmission.php');
-						echo '<span id="txtHint3">';
-						$c=$rep_idl1; $p=$rep_idl2; $m=$rep_idl3; $k=$rep_idl4; include('getcategorie.php');
-						echo '</span>'; } 
-						else {
-							if (isset($_POST['mission']) AND isset($_POST['projet']) AND $probldata == 1) {
-								$p=$_POST['client']; $m=$_POST['projet'];  $c=$_POST['mission']; include('getmission.php');
-								if (isset($_POST['categorie'])) {
-									echo '<span id="txtHint3">';
-									$c=$_POST['client']; $p=$_POST['projet']; $m=$_POST['mission']; $k=$_POST['categorie']; include('getcategorie.php');
-									echo '</span>';
+					<span id="txtHint2">
+						<?php 
+						if (isset($reprise)) {
+							$k=$rep_idl1; $m=$rep_idl2; $c=$rep_idl3; include('getmission.php');
+							echo '<span id="txtHint3">';
+							$c=$rep_idl1; $p=$rep_idl2; $m=$rep_idl3; $k=$rep_idl4; include('getcategorie.php');
+							echo '</span>'; } 
+							else {
+								if (isset($_POST['mission']) AND isset($_POST['projet']) AND $probldata == 1) {
+									$p=$_POST['client']; $m=$_POST['projet'];  $c=$_POST['mission']; include('getmission.php');
+									if (isset($_POST['categorie'])) {
+										echo '<span id="txtHint3">';
+										$c=$_POST['client']; $p=$_POST['projet']; $m=$_POST['mission']; $k=$_POST['categorie']; include('getcategorie.php');
+										echo '</span>';
+									}
 								}
 							}
-						}
-					?>
+						?>
+					</span>
 				</div>
-				<div>
+				<div class="form-divider">
 					<select class="form-control form-control-small" name="competition" id="competition" onchange="showType(this.value)">
 						<option value="00">Comp&eacute;tition</option>
 						<option value="0">Non applicable</option>
@@ -280,12 +284,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							{ $p=$_POST['competition']; $m=$_POST['typecomp']; include('gettype.php'); }
 						} ?>
 					</span>
-				</div>
-				<div id="txtHint5">
-					<?php if (isset($reprise)) { $c=$rep_idc1; $t=$rep_idc2; $e=$rep_idc3; include('getevnmt.php'); } else 
-					{ if (isset($_POST['evnmt']) AND isset($_POST['typecomp']) AND $probldata == 1)
-						{ $c=$_POST['competition']; $t=$_POST['typecomp'];  $e=$_POST['evnmt']; include('getevnmt.php'); }
-					} ?>
+					<span id="txtHint5">
+						<?php if (isset($reprise)) { $c=$rep_idc1; $t=$rep_idc2; $e=$rep_idc3; include('getevnmt.php'); } else 
+						{ if (isset($_POST['evnmt']) AND isset($_POST['typecomp']) AND $probldata == 1)
+							{ $c=$_POST['competition']; $t=$_POST['typecomp'];  $e=$_POST['evnmt']; include('getevnmt.php'); }
+						} ?>
+					</span>
 				</div>
 				<div>
 					<input class="btn btn-small btn-primary" type="submit" Value="Enregistrer" name="Valider" />
