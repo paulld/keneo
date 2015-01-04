@@ -230,6 +230,12 @@ p.new-picture-label {
   float: right;
 }
 
+/* DEVIS */
+.form-operator {
+  margin-right: 5px;
+  margin-left: -5px;
+}
+
 
 /* HISTORIQUE TEMPS, FRAIS... */
 

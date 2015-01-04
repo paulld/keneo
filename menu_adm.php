@@ -8,7 +8,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	include("headerlight.php");
 	?>
 <!-- Background Image Specific to each page -->
-	<!-- <div class="background-accueil background-image"></div> -->
+	<div class="background-administration background-image"></div>
 	<div class="overlay"></div>
 	
 	<div id="mainMenuADM" class="container">

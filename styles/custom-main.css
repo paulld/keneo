@@ -43,9 +43,18 @@ body {
   background-size: cover;
 }
 .background-transactions {
+  background: url('../assets/images/background-desert.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.background-administration {
+  background: url('../assets/images/background-road-light.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.background-db-management {
   background: url('../assets/images/background-mountain.jpg') no-repeat center center fixed;
   background-size: cover;
 }
+
 .overlay {
   position: fixed;
   top: 0;
