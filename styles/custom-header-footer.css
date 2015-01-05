@@ -44,7 +44,7 @@ nav.nav-fixed-top > .container {
   text-decoration: none;
   font-weight: 300;
   font-size: 13px;
-  margin-top: 10px;
+  margin-top: 11px;
   text-shadow: 1px 1px 1px #000;
 }
 .nav-left a:hover, .nav-name a:hover, .nav-buttons a:hover {
@@ -62,23 +62,28 @@ nav.nav-fixed-top > .container {
   padding-top: 10px;
   margin-left: 5px;
 }
-.nav-picture img {
-  max-width: 63px;
-  max-height: 63px;
-  min-width: 63px;
-  min-height: 63px;
-  border-radius: 50%;
+.nav-picture {
+  width: 63px;
+  height: 63px;
   margin-top: 10px;
-/*          filter: grayscale(100%);
-          filter: url(#greyscale);
-          filter: gray;
-  -webkit-filter: grayscale(1);*/
+  position: relative;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 50%;
 }
-.nav-picture img:hover{
+.nav-picture:hover{
   opacity: .8;
 }
+.hidden-link {
+  position: absolute; 
+  width:100%;
+  height:100%;
+  top:0;
+  left: 0;
+  z-index: 1;
+}
 .nav-name a {
-  margin-top: 7px;
+  margin-top: 1px;
 }
 
 
