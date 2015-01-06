@@ -1,27 +1,36 @@
 <?php
-session_start();
-include("appel_db.php");
+	session_start();
+	include("appel_db.php");
 
-if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass'] AND ($_SESSION['id_lev_menu'] == 4 OR $_SESSION['id_lev_menu'] ==6))
-{
-include("headerlight.php");
-
-	$i = 1;
-	$k = "";
-	?>
+	if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass'] AND ($_SESSION['id_lev_menu'] == 4 OR $_SESSION['id_lev_menu'] ==6)) {
+		include("headerlight.php");
+		$i = 1;
+		$k = "";
+?>
 	
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li>
-		<li><a class="typ" href="menu_adm.php">Administration</a></li>
-		<li><a class="typ" href="#"><span>Tableaux de bord</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Tableaux de bord</div>
+<!-- Background Image Specific to each page -->
+	<div class="background-db-management background-image"></div>
+	<div class="overlay"></div>
+
+<section class="container section-container section-toggle" id="saisie-temps">
+		<div class="section-title toggle-botton-margin">
+			<h1>
+				Tableaux de bord
+			</h1>
+		</div>
+
+
+	<!-- <div id="haut">Tableaux de bord</div> -->
 	
 	<div id="coeur" name="coeur">
-		<?php
-		include("tabbord-coeur.php");
-		?>
+		
+		<div id="filt" name="filt">
+			<?php include("tabbord-filter.php"); ?>
+		</div>
+
+		<div id="req" name="req">
+			<?php include("tabbord-req.php"); ?>
+		</div>
 
 	</div>
 
