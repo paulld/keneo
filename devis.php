@@ -322,8 +322,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 
-	if (isset($_POST['toutfrais'])) { $titrestrict='Frais sur '.$fmonth.' '.$year; $txtsitu = 1;
-	} else { $titrestrict='Frais en attente'; $txtsitu = 0; }
+	if (isset($_POST['toutfrais'])) { $titrestrict='Devis sur '.$fmonth.' '.$year; $txtsitu = 1;
+	} else { $titrestrict='Devis en attente'; $txtsitu = 0; }
 	?>
 		
 	<!-- =================== RESTITUTION: TABLEAU ================= -->
@@ -437,7 +437,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						$pseudo=$_SESSION['ID'];
 					}
 				}
-				if (isset($_POST['toutdevis'])) { $txtrestrict=" AND datejour >= '$startdate' AND datejour < '$enddate'"; 
+				if (isset($_POST['toutdevis'])) { $txtrestrict=" AND T1.dateTransac >= '$startdate' AND T1.dateTransac < '$enddate'"; 
 				} else { $txtrestrict=" AND T1.validation < 2"; }
 				$req = "SELECT T1.ID ID, T2.matricule userID, T1.dateTransac dateTransac, 
 					T3.Description client, T4.Description projet, T5.Description mission, T6.Description categorie, 

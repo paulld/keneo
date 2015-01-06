@@ -101,15 +101,20 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	// ==================== SAISIE =====================
 	?>
 	
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="menu_setup.php"><span>DB Management</span></a></li><li><a class="typ" href="#"><span>Team management</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Team management</div>
+	<div class="background-frais background-image"></div>
+	<div class="overlay"></div>
 
-	<div id="coeur">
-		<div id="sstitre">Effectif interne</div>
-		<table id="tablerestit" class="table table-striped temp-table">
+	<section class="container section-container section-toggle" id="effectif-interne">
+		<div class="section-title" id="toggle-title">
+			<h1>
+				<i class="fa fa-chevron-down"></i>
+				Team Keneo - Effectif interne
+				<i class="fa fa-chevron-down"></i>
+			</h1>
+		</div>
+		<div id="toggle-content" style="display: none;">
+		<table class="table table-striped" id="effectif-interne-table">
+		<thead>
 			<tr>
 				<td id="t-containertit">Nom</td>
 				<td id="t-containertit">Trig.</td>
@@ -121,6 +126,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<td id="t-containertit">Pole</td>
 				<td id="t-containertit" colspan="2">Actions</td>
 			</tr>
+		</thead>
+		<tbody>
 			<?php
 			$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, T2.actif, T2.ID
 					FROM rob_user_rights T1 
@@ -171,20 +178,35 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				if ($i == 1) { $i = 2; } else { $i = 1; }
 			}
 			?>
+			</tbody>
 		</table>
-		<div id="sstitre">Effectif externe</div>
-		<table id="tablerestit" class="table table-striped temp-table">
-			<tr>
-				<td id="t-containertit">Nom</td>
-				<td id="t-containertit">Trig.</td>
-				<td id="t-containertit">Acc&egrave;s menu</td>
-				<td id="t-containertit">Timesheet</td>
-				<td id="t-containertit">Frais</td>
-				<td id="t-containertit">Journal</td>
-				<td id="t-containertit">Resp.</td>
-				<td id="t-containertit">Pole</td>
-				<td id="t-containertit" colspan="2">Actions</td>
-			</tr>
+		</div>
+	</section>
+
+	<section class="container section-container section-toggle" id="effectif-externe">
+		<div class="section-title" id="toggle-title2">
+			<h1>
+				<i class="fa fa-chevron-down"></i>
+				Team Keneo - Effectif externe
+				<i class="fa fa-chevron-down"></i>
+			</h1>
+		</div>
+		<div id="toggle-content2" style="display: none;">
+		<table class="table table-striped" id="effectif-externe-table">
+			<thead>
+				<tr>
+					<td id="t-containertit">Nom</td>
+					<td id="t-containertit">Trig.</td>
+					<td id="t-containertit">Acc&egrave;s menu</td>
+					<td id="t-containertit">Timesheet</td>
+					<td id="t-containertit">Frais</td>
+					<td id="t-containertit">Journal</td>
+					<td id="t-containertit">Resp.</td>
+					<td id="t-containertit">Pole</td>
+					<td id="t-containertit" colspan="2">Actions</td>
+				</tr>
+			</thead>
+			<tbody>
 			<?php
 			$reponse->closeCursor();			
 			$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, T2.actif, T2.ID
@@ -237,102 +259,115 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			}
 			$reponse->closeCursor();			
 			?>
+			</tbody>
 		</table>
-	</div>
+		</div>
+	</section>
 
-	<div id="sstitre">Ajouter un nouveau collaborateur</div>
-	<table id="tablerestit" class="table table-striped temp-table">
-		<tr>
-			<td id="t-containertit">Nom Pr&eacute;nom</td>
-			<td id="t-containertit">Trig.</td>
-			<td id="t-containertit">Resp.</td>
-			<td id="t-containertit">Pole</td>
-			<td id="t-containertit">Acc&egrave;s menu</td>
-			<td id="t-containertit">Timesheet</td>
-			<td id="t-containertit">Frais</td>
-			<td id="t-containertit">Journal</td>
-			<td id="t-containertit">&nbsp;</td>
-		</tr>
-		<form action="collaborateurs.php" method="post">
-		<tr>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="12" name="new_nom" placeholder="NOM" value=""/> <input id="w_inputtxt_90" type="text" size="10" name="new_prenom" placeholder="Pr&eacute;nom" value=""/></td>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="5" name="new_mat" placeholder="XXX" value=""/></td>
-			<td id="t-container">
-				<?php
-				echo '<select id="w_input_90" name="new_resp"><option value=1>Resp...</option>';
-				$reponse = $bdd->query("SELECT matricule, ID FROM rob_user WHERE actif=1 ORDER BY matricule");
-				while ($donnee = $reponse->fetch() )
-				{
-					echo '<option value="'.$donnee['ID'].'">'.$donnee['matricule'].'</option>';
-				}
-				$reponse->closeCursor();
-				echo '</select>';
-				?>
-			</td>
-			<td id="t-container">
-				<?php
-				echo '<select id="w_input_90" name="new_pole">';
-				$reponse = $bdd->query("SELECT code, ID FROM rob_pole WHERE actif=1 ORDER BY ID");
-				while ($donnee = $reponse->fetch() )
-				{
-					echo '<option value="'.$donnee['ID'].'">'.$donnee['code'].'</option>';
-				}
-				$reponse->closeCursor();
-				echo '</select>';
-				?>
-			</td>
-			<td id="t-container">
-				<?php
-				echo '<select id="w_input_90" name="new_user">';
-				$reponse = $bdd->query("SELECT desc2, ID FROM rob_level WHERE desc2 <> '' ORDER BY ID");
-				while ($donnee = $reponse->fetch() )
-				{
-					echo '<option value="'.$donnee['ID'].'">'.$donnee['desc2'].'</option>';
-				}
-				$reponse->closeCursor();
-				echo '</select>';
-				?>
-			</td>
-			<td id="t-container">
-				<?php
-				echo '<select id="w_input_90" name="new_tms">';
-				$reponse = $bdd->query("SELECT desc4, ID FROM rob_level WHERE desc4 <> '' ORDER BY ID");
-				while ($donnee = $reponse->fetch() )
-				{
-					echo '<option value="'.$donnee['ID'].'">'.$donnee['desc4'].'</option>';
-				}
-				$reponse->closeCursor();
-				echo '</select>';
-				?>
-			</td>
-			<td id="t-container">
-				<?php
-				echo '<select id="w_input_90" name="new_exp">';
-				$reponse = $bdd->query("SELECT desc5, ID FROM rob_level WHERE desc5 <> '' ORDER BY ID");
-				while ($donnee = $reponse->fetch() )
-				{
-					echo '<option value="'.$donnee['ID'].'">'.$donnee['desc5'].'</option>';
-				}
-				$reponse->closeCursor();
-				echo '</select>';
-				?>
-			</td>
-			<td id="t-container">
-				<?php
-				echo '<select id="w_input_90" name="new_jrl">';
-				$reponse = $bdd->query("SELECT desc6, ID FROM rob_level WHERE desc6 <> '' ORDER BY ID");
-				while ($donnee = $reponse->fetch() )
-				{
-					echo '<option value="'.$donnee['ID'].'">'.$donnee['desc6'].'</option>';
-				}
-				$reponse->closeCursor();
-				echo '</select>';
-				?>
-			</td>				
-			<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-		</tr>
-		</form>
-	</table>
+
+	<section class="container section-container section-toggle" id="saisie-frais">
+		<div class="section-title" id="toggle-title3">
+			<h1>
+				<i class="fa fa-chevron-up"></i>
+				Ajouter un nouveau collaborateur
+				<i class="fa fa-chevron-up"></i>
+			</h1>
+		</div>
+		<div id="toggle-content3">
+			<table id="tablerestit" class="table table-striped temp-table">
+				<tr>
+					<td id="t-containertit">Nom Pr&eacute;nom</td>
+					<td id="t-containertit">Trig.</td>
+					<td id="t-containertit">Resp.</td>
+					<td id="t-containertit">Pole</td>
+					<td id="t-containertit">Acc&egrave;s menu</td>
+					<td id="t-containertit">Timesheet</td>
+					<td id="t-containertit">Frais</td>
+					<td id="t-containertit">Journal</td>
+					<td id="t-containertit">&nbsp;</td>
+				</tr>
+				<form action="collaborateurs.php" method="post">
+				<tr>
+					<td id="t-container"><input id="w_inputtxt_90" type="text" size="12" name="new_nom" placeholder="NOM" value=""/> <input id="w_inputtxt_90" type="text" size="10" name="new_prenom" placeholder="Pr&eacute;nom" value=""/></td>
+					<td id="t-container"><input id="w_inputtxt_90" type="text" size="5" name="new_mat" placeholder="XXX" value=""/></td>
+					<td id="t-container">
+						<?php
+						echo '<select id="w_input_90" name="new_resp"><option value=1>Resp...</option>';
+						$reponse = $bdd->query("SELECT matricule, ID FROM rob_user WHERE actif=1 ORDER BY matricule");
+						while ($donnee = $reponse->fetch() )
+						{
+							echo '<option value="'.$donnee['ID'].'">'.$donnee['matricule'].'</option>';
+						}
+						$reponse->closeCursor();
+						echo '</select>';
+						?>
+					</td>
+					<td id="t-container">
+						<?php
+						echo '<select id="w_input_90" name="new_pole">';
+						$reponse = $bdd->query("SELECT code, ID FROM rob_pole WHERE actif=1 ORDER BY ID");
+						while ($donnee = $reponse->fetch() )
+						{
+							echo '<option value="'.$donnee['ID'].'">'.$donnee['code'].'</option>';
+						}
+						$reponse->closeCursor();
+						echo '</select>';
+						?>
+					</td>
+					<td id="t-container">
+						<?php
+						echo '<select id="w_input_90" name="new_user">';
+						$reponse = $bdd->query("SELECT menu, ID FROM rob_level WHERE menu <> '' ORDER BY ID");
+						while ($donnee = $reponse->fetch() )
+						{
+							echo '<option value="'.$donnee['ID'].'">'.$donnee['menu'].'</option>';
+						}
+						$reponse->closeCursor();
+						echo '</select>';
+						?>
+					</td>
+					<td id="t-container">
+						<?php
+						echo '<select id="w_input_90" name="new_tms">';
+						$reponse = $bdd->query("SELECT tms, ID FROM rob_level WHERE tms <> '' ORDER BY ID");
+						while ($donnee = $reponse->fetch() )
+						{
+							echo '<option value="'.$donnee['ID'].'">'.$donnee['tms'].'</option>';
+						}
+						$reponse->closeCursor();
+						echo '</select>';
+						?>
+					</td>
+					<td id="t-container">
+						<?php
+						echo '<select id="w_input_90" name="new_exp">';
+						$reponse = $bdd->query("SELECT exp, ID FROM rob_level WHERE exp <> '' ORDER BY ID");
+						while ($donnee = $reponse->fetch() )
+						{
+							echo '<option value="'.$donnee['ID'].'">'.$donnee['exp'].'</option>';
+						}
+						$reponse->closeCursor();
+						echo '</select>';
+						?>
+					</td>
+					<td id="t-container">
+						<?php
+						echo '<select id="w_input_90" name="new_jrl">';
+						$reponse = $bdd->query("SELECT jrl, ID FROM rob_level WHERE jrl <> '' ORDER BY ID");
+						while ($donnee = $reponse->fetch() )
+						{
+							echo '<option value="'.$donnee['ID'].'">'.$donnee['jrl'].'</option>';
+						}
+						$reponse->closeCursor();
+						echo '</select>';
+						?>
+					</td>				
+					<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
+				</tr>
+				</form>
+			</table>
+		</div>
+	</section>
 
 <?php
 	include("footer.php");

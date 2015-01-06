@@ -300,17 +300,17 @@ tr.tr-highlight {
   margin: 0 12px;
   font-size: 18px;
 }
-#toggle-title, #toggle-title2 {
+#toggle-title, #toggle-title2, #toggle-title3 {
   cursor: pointer;
   margin-bottom: 0;
 }
-#toggle-title:hover, #toggle-title2:hover {
+#toggle-title:hover, #toggle-title2:hover, #toggle-title3:hover {
   background: #fff;
 }
 .section-toggle {
   padding-bottom: 0;
 }
-#toggle-content, #toggle-content2 {
+#toggle-content, #toggle-content2, #toggle-content3 {
   margin-top: 20px;
   margin-bottom: 20px;
 }

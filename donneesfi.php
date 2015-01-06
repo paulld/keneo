@@ -42,25 +42,29 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 
-	// ==================== SAISIE =====================
-	?>
-	
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="menu_setup.php"><span>DB Management</span></a></li><li><a class="typ" href="#"><span>Donn&eacute;es financi&egrave;res</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Donn&eacute;es financi&egrave;res</div>
-
-	<?php
 	if ($prblm == 1)
 	{
 		echo '<div id="message">l\'enregistrement n\'a pas pu &ecirc;tre modifi&eacute;</div>';
 	}
+	// ==================== SAISIE =====================
 	?>
 	
-	<div id="coeur">
-		<div id="sstitre">Effectif interne</div>
-		<table id="tablerestit" class="table table-striped temp-table">
+	
+	<div class="background-frais background-image"></div>
+	<div class="overlay"></div>
+
+	<section class="container section-container section-toggle" id="effectif-interne">
+		<div class="section-title" id="toggle-title">
+			<h1>
+				<i class="fa fa-chevron-up"></i>
+				Donn&eacute;es financi&egrave;res - Effectif interne
+				<i class="fa fa-chevron-up"></i>
+			</h1>
+		</div>
+		<div id="toggle-content" >
+	
+		<table class="table table-striped" id="effectif-interne-table">
+		<thead>
 			<tr>
 				<td id="t-containertit">Nom</td>
 				<td id="t-containertit">Co&ucirc;t hybride</td>
@@ -69,6 +73,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<td id="t-containertit">Valide jusqu'&agrave;</td>
 				<td id="t-containertit">Actions</td>
 			</tr>
+		</thead>
+		<tbody>
 			<?php
 			$req = "SELECT T2.nom nom, T2.prenom prenom, T1.ID ID, T1.ctHybride ctHybride, T1.ctReel ctReel, T1.validFrom validFrom, T1.validTo validTo
 					FROM rob_user_fi T1 
@@ -80,18 +86,18 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			while ($donnee = $reponse->fetch() )
 			{
 				?>
-				<form id="formbasic" action="donneesfi.php" method="post"><td id="t-ico<?php echo $i;?>">
+				<form action="donneesfi.php" method="post"><td id="t-ico<?php echo $i;?>">
 				<tr>
-					<td id="t-container<?php echo $i;?>"><?php echo $donnee['nom'].'. '.substr ($donnee['prenom'],0,1);?></td>
-					<td id="t-container<?php echo $i;?>">
-						<input type="text" id="f-Arrow<?php echo $i;?>" name="ctHybride" value="<?php echo $donnee['ctHybride'];?>" style="text-align:right" /></td>
-					<td id="t-container<?php echo $i;?>">
-						<input type="text" id="f-Arrow<?php echo $i;?>" name="ctReel" value="<?php echo $donnee['ctReel'];?>" style="text-align:right" /></td>
-					<td id="t-container<?php echo $i;?>">
-						<input type="text" id="f-Arrow<?php echo $i;?>" name="validFrom" value="<?php echo date("d/m/Y",strtotime($donnee['validFrom']));?>" /></td>
-					<td id="t-container<?php echo $i;?>">
-						<input type="text" id="f-Arrow<?php echo $i;?>" name="validTo" value="<?php echo date("d/m/Y",strtotime($donnee['validTo']));?>" /></td>
-					<td id="t-container<?php echo $i;?>">
+					<td><?php echo $donnee['nom'].'. '.substr ($donnee['prenom'],0,1);?></td>
+					<td>
+						<input type="text" name="ctHybride" value="<?php echo $donnee['ctHybride'];?>" style="text-align:right" /></td>
+					<td>
+						<input type="text" name="ctReel" value="<?php echo $donnee['ctReel'];?>" style="text-align:right" /></td>
+					<td>
+						<input type="text" name="validFrom" value="<?php echo date("d/m/Y",strtotime($donnee['validFrom']));?>" /></td>
+					<td>
+						<input type="text" name="validTo" value="<?php echo date("d/m/Y",strtotime($donnee['validTo']));?>" /></td>
+					<td>
 						<input type="hidden" value="<?php echo $donnee['ID'];?>" name="IDmodif" />
 						<input id="w_input_90val" type="submit" Value="MaJ" />
 					</td>
@@ -101,9 +107,22 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				if ($i == 1) { $i = 2; } else { $i = 1; }
 			}
 			?>
+			</tbody>
 		</table>
-		<div id="sstitre">Effectif externe</div>
-		<table id="tablerestit" class="table table-striped temp-table">
+		</div>
+	</section>
+
+	<section class="container section-container section-toggle" id="effectif-externe">
+		<div class="section-title" id="toggle-title2">
+			<h1>
+				<i class="fa fa-chevron-down"></i>
+				Team Keneo - Effectif externe
+				<i class="fa fa-chevron-down"></i>
+			</h1>
+		</div>
+		<div id="toggle-content2" style="display: none;">
+		<table class="table table-striped" id="effectif-externe-table">
+			<thead>
 			<tr>
 				<td id="t-containertit">Nom</td>
 				<td id="t-containertit">Co&ucirc;t hybride</td>
@@ -112,6 +131,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<td id="t-containertit">Valide jusqu'&agrave;</td>
 				<td id="t-containertit">Actions</td>
 			</tr>
+			</thead>
+			<tbody>
 			<?php
 			$req = "SELECT T2.nom nom, T2.prenom prenom, T1.ID ID, T1.ctHybride ctHybride, T1.ctReel ctReel, T1.validFrom validFrom, T1.validTo validTo
 					FROM rob_user_fi T1 
@@ -144,41 +165,54 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				if ($i == 1) { $i = 2; } else { $i = 1; }
 			}
 			?>
+			</tbody>
 		</table>
-	</div>
+		</div>
+	</section>
 
-	<div id="sstitre">Ajouter une nouvelle combinaison</div>
-	<table id="tablerestit" class="table table-striped temp-table">
-		<tr>
+
+	<section class="container section-container section-toggle" id="saisie-frais">
+		<div class="section-title" id="toggle-title3">
+			<h1>
+				<i class="fa fa-chevron-up"></i>
+				Ajouter une nouvelle combinaison
+				<i class="fa fa-chevron-up"></i>
+			</h1>
+		</div>
+		<div id="toggle-content3">
+			<table id="tablerestit" class="table table-striped temp-table">
+			<tr>
 				<td id="t-containertit">Nom</td>
 				<td id="t-containertit">Co&ucirc;t hybride</td>
 				<td id="t-containertit">Co&ucirc;t r&eacute;el</td>
 				<td id="t-containertit">Valide du</td>
 				<td id="t-containertit">Valide jusqu'&agrave;</td>
-			<td id="t-containertit">&nbsp;</td>
-		</tr>
-		<form action="donneesfi.php" method="post">
-		<tr>
-			<td id="t-container">
-				<?php
-				echo '<select id="w_input_90" name="new_user"><option value=0>User...</option>';
-				$reponse = $bdd->query("SELECT nom, prenom, ID FROM rob_user WHERE actif=1 ORDER BY nom");
-				while ($donnee = $reponse->fetch() )
-				{
-					echo '<option value="'.$donnee['ID'].'">'.$donnee['nom'].'. '.substr ($donnee['prenom'],0,1).'</option>';
-				}
-				$reponse->closeCursor();
-				echo '</select>';
-				?>
-			</td>
-			<td id="t-container"><input type="text" name="new_ctHybride" style="text-align:right" /></td>
-			<td id="t-container"><input type="text" name="new_ctReel" style="text-align:right" /></td>
-			<td id="t-container"><input id="datefrais" type="text" name="new_validFrom" placeholder="JJ/MM/AAAA" /></td>
-			<td id="t-container"><input id="dateTransac" type="text" name="new_validTo" placeholder="JJ/MM/AAAA" /></td>
-			<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-		</tr>
-		</form>
-	</table>
+				<td id="t-containertit">&nbsp;</td>
+			</tr>
+			<form action="donneesfi.php" method="post">
+			<tr>
+				<td id="t-container">
+					<?php
+					echo '<select id="w_input_90" name="new_user"><option value=0>User...</option>';
+					$reponse = $bdd->query("SELECT nom, prenom, ID FROM rob_user WHERE actif=1 ORDER BY nom");
+					while ($donnee = $reponse->fetch() )
+					{
+						echo '<option value="'.$donnee['ID'].'">'.$donnee['nom'].'. '.substr ($donnee['prenom'],0,1).'</option>';
+					}
+					$reponse->closeCursor();
+					echo '</select>';
+					?>
+				</td>
+				<td id="t-container"><input type="text" name="new_ctHybride" style="text-align:right" /></td>
+				<td id="t-container"><input type="text" name="new_ctReel" style="text-align:right" /></td>
+				<td id="t-container"><input id="datefrais" type="text" name="new_validFrom" placeholder="JJ/MM/AAAA" /></td>
+				<td id="t-container"><input id="dateTransac" type="text" name="new_validTo" placeholder="JJ/MM/AAAA" /></td>
+				<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
+			</tr>
+			</form>
+		</table>
+		</div>
+	</section>
 
 <?php
 	include("footer.php");

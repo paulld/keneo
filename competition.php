@@ -55,14 +55,16 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="menu_setup.php"><span>DB Management</span></a></li><li><a class="typ" href="#"><span>Comp&eacute;titions</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Comp&eacute;titions management</div>
+	<div class="background-frais background-image"></div>
+	<div class="overlay"></div>
 
-	<div id="coeur">
-		<table id="tablerestit" class="table table-striped temp-table">
+	<section class="container section-container" id="historique-frais">
+
+	<div class="section-title">
+		<h1>Comp&eacute;titions management</h1>
+	</div>
+	<table class="table table-striped">
+		<thead>
 			<tr>
 				<td id="t-containertit">Comp&eacute;tition</td>
 				<td id="t-containertit">Description</td>
@@ -70,6 +72,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<td id="t-containertit">Responsable</td>
 				<td id="t-containertit" colspan="3">Actions</td>
 			</tr>
+		</thead>
+		<tbody>
 			<?php
 			$req="SELECT T1.code, T1.description, T1. plan, T2.prenom, T2.nom ,T1.actif, T1.ID
 				FROM rob_compl1 T1
@@ -106,10 +110,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			}
 			$reponse->closeCursor();
 			?>
+		</tbody>
 		</table>
-	</div>
 
-	<div id="sstitre">Ajouter une nouvelle comp&eacute;tition</div>
+	<h2>Ajouter une nouvelle comp&eacute;tition</h2>
 	<table id="tablerestit" class="table table-striped temp-table">
 		<tr>
 			<td id="t-containertit">Code</td>

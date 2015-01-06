@@ -7,14 +7,18 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	//Ecriture de la page
 	include("headerlight.php");
 	?>
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li><li><a class="typ" href="menu_setup.php"><span>DB Management</span></a></li><li><a class="typ" href="#"><span>Tables</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Tables</div>
+	<div class="background-frais background-image"></div>
+	<div class="overlay"></div>
 
-	<div id="coeur">
-		Acc&eacute;der &agrave; la table : <select name="table" onchange="location=this.options[selectedIndex].value;" >
+	<section class="container section-container" id="saisie-frais">
+	<div class="section-title">
+		<h1>
+			Tables
+		</h1>
+	</div>
+
+	<div class="form-inner">
+		Acc&eacute;der &agrave; la table : <select class="form-control form-control-small" name="table" onchange="location=this.options[selectedIndex].value;" >
 		<option>...</option>
 		<?php
 		$men= "SELECT * FROM rob_tables ORDER BY nom";
@@ -30,6 +34,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
  		?>
 		</select>
 	</div>
+	</section>
 	<?php
 	include("footer.php");
 }

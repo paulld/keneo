@@ -237,7 +237,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<i class="fa fa-chevron-down"></i>
 			</h1>
 		</div>
-		<form action="frais.php" method="post" id="toggle-content" style="<?php if (isset($_POST['Reprise']) || isset($_POST['Modif'])) { } else { echo 'display: none;'; } ?>">
+		<form action="frais.php" method="post" id="toggle-content" style="<?php if (isset($_POST['Reprise']) || isset($_POST['Modif']) || isset($_POST['Valider'])) { } else { echo 'display: none;'; } ?>">
 			<div class="form-inner">
 				<div>
 					<select class="form-control form-control-small" name="nature2" />
@@ -268,8 +268,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							}
 						}
 					echo '" />';
+					echo '<input type="hidden" value="'.$_SESSION['ID'].'" name="collaborateur" />';
 					?> 
-					<input type="hidden" value='.$_SESSION['ID'].' name="collaborateur" />
 				</div>
 				<input type="hidden" id="ma_page" value="1" />
 				<div>
@@ -512,7 +512,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				echo '<form action="frais-pdf.php" method="post" target="_blank" class="form-right">';
 				echo '<input type="hidden" name="matricule" value="'.$matricule.'" /><input type="submit" class="btn btn-small btn-primary" Value="Cr&eacute;er la note des frais en attente" name="frais-pdf" onclick="return(confirm(\'En cr&eacute;ant votre PDF, vous allez g&eacute;n&eacute;rer un num&eacute;ro de frais pour tout vos frais en cours, non flagg&eacute;. \'))" />';
 				echo '</form>'; }
-			echo '</div>'; ?>
+			?>
 		</div>
 		
 		<h2><?php echo $titrestrict; ?></h2>

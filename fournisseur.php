@@ -53,86 +53,91 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li>
-		<li><a class="typ" href="menu_setup.php"><span>DB Management</span></a></li>
-		<li><a class="typ" href="table.php"><span>Tables</span></a></li>
-		<li><a class="typ" href="#"><span>Fournisseur</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Fournisseur</div>
-
-	<div id="coeur">
-		<table id="tablerestit" class="table table-striped temp-table">
-			<tr>
-				<td id="t-containertit">Code</td>
-				<td id="t-containertit">Description</td>
-				<td id="t-containertit">Type de fournisseur</td>
-				<td id="t-containertit" colspan="2">Actions</td>
-			</tr>
-			<?php
-			$req="SELECT T1.code, T1.Description, T1.actif, T1.ID, T2.categorie FROM rob_fournisseur T1
-				INNER JOIN rob_catfrs T2 ON T1.typeFrnsID = T2.ID
-				ORDER BY T2.categorie, T1.Description";
-			$reponse = $bdd->query($req);
-			$i=1;
-			while ($donnee = $reponse->fetch() )
-			{
-			?>
+	<section class="container section-container section-toggle" id="effectif-interne">
+		<div class="section-title" id="toggle-title">
+			<h1>
+				<i class="fa fa-chevron-down"></i>
+				Liste des fournisseurs
+				<i class="fa fa-chevron-down"></i>
+			</h1>
+		</div>
+		
+	<div id="toggle-content" style="display: none;">
+		<table class="table table-striped" id="effectif-interne-table">
+			<thead>
 				<tr>
-					<td id="t-container<?php echo $i;?>"><?php echo $donnee[0];?></td>
-					<td id="t-container<?php echo $i;?>"><?php echo $donnee[1];?></td>
-					<td id="t-container<?php echo $i;?>"><?php echo $donnee[4];?></td>
-					<?php if ($donnee[2] == 1)
-					{ ?>
-						<td id="t-ico<?php echo $i;?>"><form action="fournisseur.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDinact" /><input border=0 src="images/RoB_activ.png" type=image Value=submit title="Desactiver le code"></form></td>
-						<?php
-					}
-					else
-					{
-						?>
-						<td id="t-ico<?php echo $i;?>"><form action="fournisseur.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDact" /><input border=0 src="images/RoB_deactiv.png" type=image Value=submit title="Activer le code"></form></td>
-						<?php
-					}
-					?>
-					<td id="t-ico<?php echo $i;?>"><form action="modif_fournisseur.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDmodif" /><input border=0 src="images/RoB_info.png" type=image Value=submit title="Modifier les informations" name="modif"></form></td>
+					<td id="t-containertit">Code</td>
+					<td id="t-containertit">Description</td>
+					<td id="t-containertit">Type de fournisseur</td>
+					<td id="t-containertit" colspan="2">Actions</td>
 				</tr>
-			<?php
-				if ($i == 1) { $i = 2; } else { $i = 1; }
-			}
-			$reponse->closeCursor();
-			?>
+			</thead>
+			<tbody>
+				<?php
+				$req="SELECT T1.code, T1.Description, T1.actif, T1.ID, T2.categorie FROM rob_fournisseur T1
+					INNER JOIN rob_catfrs T2 ON T1.typeFrnsID = T2.ID
+					ORDER BY T2.categorie, T1.Description";
+				$reponse = $bdd->query($req);
+				$i=1;
+				while ($donnee = $reponse->fetch() )
+				{
+				?>
+					<tr>
+						<td id="t-container<?php echo $i;?>"><?php echo $donnee[0];?></td>
+						<td id="t-container<?php echo $i;?>"><?php echo $donnee[1];?></td>
+						<td id="t-container<?php echo $i;?>"><?php echo $donnee[4];?></td>
+						<?php if ($donnee[2] == 1)
+						{ ?>
+							<td id="t-ico<?php echo $i;?>"><form action="fournisseur.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDinact" /><input border=0 src="images/RoB_activ.png" type=image Value=submit title="Desactiver le code"></form></td>
+							<?php
+						}
+						else
+						{
+							?>
+							<td id="t-ico<?php echo $i;?>"><form action="fournisseur.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDact" /><input border=0 src="images/RoB_deactiv.png" type=image Value=submit title="Activer le code"></form></td>
+							<?php
+						}
+						?>
+						<td id="t-ico<?php echo $i;?>"><form action="modif_fournisseur.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDmodif" /><input border=0 src="images/RoB_info.png" type=image Value=submit title="Modifier les informations" name="modif"></form></td>
+					</tr>
+				<?php
+					if ($i == 1) { $i = 2; } else { $i = 1; }
+				}
+				$reponse->closeCursor();
+				?>
+			</tbody>
 		</table>
 	</div>
+	</section>
 
-	<div id="sstitre">Ajouter un nouveau fournisseur</div>
-	<table id="tablerestit" class="table table-striped temp-table">
-		<tr>
-			<td id="t-containertit">Code</td>
-			<td id="t-containertit">Description</td>
-			<td id="t-containertit">Type de fournisseur</td>
-			<td id="t-containertit">Actions</td>
-		</tr>
-		<form action="fournisseur.php" method="post">
-		<tr>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newcode" /></td>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="desc" /></td>
-			<td id="t-container">
-				<?php echo ' <select name="cat" id="w_input_90" >';
-					echo '<option></option>';
-					$affcollab = $bdd->query("SELECT * FROM rob_catfrs WHERE actif='1' ORDER BY categorie");
-					while ($optioncoll = $affcollab->fetch())
-					{
-						echo '<option value='.$optioncoll['ID'].'>'.$optioncoll['categorie'].'</option>';
-					}
-					$affcollab->closeCursor();
-				echo '</select>';
-				?>
-			</td>
-			<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-		</tr>
-		</form>
-	</table>
+	<section class="container section-container section-toggle" id="saisie-frais">
+		<div class="section-title" id="toggle-title3">
+			<h1>
+				<i class="fa fa-chevron-up"></i>
+				Ajouter un nouveau fournisseur
+				<i class="fa fa-chevron-up"></i>
+			</h1>
+		</div>
+		<div id="toggle-content3">
+			<div class="form-inner">
+				<form action="fournisseur.php" method="post">
+					<input class="form-control form-control-small" type="text" size="50" name="newcode" placeholder="Code" />
+					<input class="form-control form-control-small" type="text" size="50" name="desc" placeholder="Description" />
+						<?php echo ' <select name="cat" class="form-control form-control-small" >';
+							echo '<option>Type de fournisseur</option>';
+							$affcollab = $bdd->query("SELECT * FROM rob_catfrs WHERE actif='1' ORDER BY categorie");
+							while ($optioncoll = $affcollab->fetch())
+							{
+								echo '<option value='.$optioncoll['ID'].'>'.$optioncoll['categorie'].'</option>';
+							}
+							$affcollab->closeCursor();
+						echo '</select>';
+						?>
+					<input class="btn btn-small btn-primary" type="submit" Value="Ajouter" />
+				</form>
+			</div>
+		</div>
+	</section>
 		
 <?php
 	include("footer.php");
