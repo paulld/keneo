@@ -49,6 +49,45 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<br/>
 
 			<?php
+			//DETAIL
+			$req = "SELECT T11.Compte compte, sum(T1.totalHT) HT, sum(T1.totalTVA) TVA, sum(T1.totalTTC) TTC FROM rob_frais T1 
+				INNER JOIN rob_nature2 T11 ON T11.ID = T1.nature2ID
+				WHERE T1.userID='$pseudo' AND T1.noteNum = '' AND T1.validation < 2
+				GROUP BY T11.Compte WITH ROLLUP";
+			$reponsea = $bdd->query($req);
+			$checkrep=$reponsea->rowCount();
+			if ($checkrep != 0)
+			{
+				echo '<table cellspacing="0" style="width: 100%; border: 1px solid #cccccc; border-collapse: collapse; text-align: left; font-size: 10px">';
+				echo '<tr><td style="width: 5%;">&nbsp;</td>';
+				echo '<td align="center" style="width: 62%;">&nbsp;</td>';
+				echo '<td align="center" style="width: 10%; border: 1px solid #cccccc; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">Compte</td>';
+				echo '<td align="center" style="width: 6%; border: 1px solid #cccccc; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">HT</td>';
+				echo '<td align="center" style="width: 6%; border: 1px solid #cccccc; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">TVA</td>';
+				echo '<td align="center" style="width: 6%; border: 1px solid #cccccc; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">TTC</td>';
+				echo '<td style="width: 5%;">&nbsp;</td></tr>';
+				$totht=0;
+				$tottva=0;
+				$totttc=0;
+				while ($donneea = $reponsea->fetch())
+				{
+					echo '<tr><td style="width: 5%;">&nbsp;</td>';
+					echo '<td style="width: 62%;">&nbsp;</td>';
+					//info
+					echo '<td style="width: 10%; border: 1px solid #cccccc;">'.$donneea['compte'].'</td>';
+					//valeurs
+					echo '<td style="width: 6%; border: 1px solid #cccccc;" align="right">'.number_format($donneea['HT'],2,".","").'</td>';
+					echo '<td style="width: 6%; border: 1px solid #cccccc;" align="right">'.number_format($donneea['TVA'],2,".","").'</td>';
+					echo '<td style="width: 6%; border: 1px solid #cccccc;" align="right">'.number_format($donneea['TTC'],2,".","").'</td>';
+					echo '<td style="width: 5%;">&nbsp;</td></tr>';
+				}
+				echo '</table>';
+			}
+			?>
+			<br/>
+			
+			<?php
+			//DETAIL
 			$req = "SELECT T1.ID, T2.matricule, T1.datejour, 
 				T3.Description, T4.Description, T5.Description, T6.Description, 
 				T7.Description, T8.Description, T9.Description, 
