@@ -96,6 +96,7 @@ input.checkbox {
 .nav-tabs-outer .nav.nav-tabs li a {
   border: none;
   color: #fff;
+  text-transform: uppercase;
 }
 .nav-tabs-outer .nav.nav-tabs li.active {
   background: transparent;

@@ -29,7 +29,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			 		$menu = $bdd->query($men);
 			 		while ($donnee = $menu->fetch())
 			 		{
-			 			echo '<div class="col-sm-4 col-xs-6">';
+			 			echo '<div class="col-lg-3 col-sm-4 col-xs-6">';
 			 				echo '<div class="menu-item-outer">';
 			 					echo '<a href="'.$donnee['lien'].'"><span class="menu-link"></span></a>';
 			 					echo '<i class="fa fa-'.$donnee['ID'].'"></i><p>'.$donnee['desc1'].'</p>';

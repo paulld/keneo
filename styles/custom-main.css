@@ -27,7 +27,7 @@ body {
   background-size: cover;
 }
 .background-accueil {
-  background: url('../assets/images/background-stadium-empty.jpg') no-repeat center center fixed;
+  background: url('../assets/images/background-parachute.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 .background-temps, .background-journal {
@@ -51,7 +51,7 @@ body {
   background-size: cover;
 }
 .background-db-management {
-  background: url('../assets/images/background-mountain.jpg') no-repeat center center fixed;
+  background: url('../assets/images/background-road.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 
