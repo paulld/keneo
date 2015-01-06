@@ -45,6 +45,7 @@ nav.nav-fixed-top > .container {
   font-weight: 300;
   font-size: 13px;
   margin-top: 11px;
+  margin-bottom: 7px;
   text-shadow: 1px 1px 1px #000;
 }
 .nav-left a:hover, .nav-name a:hover, .nav-buttons a:hover {
@@ -123,7 +124,7 @@ nav.nav-fixed-top > .container {
   }
 }
 @media (max-width: 640px) {
-  .nav-picture img {
+  .nav-picture {
     display: none;
   }
 }

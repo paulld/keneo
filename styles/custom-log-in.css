@@ -17,7 +17,7 @@
 /* LOG IN FORM */
 
 .signin-outer {
-  margin: 0 auto 50px;
+  margin: -25px auto 0px;
   padding-top: 150px;
   width: 518px;
   height: 518px;
@@ -32,6 +32,16 @@
     padding: 40px 0;
   }
 }
+
+.jumbo-signin {
+  margin-top: -100px;
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
 
 .form-signin,
 .form-recovery {
