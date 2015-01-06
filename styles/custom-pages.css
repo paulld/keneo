@@ -138,6 +138,14 @@ input.checkbox {
   text-align: right;
   padding-right: 30px;
 }
+.param-picture {
+  width: 120px;
+  height: 120px;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 50%;
+  float: right;
+}
 .param-basic-right {
   display: inline-block;
   width: 54%;
@@ -145,17 +153,6 @@ input.checkbox {
   padding-top: 6px;
   vertical-align: top;
   height: 130px;
-}
-.param-basic-left img {
-  max-width: 120px;
-  max-height: 120px;
-  min-width: 120px;
-  min-height: 120px;
-  border-radius: 50%;
-/*          filter: grayscale(100%);
-          filter: url(#greyscale);
-          filter: gray;
-  -webkit-filter: grayscale(1);*/
 }
 .param-basic-title {
   min-width: 80px;
@@ -332,19 +329,17 @@ tr.tr-highlight {
   width: 140px;
   height: 170px;
 }
+.col-effectif-picture {
+  width: 110px;
+  height: 110px;
+  /*margin-top: 10px;*/
+  position: relative;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 50%;
+}
 .row-trombi {
   text-align: center;
-}
-.row-trombi img {
-  max-width: 110px;
-  max-height: 110px;
-  min-width: 110px;
-  min-height: 110px;
-  border-radius: 50%;
-/*          filter: grayscale(100%);
-          filter: url(#greyscale);
-          filter: gray;
-  -webkit-filter: grayscale(1);*/
 }
 .row-trombi p {
   margin: 6px 0 0;
