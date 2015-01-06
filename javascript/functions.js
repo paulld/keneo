@@ -960,6 +960,10 @@ $(document).ready(function(){
   	$( "#toggle-content2" ).slideToggle( "slow", function() {});
   	$('#toggle-title2 i.fa').toggleClass('fa-chevron-down').toggleClass('fa-chevron-up');
   });
+  $(document).on('click', '#toggle-title3', function(e){
+  	$( "#toggle-content3" ).slideToggle( "slow", function() {});
+  	$('#toggle-title3 i.fa').toggleClass('fa-chevron-down').toggleClass('fa-chevron-up');
+  });
 });
 
 // CHANGE PROFILE PICTURE
@@ -967,7 +971,8 @@ $(document).ready(function(){
 $(document).on('change', '.btn-file :file', function() {
   var input = $(this),
     numFiles = input.get(0).files ? input.get(0).files.length : 1,
-    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    //label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    label = input.val();
   input.trigger('fileselect', [numFiles, label]);
 });
 $(document).ready( function() {
