@@ -11,29 +11,29 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<div class="overlay"></div>
 
 	<section class="container section-container" id="saisie-frais">
-	<div class="section-title">
-		<h1>
-			Tables
-		</h1>
-	</div>
+		<div class="section-title">
+			<h1>
+				Tables
+			</h1>
+		</div>
 
-	<div class="form-inner">
-		Acc&eacute;der &agrave; la table : <select class="form-control form-control-small" name="table" onchange="location=this.options[selectedIndex].value;" >
-		<option>...</option>
-		<?php
-		$men= "SELECT * FROM rob_tables ORDER BY nom";
- 		$menu = $bdd->query($men);
-		//echo '<ul id="navigationTable">';
- 		while ($donnee = $menu->fetch())
- 		{
-			//echo '<li><a class="typ" href="'.$donnee['lien'].'"><span>'.$donnee['nom'].'</span></a></li>';
-			echo '<option value='.$donnee['lien'].'>'.$donnee['nom'].'</option>';
-		}
-		//echo '</ul>';
-		$menu->closeCursor();
- 		?>
-		</select>
-	</div>
+		<div class="form-inner">
+			Acc&eacute;der &agrave; la table : <select class="form-control form-control-small" name="table" onchange="location=this.options[selectedIndex].value;" >
+			<option>...</option>
+			<?php
+			$men= "SELECT * FROM rob_tables ORDER BY nom";
+	 		$menu = $bdd->query($men);
+			//echo '<ul id="navigationTable">';
+	 		while ($donnee = $menu->fetch())
+	 		{
+				//echo '<li><a class="typ" href="'.$donnee['lien'].'"><span>'.$donnee['nom'].'</span></a></li>';
+				echo '<option value='.$donnee['lien'].'>'.$donnee['nom'].'</option>';
+			}
+			//echo '</ul>';
+			$menu->closeCursor();
+	 		?>
+			</select>
+		</div>
 	</section>
 	<?php
 	include("footer.php");

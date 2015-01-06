@@ -245,6 +245,9 @@ p.new-picture-label {
 .table>tfoot>tr>td {
   vertical-align: middle;
 }
+.table>thead {
+  font-weight: bold;
+}
 
 .duplicate-edit-remove button {
   border: none;
