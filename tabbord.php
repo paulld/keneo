@@ -4,6 +4,7 @@
 
 	if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass'] AND ($_SESSION['id_lev_menu'] == 4 OR $_SESSION['id_lev_menu'] ==6)) {
 		include("headerlight.php");
+		// TODO: REMOVE THE 2 NEXT LINES AFTER CHECK THAT THEY'RE USELESS
 		$i = 1;
 		$k = "";
 ?>
