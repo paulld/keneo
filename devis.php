@@ -10,59 +10,67 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	$probldata = 0;
 	if (isset($_POST['Valider']))
 	{
-		if (isset($_POST['client']) AND isset($_POST['dateTransac']) AND isset($_POST['competition']) AND isset($_POST['nature1']))
+		if (isset($_POST['client']) AND isset($_POST['dateTransac']) AND isset($_POST['competition']) AND isset($_POST['nature1']) OR isset($_POST['devisNum']))
 		{
-			if ($_POST['client'] != "none" AND $_POST['nature1'] != "none")
+			if ($_POST['client'] != "none" AND $_POST['projet'] != "none" AND $_POST['competition'] != "none" AND $_POST['nature1'] != "none" OR isset($_POST['devisNum']))
 			{
-				//Check sur projet et mission
-				if ($_POST['projet'] != "none")
-				{
-					$imputID2 = $_POST['projet'];
-					if ($_POST['projet'] != 0 and isset($_POST['mission']) and $_POST['mission'] != "none")
-					{
-						$imputID3 = $_POST['mission'];
-					}
-					else
-					{
-						if ($_POST['projet'] == 0)
-						{
-							$imputID3 = 0;
-						}
-						else
-						{
-							$comptchg = 1;
-						}
-					}
-				}
-				else
-				{
-					$comptchg = 1;
-				}
 				
-				//Check sur projet et mission
+				//Check sur projet et client
 				if ($_POST['devisNum'] == "none")
 				{
-					$devisNum = 'D'.$_POST['client'].'-'.$_POST['projet'].'-'.date('ymd',mktime(0,0,0,substr($_POST['dateTransac'],3,2),substr($_POST['dateTransac'],0,2),substr($_POST['dateTransac'],6,4)));
+					$devisNum = 'D'.$_POST['client'].'-'.$_POST['projet'].'-'.date('ymd',mktime(0,0,0,substr($_POST['dateTransac'],3,2),substr($_POST['dateTransac'],0,2),substr($_POST['dateTransac'],6,4)));;
+					if ($comptchg == 0)
+					{
+						$client = $_POST['client'];
+						$projet = $_POST['projet'];
+						if (isset($_POST['mission'])) { $mission = $_POST['mission']; } else { $mission = 0; }
+						if (isset($_POST['categorie'])) { $categorie = $_POST['categorie']; } else { $categorie = 0; }
+						$competition = $_POST['competition'];
+						if (isset($_POST['typecomp'])) { $typecomp = $_POST['typecomp']; } else { $typecomp = 0; }
+						if (isset($_POST['evnmt'])) { $evnmt = $_POST['evnmt']; } else { $evnmt = 0; }
+						$dateTransac = date('Y-m-d',mktime(0,0,0,substr($_POST['dateTransac'],3,2),substr($_POST['dateTransac'],0,2),substr($_POST['dateTransac'],6,4)));
+					}
 				} else {
 					$devisNum = $_POST['devisNum'];
+					$req = "SELECT imputID1, imputID2, imputID3, imputID4, compID1, compID2, compID3, dateTransac FROM rob_devis
+						WHERE userID='".$_SESSION['ID']."' AND devisNum = '$devisNum' LIMIT 1";
+					$repreq = $bdd->query($req);
+					$checkrow=$repreq->rowCount();
+					if ($checkrow != 0)
+					{
+						$repdon = $repreq->fetch();
+						$client = $repdon[0];
+						$projet = $repdon[1];
+						$mission = $repdon[2];
+						$categorie = $repdon[3];
+						$competition = $repdon[4];
+						$typecomp = $repdon[5];
+						$evnmt = $repdon[6];
+						$dateTransac = $repdon[7];
+					}
+					$repreq->closeCursor();
+					echo $_POST['devisNum'];
+				}
+				//Version
+				if (isset($_POST['devisVersion']))
+				{
+					if ($_POST['devisVersion'] == "none")
+					{
+						$devisVersion = 'V'.date('ymd');
+					} else {
+						$devisVersion = $_POST['devisVersion'];
+					}
+				} else {
+					$devisVersion = 'V'.date('ymd');
 				}
 				
 				//insertion dans la table
 				if ($comptchg == 0)
 				{
+					$nature1 = $_POST['nature1'];
 					$userID = $_SESSION['ID'];
 					$info = $_POST['info'];
 					$info = str_replace("'","\'",$info);
-					$dateTransac = date('Y-m-d',mktime(0,0,0,substr($_POST['dateTransac'],3,2),substr($_POST['dateTransac'],0,2),substr($_POST['dateTransac'],6,4)));
-					$nature1 = $_POST['nature1'];
-					$client = $_POST['client'];
-					$projet = $_POST['projet'];
-					if (isset($_POST['mission'])) { $mission = $_POST['mission']; } else { $mission = 0; }
-					if (isset($_POST['categorie'])) { $categorie = $_POST['categorie']; } else { $categorie = 0; }
-					$competition = $_POST['competition'];
-					if (isset($_POST['typecomp'])) { $typecomp = $_POST['typecomp']; } else { $typecomp = 0; }
-					if (isset($_POST['evnmt'])) { $evnmt = $_POST['evnmt']; } else { $evnmt = 0; }
-					$devisVersion = 'V01';
 					$aujourdhui = date("Y-m-d");
 					$frsCtUnit = $_POST['frsCtUnit'];
 					$frsQty = $_POST['frsQty'];
@@ -105,7 +113,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				$rep_nbre = $repdon[11];
 				$rep_tota = $repdon[12];
 				$rep_devisNum = $repdon[13];
-				//$rep_devisVers = $repdon[14];
+				$rep_devisVers = $repdon[14];
 			}
 			$repreq->closeCursor();
 		}
@@ -145,6 +153,36 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<form action="devis.php" method="post" id="form-saisie-frais">
 			<div class="form-inner">
 				<div>
+					<select class="form-control form-control-small" name="devisNum" id="devisNum" onchange="showDevisVersion(this.value)" >
+						<option value="none">Cr&eacute;er nouveau Num&eacute;ro de devis</option>
+						<?php
+						$reqimput = $bdd->query("SELECT DISTINCT devisNum FROM rob_devis WHERE actif = 1 ORDER BY devisNum DESC");
+						while ($optimput = $reqimput->fetch())
+						{
+							if (isset($reprise)) { if ($rep_devisNum == $optimput['devisNum']) { $optsel = " selected"; } else { $optsel = ""; }
+							} else {
+							if (isset($_POST['devisNum']) AND $probldata == 1) { if ($_POST['devisNum'] == $optimput['devisNum']) {$optsel = " selected"; } else { $optsel = ""; }
+							} else { $optsel = "";} }
+							echo '<option value="'.$optimput['devisNum'].'"'.$optsel.'>'.$optimput['devisNum'].'</option>';
+						}
+						$reqimput->closeCursor();
+						?>
+					</select>
+					<span id="txtHint7">
+						<?php
+						if (isset($reprise)) {
+							$d=$rep_devisNum; $v=$rep_devisVers; include('getDevisVersion.php');
+						} else {
+							if (isset($_POST['devisVersion']) AND $probldata == 1) {
+								$d=$_POST['devisNum']; $v=$_POST['devisVersion']; include('getDevisVersion.php');
+							} else {
+							echo '<input type="hidden" name="devisVersion" value="none" />';
+							}
+						}
+						?>
+					</span>
+					<input type="hidden" id="ma_page" value="0" />
+					<span id="f-rf3">
 					<?php
 					echo ' <input class="form-control form-control-small" size="12" type="text" name="dateTransac" id="dateTransac" value="';
 						if (isset($_POST['dateTransac']))
@@ -164,57 +202,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						}
 						echo '" />';
 					?> 
-					<select class="form-control form-control-small" name="devisNum" />
-						<option value="none">Cr&eacute;er nouveau Num&eacute;ro de devis</option>
-						<?php
-						$reqimput = $bdd->query("SELECT DISTINCT devisNum FROM rob_devis WHERE actif = 1 ORDER BY devisNum DESC");
-						while ($optimput = $reqimput->fetch())
-						{
-							if (isset($reprise)) { if ($rep_devisNum == $optimput['devisNum']) { $optsel = " selected"; } else { $optsel = ""; }
-							} else {
-							if (isset($_POST['devisNum']) AND $probldata == 1) { if ($_POST['devisNum'] == $optimput['devisNum']) {$optsel = " selected"; } else { $optsel = ""; }
-							} else { $optsel = "";} }
-							echo '<option value='.$optimput['devisNum'].$optsel.'>'.$optimput['devisNum'].'</option>';
-						}
-						$reqimput->closeCursor();
-						?>
-					</select>
-					<input type="hidden" id="ma_page" value="0" />
+					</span>
 				</div>
-				<div class="form-divider">
-					<select class="form-control form-control-small" name="nature1" />
-						<option value="none">Nature de prestation</option>
-						<?php
-						$reqimput = $bdd->query("SELECT ID, Description FROM rob_nature1 WHERE actif = 1 ORDER BY Description");
-						while ($optimput = $reqimput->fetch())
-						{
-							if (isset($reprise)) { if ($rep_nat1 == $optimput['ID']) { $optsel = " selected"; } else { $optsel = ""; }
-							} else {
-							if (isset($_POST['nature1']) AND $probldata == 1) { if ($_POST['nature1'] == $optimput['ID']) {$optsel = " selected"; } else { $optsel = ""; }
-							} else { $optsel = "";} }
-							echo '<option value='.$optimput['ID'].$optsel.'>'.$optimput['Description'].'</option>';
-						}
-						$reqimput->closeCursor();
-						?>
-					</select>
-					<input class="form-control form-control-small" type="text" size="70" name="info" placeholder="Description"
-						<?php
-							if (isset($reprise)) { echo ' value="'.$rep_info.'" ';
-							} else {
-								if (isset($_POST['info']) AND $probldata == 1) { echo ' value="'.$_POST['info'].'" '; } else { echo ' value="" '; }
-							}
-						?>
-					/>
-				</div>
-				<div>
-					<input class="form-control form-control-small" type="text" size="10" id="frsCtUnit" name="frsCtUnit" onkeyup="frscalc()" title="UnitHT" placeholder="Unit HT"<?php if (isset($reprise)) { echo ' value="'.$rep_unit.'"'; } ?> />
-					<span class="form-operator">x</span>
-					<input class="form-control form-control-small" type="text" size="5" id="frsQty" name="frsQty" onkeyup="frscalc()" title="Qt" placeholder="Quantit&eacute;"<?php if (isset($reprise)) { echo ' value="'.$rep_nbre.'"'; } else { echo ' value="1"'; } ?> />
-					<span class="form-operator">=</span>
-					<input class="form-control form-control-small" type="text" size="10" id="frstot" name="frstot" title="TotalHT" placeholder="Total HT" <?php if (isset($reprise)) { echo ' value="'.$rep_tota.'"'; } ?> disabled />
-					<input type="hidden" id="frsCtTotHT" name="frsCtTotHT" readonly="readonly"<?php if (isset($idenr)) { echo ' value="'.$rtotal.'"'; } ?> />
-				</div>
-				<div class="form-divider">
+				<div class="form-divider" id="f-rf1">
 					<select class="form-control form-control-small" name="client" id="client" onchange="showProjet(this.value)">
 						<option value="none">Client</option>
 						<?php
@@ -261,7 +251,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						?>
 					</span>
 				</div>
-				<div class="form-divider">
+				<div class="form-divider" id="f-rf2">
 					<select class="form-control form-control-small" name="competition" id="competition" onchange="showType(this.value)">
 						<option value="00">Comp&eacute;tition</option>
 						<option value="0">Non applicable</option>
@@ -290,6 +280,39 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							{ $c=$_POST['competition']; $t=$_POST['typecomp'];  $e=$_POST['evnmt']; include('getevnmt.php'); }
 						} ?>
 					</span>
+				</div>
+				<div class="form-divider">
+					<select class="form-control form-control-small" name="nature1" />
+						<option value="none">Nature de prestation</option>
+						<?php
+						$reqimput = $bdd->query("SELECT ID, Description FROM rob_nature1 WHERE actif = 1 ORDER BY Description");
+						while ($optimput = $reqimput->fetch())
+						{
+							if (isset($reprise)) { if ($rep_nat1 == $optimput['ID']) { $optsel = " selected"; } else { $optsel = ""; }
+							} else {
+							if (isset($_POST['nature1']) AND $probldata == 1) { if ($_POST['nature1'] == $optimput['ID']) {$optsel = " selected"; } else { $optsel = ""; }
+							} else { $optsel = "";} }
+							echo '<option value='.$optimput['ID'].$optsel.'>'.$optimput['Description'].'</option>';
+						}
+						$reqimput->closeCursor();
+						?>
+					</select>
+					<input class="form-control form-control-small" type="text" size="70" name="info" placeholder="Description"
+						<?php
+							if (isset($reprise)) { echo ' value="'.$rep_info.'" ';
+							} else {
+								if (isset($_POST['info']) AND $probldata == 1) { echo ' value="'.$_POST['info'].'" '; } else { echo ' value="" '; }
+							}
+						?>
+					/>
+				</div>
+				<div>
+					<input class="form-control form-control-small" type="text" size="10" id="frsCtUnit" name="frsCtUnit" onkeyup="frscalc()" title="UnitHT" placeholder="Unit HT"<?php if (isset($reprise)) { echo ' value="'.$rep_unit.'"'; } ?> />
+					<span class="form-operator">x</span>
+					<input class="form-control form-control-small" type="text" size="5" id="frsQty" name="frsQty" onkeyup="frscalc()" title="Qt" placeholder="Quantit&eacute;"<?php if (isset($reprise)) { echo ' value="'.$rep_nbre.'"'; } else { echo ' value="1"'; } ?> />
+					<span class="form-operator">=</span>
+					<input class="form-control form-control-small" type="text" size="10" id="frstot" name="frstot" title="TotalHT" placeholder="Total HT" <?php if (isset($reprise)) { echo ' value="'.$rep_tota.'"'; } ?> disabled />
+					<input type="hidden" id="frsCtTotHT" name="frsCtTotHT" readonly="readonly"<?php if (isset($reprise)) { echo ' value="'.$rep_tota.'"'; } ?> />
 				</div>
 				<div>
 					<input class="btn btn-small btn-primary" type="submit" Value="Enregistrer" name="Valider" />
@@ -377,8 +400,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '<input type="submit" id="buttonval" class="btn btn-primary" name="toutdevis" value="Visualiser tous les devis"></form>';
 			
 			//EDITER LE DEVIS
-			echo '<form action="devis-pdf.php" method="post" class="form-right">';
-				echo '<select class="form-control form-control-small" name="devisNumRest" />';
+			echo '<form action="devis-pdf.php" method="post" class="form-right" target="_blank">';
+				echo '<select class="form-control form-control-small" name="devisNum" />';
 					$reqimput = $bdd->query("SELECT DISTINCT devisNum FROM rob_devis WHERE actif = 1 ORDER BY devisNum DESC");
 					while ($optimput = $reqimput->fetch())
 					{
@@ -386,7 +409,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					}
 					$reqimput->closeCursor();
 				echo '</select>';
-				echo '<select class="form-control form-control-small" name="devisVersRest" />';
+				echo '<select class="form-control form-control-small" name="devisVers" />';
 					$reqimput = $bdd->query("SELECT DISTINCT devisVersion FROM rob_devis WHERE actif = 1 ORDER BY devisVersion DESC");
 					while ($optimput = $reqimput->fetch())
 					{
@@ -402,7 +425,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<table id="tablerestit" class="table table-striped">
 			<thead>
 				<tr>
-					<th id="t-containertit">N° de devis</th>
+					<th id="t-containertit">Num</th>
 					<th id="t-containertit">Version</th>
 					<th id="t-containertit">Client/ Projet/ Mission/ Cat&eacute;gorie</th>
 					<th id="t-containertit">Comp&eacute;tition/ Type/ &Eacute;v&eacute;nement</th>

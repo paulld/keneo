@@ -327,6 +327,44 @@ function showCatEve(streve)
 }
 
 
+//DEVIS
+//Afficher le projet dynamiquement
+function showDevisVersion(str)
+{
+	if (str=="none")
+	{
+		document.getElementById("txtHint7").innerHTML="";
+		document.getElementById('f-rf1').style.display = 'block';
+		document.getElementById('f-rf2').style.display = 'block';
+		document.getElementById('f-rf3').style.display = 'block';
+		return;
+	}
+	else
+	{
+		document.getElementById('f-rf1').style.display = 'none';
+		document.getElementById('f-rf2').style.display = 'none';
+		document.getElementById('f-rf3').style.display = 'none';
+	}
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("txtHint7").innerHTML=xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET","getDevisVersion.php?d="+str,true);
+	xmlhttp.send();
+}
+ 
+
 //VALIDATION DES TEMPS
 //Afficher la requete du filtre dynamiquement
 function showFilterValtps(param)
