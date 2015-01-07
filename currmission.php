@@ -3,21 +3,26 @@ session_start();
 include("appel_db.php");
 
 	?>
-	<select onchange="showNewMis(this.value)" id="w_input_90">
-		<option value="0">Mission existante</option>
-		<option value="1">Ajouter une mission</option>
-	</select>
+
+	<div class="col-sm-3">
+		<select class="form-control" onchange="showNewMis(this.value)">
+			<option value="0">Mission existante</option>
+			<option value="1">Ajouter une mission</option>
+		</select>
+	</div>
 	
-	<?php
-	echo ' <select name="newcomb3" id="w_input_90" >';
-	echo ' <option value=0></option>';
-	$req = "SELECT * FROM rob_imputl3 WHERE actif=1 ORDER BY code";
-	$affmis = $bdd->query($req);
-	while ($optionmis = $affmis->fetch())
-	{
-		echo '<option value='.$optionmis['ID'].'>'.$optionmis['code'].' | '.$optionmis['description'].'</option>';
-	}
-	echo '</select> ';
-	$affmis->closeCursor();
-	?>
-	<input id="w_input_90val" type="submit" Value="Ajouter" />
+	<div class="col-sm-7">
+		<select class="form-control" name="newcomb3" >
+			<option value=0></option>
+			<?php
+				$req = "SELECT * FROM rob_imputl3 WHERE actif=1 ORDER BY code";
+				$affmis = $bdd->query($req);
+				while ($optionmis = $affmis->fetch())
+				{
+					echo '<option value='.$optionmis['ID'].'>'.$optionmis['code'].' | '.$optionmis['description'].'</option>';
+				}
+				$affmis->closeCursor();
+			?>
+		</select>
+	</div>
+	<input class="btn btn-primary" type="submit" Value="Ajouter" />
