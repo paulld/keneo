@@ -3,24 +3,85 @@ session_start();
 include("appel_db.php");
 
 	?>
-	<select name="client" onchange="showCurrProj(this.value)" id="w_input_90">
-		<option value="0">Projet existant</option>
-		<option value="1" selected>Ajouter un projet</option>
-	</select><br/>
-	<?php
-	echo '<table id="newimput"><tr><th id="newimputth" colspan="2">Param&egrave;tres du nouveau projet</th></tr>';
-	echo '<tr><td id="newimputtdr">Code</td><td id="newimputtd"><input id="w_input_90" type="text" size="15" name="newprjcode" /></td></tr>';
-	echo '<tr><td id="newimputtdr">Alias</td><td id="newimputtd"><input id="w_input_90" type="text" size="3" name="newprjplan" /></td></tr>';
-	echo '<tr><td id="newimputtdr">Description</td><td id="newimputtd"><input id="w_input_90" type="text" size="45" name="newprjdesc" /></td></tr>';
-	echo '<tr><td id="newimputtdr">Responsable</td><td id="newimputtd">';
-		echo '<select name="newprjresp" id="w_input_90" >';
-			echo '<option value=0></option>';
-			$affcollab = $bdd->query("SELECT * FROM rob_user WHERE actif='1' ORDER BY nom");
-			while ($optioncoll = $affcollab->fetch())
-			{
-				echo '<option value='.$optioncoll['ID'].'>'.substr ($optioncoll['prenom'],0,1).'. '.$optioncoll['nom'].'</option>';
-			}
-			$affcollab->closeCursor();
-		echo '</select></td></tr></table>';
-	echo '<input id="w_input_90val" type="submit" Value="Ajouter" />';
-?> 
+	<div class="col-sm-3">
+		<select class="form-control" name="client" onchange="showCurrProj(this.value)">
+			<option value="0">Projet existant</option>
+			<option value="1" selected>Ajouter un projet</option>
+		</select>
+	</div>
+
+	<div class="col-sm-8">
+		<!-- <p>Param&egrave;tres du nouveau projet</p> -->
+
+		<div class="form-group form-group-new-project">
+			<label for="modcode" class="col-xs-4 control-label">Code</label>
+			<div class="col-sm-8">
+				<input class="form-control" type="text" size="15" name="newprjcode" />
+			</div>
+		</div>
+
+		<div class="form-group form-group-new-project">
+			<label for="modcode" class="col-xs-4 control-label">Alias</label>
+			<div class="col-sm-8">
+				<input class="form-control" type="text" size="3" name="newprjplan" />
+			</div>
+		</div>
+
+		<div class="form-group form-group-new-project">
+			<label for="modcode" class="col-xs-4 control-label">Description</label>
+			<div class="col-sm-8">
+				<input class="form-control" type="text" size="45" name="newprjdesc" />
+			</div>
+		</div>
+
+		<div class="form-group form-group-new-project">
+			<label for="modcode" class="col-xs-4 control-label">Responsable</label>
+			<div class="col-sm-8">
+				<select class="form-control" name="newprjresp" >
+					<option value=0></option>
+					<?php
+						$affcollab = $bdd->query("SELECT * FROM rob_user WHERE actif='1' ORDER BY nom");
+						while ($optioncoll = $affcollab->fetch())
+						{
+							echo '<option value='.$optioncoll['ID'].'>'.substr ($optioncoll['prenom'],0,1).'. '.$optioncoll['nom'].'</option>';
+						}
+						$affcollab->closeCursor();
+					?> 
+				</select>
+			</div>
+		</div>
+		<!-- <table>
+			<tr>
+				<th colspan="2">Param&egrave;tres du nouveau projet</th>
+			</tr>
+			<tr>
+				<td>Code</td>
+				<td id="newimputtd"><input type="text" size="15" name="newprjcode" /></td>
+			</tr>
+			<tr>
+				<td>Alias</td>
+				<td id="newimputtd"><input type="text" size="3" name="newprjplan" /></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td id="newimputtd"><input type="text" size="45" name="newprjdesc" /></td>
+			</tr>
+			<tr>
+				<td>Responsable</td>
+				<td id="newimputtd">
+					<select name="newprjresp" >
+						<option value=0></option>
+						<?php
+							$affcollab = $bdd->query("SELECT * FROM rob_user WHERE actif='1' ORDER BY nom");
+							while ($optioncoll = $affcollab->fetch())
+							{
+								echo '<option value='.$optioncoll['ID'].'>'.substr ($optioncoll['prenom'],0,1).'. '.$optioncoll['nom'].'</option>';
+							}
+							$affcollab->closeCursor();
+						?> 
+					</select>
+				</td>
+			</tr>
+		</table> -->
+	</div>
+	<!-- <input type="submit" Value="Ajouter" /> -->

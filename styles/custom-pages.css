@@ -249,6 +249,15 @@ p.new-picture-label {
   font-weight: bold;
 }
 
+.table-align-top>thead>tr>th,
+.table-align-top>tbody>tr>th,
+.table-align-top>tfoot>tr>th,
+.table-align-top>thead>tr>td,
+.table-align-top>tbody>tr>td,
+.table-align-top>tfoot>tr>td {
+  vertical-align: top;
+}
+
 .duplicate-edit-remove button, .btn-icon {
   border: none;
   background: none;
@@ -367,4 +376,12 @@ tr.tr-highlight {
   position: relative;
   top: 2px;
   margin: 0 7px 0 0;
+}
+
+
+
+/* CLIENTS */
+
+.form-group-new-project {
+  height: 25px;
 }
