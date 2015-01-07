@@ -49,39 +49,40 @@ $bdd->query($req3);
 ?>
 
 <!-- ================= RESTITUTION =============== -->
-<div id="sstitre">R&eacute;cup&eacute;rations et cong&eacute;s</div>
-<table id="tablerestit" class="table table-striped temp-table">
-	<tr>
-		<td id="t-containertit" rowspan="2">Collaborateurs</td>
-		<td id="t-containertit" align="right">R&eacute;cup&eacute;ration</td>
-		<td id="t-containertit" align="center" colspan="2">RTT [01/01 > 31/12]</td>
-		<td id="t-containertit" align="center" colspan="2">CP [01/06 > 31/05]</td>
-	</tr>
-	<tr>
-		<td id="t-containertit" align="right">&agrave; prendre</td>
-		<td id="t-containertit" align="right">pris</td>
-		<td id="t-containertit" align="right">restants</td>
-		<td id="t-containertit" align="right">pris</td>
-		<td id="t-containertit" align="right">restants</td>
-	</tr>
-	<?php
-	$i=1;
-	while ($donnee = $result->fetch())
-	{
-	?>
+<h2>R&eacute;cup&eacute;rations et cong&eacute;s</h2>
+<table class="table table-striped">
+	<thead>
 		<tr>
-			<td id="t-container<?php echo $i;?>"><?php echo $donnee['nom'].' '.$donnee['prenom'];?></td>
-			<td id="t-container<?php echo $i;?>" align="right"><?php echo $donnee['recuprest'];?></td>
-			<td id="t-container<?php echo $i;?>" align="right"><?php echo $donnee['rttpris'];?></td>
-			<td id="t-container<?php echo $i;?>" align="right"><?php echo $donnee['rttrest'];?></td>
-			<td id="t-container<?php echo $i;?>" align="right"><?php echo $donnee['cppris'];?></td>
-			<td id="t-container<?php echo $i;?>" align="right"><?php echo $donnee['cprest'];?></td>
+			<td rowspan="2">Collaborateurs</td>
+			<td align="right">R&eacute;cup&eacute;ration</td>
+			<td align="center" colspan="2">RTT [01/01 > 31/12]</td>
+			<td align="center" colspan="2">CP [01/06 > 31/05]</td>
 		</tr>
-
-	<?php
-		if ($i == 1) { $i = 2; } else { $i = 1; }
-	}
-	?>
+		<tr>
+			<td align="right">&agrave; prendre</td>
+			<td align="right">pris</td>
+			<td align="right">restants</td>
+			<td align="right">pris</td>
+			<td align="right">restants</td>
+		</tr>
+	</thead>
+	<tbody>
+		<?php
+		
+		while ($donnee = $result->fetch()) {
+			?>
+			<tr>
+				<td><?php echo $donnee['nom'].' '.$donnee['prenom'];?></td>
+				<td align="right"><?php echo $donnee['recuprest'];?></td>
+				<td align="right"><?php echo $donnee['rttpris'];?></td>
+				<td align="right"><?php echo $donnee['rttrest'];?></td>
+				<td align="right"><?php echo $donnee['cppris'];?></td>
+				<td align="right"><?php echo $donnee['cprest'];?></td>
+			</tr>
+			<?php
+		}
+		?>
+	</tbody>
 </table>
 <?php
 $result->closeCursor();

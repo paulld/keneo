@@ -83,6 +83,13 @@ nav.nav-fixed-top > .container {
   left: 0;
   z-index: 1;
 }
+.nav-name {
+  float: right;
+  overflow: hidden;
+  max-height: 18px;
+  text-align: right;
+  word-break: break-all;
+}
 .nav-name a {
   margin-top: 1px;
 }

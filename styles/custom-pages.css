@@ -96,6 +96,7 @@ input.checkbox {
 .nav-tabs-outer .nav.nav-tabs li a {
   border: none;
   color: #fff;
+  text-transform: uppercase;
 }
 .nav-tabs-outer .nav.nav-tabs li.active {
   background: transparent;
@@ -244,34 +245,46 @@ p.new-picture-label {
 .table>tfoot>tr>td {
   vertical-align: middle;
 }
+.table>thead {
+  font-weight: bold;
+}
 
-.duplicate-edit-remove button {
+.table-align-top>thead>tr>th,
+.table-align-top>tbody>tr>th,
+.table-align-top>tfoot>tr>th,
+.table-align-top>thead>tr>td,
+.table-align-top>tbody>tr>td,
+.table-align-top>tfoot>tr>td {
+  vertical-align: top;
+}
+
+.duplicate-edit-remove button, .btn-icon {
   border: none;
   background: none;
   margin: 0;
   padding: 0;
   opacity: .8;
 }
-.duplicate-edit-remove button:hover {
+.duplicate-edit-remove button:hover, .btn-icon:hover {
   background: transparent;
   opacity: 1;
 }
 .duplicate-edit-remove button:nth-of-type(2) {
   margin: 0 7px;
 }
-.duplicate-edit-remove i {
+.duplicate-edit-remove i.fa, .btn-icon i.fa {
   font-size: 18px;
 }
-.duplicate-edit-remove i.fa.fa-trash-o {
+.duplicate-edit-remove i.fa.fa-trash-o, .btn-red i.fa {
   color: #d9534f;
 }
-.duplicate-edit-remove i.fa.fa-files-o {
+.duplicate-edit-remove i.fa.fa-files-o, .btn-green i.fa {
   color: #4cae4c;
 }
-.duplicate-edit-remove i.fa.fa-pencil-square-o {
+.duplicate-edit-remove i.fa.fa-pencil-square-o, .btn-blue i.fa {
   color: #337ab7;
 }
-.duplicate-edit-remove i.fa.fa-unlock {
+.duplicate-edit-remove i.fa.fa-unlock, .btn-orange i.fa {
   color: #f0ad4e;
 }
 .form-error-message {
@@ -363,4 +376,12 @@ tr.tr-highlight {
   position: relative;
   top: 2px;
   margin: 0 7px 0 0;
+}
+
+
+
+/* CLIENTS */
+
+.form-group-new-project {
+  height: 25px;
 }

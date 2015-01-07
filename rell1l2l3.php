@@ -127,34 +127,29 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li>
-			<li><a class="typ" href="menu_setup.php"><span>DB Management</span></a></li>
-			<li><a class="typ" href="imputation.php"><span>Clients</span></a></li>
-			<?php
-			if (isset($_POST['IDrel']))
-			{ echo '<li><a class="typ" href="rell1l2.php?IDrel='.$_POST['IDrel'].'"><span>Client-Projets</span></a></li>'; }
-			else { echo '<li><a class="typ" href="rell1l2.php?IDrel='.$_GET['IDrel'].'"><span>Client-Projets</span></a></li>'; }
-			?>
-			<li><a class="typ" href="#"><span>Client-Projet-Missions</span></a></li>
-		</ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Client-Projet-Missions management</div>
+	<div class="background-db-management background-image"></div>
+	<div class="overlay"></div>
 
-	<?php
-	if ($imputtmp !=0 AND $imput2tmp !=0 AND $errvar == 0)
-	{
+	<section class="container section-container section-toggle" id="saisie-temps">
+		<div class="section-title">
+			<h1>Client-Projet-Missions management</h1>
+		</div>
+
+		<?php
+		if ($imputtmp !=0 AND $imput2tmp !=0 AND $errvar == 0) {
 		?>
-		<div id="coeur">
-			<table id="tablerestit" class="table table-striped temp-table">
-				<tr>
-					<td id="t-containertit">Client</td>
-					<td id="t-containertit">Projet</td>
-					<td id="t-containertit">Mission</td>
-					<td id="t-containertit">Description</td>
-					<td id="t-containertit" colspan="3">Actions</td>
-				</tr>
+		
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Client</th>
+						<th>Projet</th>
+						<th>Mission</th>
+						<th>Description</th>
+						<th colspan="3">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
 				<?php
 				$req="SELECT T3.code, T3.description, T0.ID, T0.imputID, T0.imputID2, T0.imputID3, T0.actif, T1.code, T2.code
 					FROM rob_imprel3 T0
@@ -165,101 +160,148 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					ORDER BY T3.description";
 				$reponse = $bdd->query($req);
 				$checkrep = $reponse->rowCount();
-				if ($checkrep != 0)
-				{
-					$i = 1;
-					while ($donnee = $reponse->fetch() )
-					{
+				if ($checkrep != 0) {
+					while ($donnee = $reponse->fetch() ) {
 						?>
 						<tr>
-							<td id="t-container<?php echo $i;?>"><?php echo $donnee[7];?></td>
-							<td id="t-container<?php echo $i;?>"><?php echo $donnee[8];?></td>
-							<td id="t-container<?php echo $i;?>"><?php echo $donnee[0];?></td>
-							<td id="t-container<?php echo $i;?>"><?php if ($donnee[1] != "") { echo $donnee[1]; } ?></td>
+							<td><?php echo $donnee[7];?></td>
+							<td><?php echo $donnee[8];?></td>
+							<td><?php echo $donnee[0];?></td>
+							<td><?php if ($donnee[1] != "") { echo $donnee[1]; } ?></td>
 							<?php if ($donnee[6] == 1)
 							{ ?>
-								<td id="t-ico<?php echo $i;?>"><form action="rell1l2l3.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" /><input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" /><input type="hidden" value="<?php echo $donnee[2];?>" name="IDinact" /><input border=0 src="images/RoB_activ.png" type=image Value=submit title="Desactiver la relation"></form></td>
-								<td id="t-ico<?php echo $i;?>"><form action="rell1l2l3l4.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" /><input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" /><input type="hidden" value="<?php echo $donnee[5];?>" name="IDrel3" /><input border=0 src="images/RoB_relact.png" type=image Value=submit title="Vers les missions en relation" name="relat"></form></td>
+								<td>
+									<form action="rell1l2l3.php" method="post">
+										<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
+										<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
+										<input type="hidden" value="<?php echo $donnee[2];?>" name="IDinact" />
+										<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver la relation"><i class="fa fa-toggle-on"></i></button>
+									</form>
+								</td>
+								<td>
+									<form action="rell1l2l3l4.php" method="post">
+										<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
+										<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
+										<input type="hidden" value="<?php echo $donnee[5];?>" name="IDrel3" />
+										<button class="btn btn-small btn-default btn-icon btn-orange" type="submit" title="Vers les missions en relation" name="relat"><i class="fa fa-link"></i></button>
+									</form>
+								</td>
 								<?php
-							}
-							else
-							{
+							} else {
 								?>
-								<td id="t-ico<?php echo $i;?>"><form action="rell1l2l3.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" /><input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" /><input type="hidden" value="<?php echo $donnee[2];?>" name="IDact" /><input border=0 src="images/RoB_deactiv.png" type=image Value=submit title="Activer la relation"></form></td>
-								<td id="t-ico<?php echo $i;?>"><form action="rell1l2l3l4.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" /><input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" /><input type="hidden" value="<?php echo $donnee[5];?>" name="IDrel3" /><input border=0 src="images/RoB_reldeact.png" type=image Value=submit title="Vers les missions en relation" name="relat"></form></td>
+								<td>
+									<form action="rell1l2l3.php" method="post">
+										<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
+										<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
+										<input type="hidden" value="<?php echo $donnee[2];?>" name="IDact" />
+										<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="D&eacute;sactiver la relation"><i class="fa fa-toggle-on"></i></button>
+									</form>
+								</td>
+								<td>
+									<form action="rell1l2l3l4.php" method="post">
+										<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
+										<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
+										<input type="hidden" value="<?php echo $donnee[5];?>" name="IDrel3" />
+										<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Vers les missions en relation" name="relat"><i class="fa fa-link"></i></button>
+									</form>
+								</td>
 								<?php
 							}
 							?>
-							<td id="t-ico<?php echo $i;?>"><form action="modif_imputl3.php" method="post"><input type="hidden" value="<?php echo $donnee[5];?>" name="IDmodif" /><input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" /><input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" /><input border=0 src="images/RoB_info.png" type=image Value=submit title="Modifier les informations" name="modif"></form></td>
+							<td>
+								<form action="modif_imputl3.php" method="post">
+									<input type="hidden" value="<?php echo $donnee[5];?>" name="IDmodif" />
+									<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
+									<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
+									<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
+								</form>
+							</td>
 						</tr>
 					<?php
-						if ($i == 1) { $i = 2; } else { $i = 1; }
 					}
 				} else {
-					echo '<tr><td colspan="5">Pas de relation existante</td></tr>';
+					?>
+					<tr>
+						<td colspan="5">
+							Pas de relation existante
+						</td>
+					</tr>
+					<?php
 				}
 				$reponse->closeCursor();
 				?>
+				</tbody>
 			</table>
-		</div>
 		
-		<div id="sstitre">Ajouter une nouvelle relation Client-Projet-Mission</div>
-		<table id="tablerestit" class="table table-striped temp-table">
-			<tr>
-				<td id="t-containertit">Client</td>
-				<td id="t-containertit">Projet</td>
-				<td id="t-containertit">Mission</td>
-			</tr>
-			<tr>
-				<td id="t-container">
-					<?php
-					$repimpid = $bdd->query("SELECT * FROM rob_imputl1 WHERE ID='$imputtmp'");
-					$donimpid = $repimpid->fetch();
-					echo '<input id="w_inputtxt_90" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
-					$repimpid->closeCursor();
-					?>
-				</td>
-				<td id="t-container">
-					<?php
-					$repimpid = $bdd->query("SELECT * FROM rob_imputl2 WHERE ID='$imput2tmp'");
-					$donimpid = $repimpid->fetch();
-					echo '<input id="w_inputtxt_90" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
-					$repimpid->closeCursor();
-					?>
-				</td>
-				<td id="t-container">
-					<form action="rell1l2l3.php" method="post">
-						<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
-						<input type="hidden" value="<?php echo $imput2tmp; ?>" name="IDrel2" />
-						<div id="ProjetHint">
-							<select onchange="showNewMis(this.value)" id="w_input_90">
-								<option value="0">Mission existante</option>
-								<option value="1">Ajouter une mission</option>
-							</select>
+		
+		<h2>Ajouter une nouvelle relation Client-Projet-Mission</h2>
+		<form action="rell1l2l3.php" method="post">
+			<table id="tablerestit" class="table table-striped table-align-top">
+				<thead>
+					<tr>
+						<th>Client</th>
+						<th>Projet</th>
+						<th>Mission</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
 							<?php
-							echo ' <select name="newcomb3" id="w_input_90" >';
-							echo ' <option value=0></option>';
-							$req = "SELECT * FROM rob_imputl3 WHERE actif=1 ORDER BY code";
-							$affpro = $bdd->query($req);
-							while ($optionpro = $affpro->fetch())
-							{
-								echo '<option value='.$optionpro['ID'].'>'.$optionpro['code'].' | '.$optionpro['description'].'</option>';
-							}
-							echo '</select> ';
-							$affpro->closeCursor();
+							$repimpid = $bdd->query("SELECT * FROM rob_imputl1 WHERE ID='$imputtmp'");
+							$donimpid = $repimpid->fetch();
+							echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
+							$repimpid->closeCursor();
 							?>
-							<input id="w_input_90val" type="submit" Value="Ajouter" />
-						</div>
-					</form>
-				</td>
-			</tr>
-		</table>
+						</td>
+						<td>
+							<?php
+							$repimpid = $bdd->query("SELECT * FROM rob_imputl2 WHERE ID='$imput2tmp'");
+							$donimpid = $repimpid->fetch();
+							echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
+							$repimpid->closeCursor();
+							?>
+						</td>
+						<td>
+								<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
+								<input type="hidden" value="<?php echo $imput2tmp; ?>" name="IDrel2" />
+								<div id="ProjetHint">
+									<div class="col-sm-3">
+										<select class="form-control" onchange="showNewMis(this.value)">
+											<option value="0">Mission existante</option>
+											<option value="1">Ajouter une mission</option>
+										</select>
+									</div>
+									<div class="col-sm-7">
+										<select class="form-control" name="newcomb3">
+											<option value=0></option>
+											<?php
+												$req = "SELECT * FROM rob_imputl3 WHERE actif=1 ORDER BY code";
+												$affpro = $bdd->query($req);
+												while ($optionpro = $affpro->fetch())
+												{
+													echo '<option value='.$optionpro['ID'].'>'.$optionpro['code'].' | '.$optionpro['description'].'</option>';
+												}
+												$affpro->closeCursor();
+											?>
+										</select>
+									</div>
+									<input class="btn btn-primary" type="submit" Value="Ajouter" />
+								</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
 		<?php
 	} else {
 		if ($info != '') { echo '<div id="bas">'.$info.'</div>'; }
 		if ($test != '') { echo '<div id="bas">'.$test.'</div>'; }
 		echo "Probleme dans l'initialisation des variables - ".$errvar.' - '.$imputtmp;
 	}
+	?>
+	</section>
+	<?php
 	include("footer.php");
 }
 else
