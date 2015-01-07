@@ -111,9 +111,14 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					//Nature
 					echo '<td style="width: 60%; '.$d.$e.'">'.$n.$f.'</td>';
 					//valeurs
+					if ($donneea['descriptif'] != "") {
 					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['unitaire'],2,".","").'</td>';
 					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['quantite'],2,".","").'</td>';
+					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['total'],2,".","").'</td>'; } else {
+					echo '<td style="width: 10%; '.$d.$e.'" align="right">&nbsp;</td>';
+					echo '<td style="width: 10%; '.$d.$e.'" align="right">&nbsp;</td>';
 					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['total'],2,".","").'</td>';
+					}
 					echo '<td style="width: 5%;">&nbsp;</td></tr>';
 				}
 				echo '</table>';
