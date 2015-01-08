@@ -157,7 +157,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					{
 						?>
 						<form action="collaborateurs.php" method="post"><td id="t-ico<?php echo $i;?>">
-							<input type="hidden" value="<?php echo $donnee[10];?>" name="IDinact" /><input border=0 src="images/RoB_activ.png" type=image Value=submit title="Desactiver un collaborateur" >
+							<input type="hidden" value="<?php echo $donnee[10];?>" name="IDinact" />
+							<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver un collaborateur"><i class="fa fa-toggle-on"></i></button>
 						</td></form>
 						<?php
 					}
@@ -165,13 +166,15 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					{
 						?>
 						<form action="collaborateurs.php" method="post"><td id="t-ico<?php echo $i;?>">
-							<input type="hidden" value="<?php echo $donnee[10];?>" name="IDact" /><input border=0 src="images/RoB_deactiv.png" type=image Value=submit title="Activer un collaborateur" >
+							<input type="hidden" value="<?php echo $donnee[10];?>" name="IDact" />
+							<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer un collaborateur"><i class="fa fa-toggle-off"></i></button>
 						</td></form>
 						<?php 
 					} 
 					?>
 					<form action="modif_collab.php" method="post"><td id="t-ico<?php echo $i;?>">
-						<input type="hidden" value="<?php echo $donnee[10];?>" name="IDmodif" /><input border=0 src="images/RoB_info.png" type=image Value=submit title="Modifier un collaborateur" name="modif">
+						<input type="hidden" value="<?php echo $donnee[10];?>" name="IDmodif" />
+						<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
 					</td></form>
 				</tr>
 				<?php
@@ -237,7 +240,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					{
 						?>
 						<form action="collaborateurs.php" method="post"><td id="t-ico<?php echo $i;?>">
-							<input type="hidden" value="<?php echo $donnee[10];?>" name="IDinact" /><input border=0 src="images/RoB_activ.png" type=image Value=submit title="Desactiver un collaborateur" >
+							<input type="hidden" value="<?php echo $donnee[10];?>" name="IDinact" />
+							<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver un collaborateur"><i class="fa fa-toggle-on"></i></button>
 						</td></form>
 						<?php
 					}
@@ -245,13 +249,15 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					{
 						?>
 						<form action="collaborateurs.php" method="post"><td id="t-ico<?php echo $i;?>">
-							<input type="hidden" value="<?php echo $donnee[10];?>" name="IDact" /><input border=0 src="images/RoB_deactiv.png" type=image Value=submit title="Activer un collaborateur" >
+							<input type="hidden" value="<?php echo $donnee[10];?>" name="IDact" />
+							<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer un collaborateur"><i class="fa fa-toggle-off"></i></button>
 						</td></form>
 						<?php 
 					} 
 					?>
 					<form action="modif_collab.php" method="post"><td id="t-ico<?php echo $i;?>">
-						<input type="hidden" value="<?php echo $donnee[10];?>" name="IDmodif" /><input border=0 src="images/RoB_info.png" type=image Value=submit title="Modifier un collaborateur" name="modif">
+						<input type="hidden" value="<?php echo $donnee[10];?>" name="IDmodif" />
+						<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
 					</td></form>
 				</tr>
 				<?php

@@ -12,7 +12,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	{
 		if (isset($_POST['client']) AND isset($_POST['dateTransac']) AND isset($_POST['competition']) AND isset($_POST['nature1']) OR isset($_POST['devisNum']))
 		{
-			if ($_POST['client'] != "none" AND $_POST['projet'] != "none" AND $_POST['competition'] != "none" AND $_POST['nature1'] != "none" OR isset($_POST['devisNum']))
+			if ($_POST['client'] != "none" AND $_POST['projet'] != "none" AND $_POST['nature1'] != "none" OR isset($_POST['devisNum']))
 			{
 				
 				//Check sur projet et client
@@ -146,11 +146,15 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		</ul>
 	</div>
 
-	<section class="container section-container" id="saisie-frais">
-		<div class="section-title">
-			<h1>Cr&eacute;er une ligne de devis</h1>
+	<section class="container section-container section-toggle" id="saisie-frais">
+		<div class="section-title" id="toggle-title">
+			<h1>
+				<i class="fa fa-chevron-down"></i>
+				Cr&eacute;er une ligne de devis
+				<i class="fa fa-chevron-down"></i>
+			</h1>
 		</div>
-		<form action="devis.php" method="post" id="form-saisie-frais">
+		<form action="devis.php" method="post" id="toggle-content" style="<?php if (isset($_POST['Reprise']) || isset($_POST['Modif']) || isset($_POST['Valider'])) { } else { echo 'display: none;'; } ?>">
 			<div class="form-inner">
 				<div>
 					<select class="form-control form-control-small" name="devisNum" id="devisNum" onchange="showDevisVersion(this.value)" >
@@ -182,7 +186,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						?>
 					</span>
 					<input type="hidden" id="ma_page" value="0" />
-					<span id="f-rf3">
+					<span id="f-rf3" <?php if (isset($_POST['Reprise'])) { echo 'style="display: none;"'; } ?>>
 					<?php
 					echo ' <input class="form-control form-control-small" size="12" type="text" name="dateTransac" id="dateTransac" value="';
 						if (isset($_POST['dateTransac']))
@@ -200,11 +204,11 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								echo date("d/m/Y");
 							}
 						}
-						echo '" />';
+						echo '" title="date d\'&eacute;tablissement du devis" />';
 					?> 
 					</span>
 				</div>
-				<div class="form-divider" id="f-rf1">
+				<div class="form-divider" id="f-rf1" <?php if (isset($_POST['Reprise'])) { echo 'style="display: none;"'; } ?>>
 					<select class="form-control form-control-small" name="client" id="client" onchange="showProjet(this.value)">
 						<option value="none">Client</option>
 						<?php
@@ -251,10 +255,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						?>
 					</span>
 				</div>
-				<div class="form-divider" id="f-rf2">
+				<div class="form-divider" id="f-rf2" <?php if (isset($_POST['Reprise'])) { echo 'style="display: none;"'; } ?>>
 					<select class="form-control form-control-small" name="competition" id="competition" onchange="showType(this.value)">
-						<option value="00">Comp&eacute;tition</option>
-						<option value="0">Non applicable</option>
+						<option value="0">Comp&eacute;tition</option>
 						<?php
 						$reqimput = $bdd->query("SELECT * FROM rob_compl1 WHERE actif=1 ORDER BY description");
 						while ($optimput = $reqimput->fetch())
@@ -480,11 +483,39 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					ORDER BY T1.devisNum DESC, T1.devisVersion DESC, T3.code, T4.code, T11.Description";
 				$reponsea = $bdd->query($req);
 				$checkrep=$reponsea->rowCount();
+				$devisNumTmp = "";
+				$devisVersTmp = "";
+				$devisTotTmp = 0;
 
 				if ($checkrep != 0)
 				{
 					while ($donneea = $reponsea->fetch())
 					{
+						if ($devisNumTmp == "")
+						{
+							$devisNumTmp = $donneea['devisNum'];
+							$devisVersTmp = $donneea['devisVersion'];
+							$devisTotTmp = $devisTotTmp + $donneea['total'];
+						}
+						else
+						{
+							if ($devisNumTmp != $donneea['devisNum'] OR $devisVersTmp != $donneea['devisVersion'])
+							{
+								echo '<tr class="tr-'.$highlight.'">';
+								echo '<td><strong>'.$devisNumTmp.'</strong></td>';
+								echo '<td><strong>'.$devisVersTmp.'</strong></td>';
+								echo '<td colspan=7><strong>&nbsp;</strong></td>';
+								echo '<td align="right"><strong>'.$devisTotTmp.'</strong></td>';
+								echo '<td>&nbsp;</td>';
+								$devisNumTmp = $donneea['devisNum'];
+								$devisVersTmp = $donneea['devisVersion'];
+								$devisTotTmp = $donneea['total'];
+							}
+							else
+							{
+								$devisTotTmp = $devisTotTmp + $donneea['total'];
+							}
+						}
 						//if ($donneea[2] <= $deadline OR $donneea[21] != '' OR $donneea[22] == 2) { 
 						//	$l = " disabled"; 
 						//	$highlight ="v"; 
@@ -541,6 +572,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						echo '</form></td></tr>';
 						if ($i == 1) { $i = 2; } else { $i = 1; }
 					}
+					echo '<tr class="tr-'.$highlight.'">';
+					echo '<td><strong>'.$devisNumTmp.'</strong></td>';
+					echo '<td><strong>'.$devisVersTmp.'</strong></td>';
+					echo '<td colspan=7><strong>&nbsp;</strong></td>';
+					echo '<td align="right"><strong>'.$devisTotTmp.'</strong></td>';
+					echo '<td>&nbsp;</td>';
 				}
 				$reponsea->closeCursor();
 				?>
