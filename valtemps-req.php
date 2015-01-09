@@ -40,64 +40,61 @@ if ($_SESSION['id_lev_tms'] == 6) { $fltuser = ''; } else { if ($_SESSION['id_le
 
 
 // ================= REQUETE1 =============== 
-$req = "SELECT T2.ID userID, T2.matricule trig, T1.datejour date, T1.info info, T1.valeur jour, T1.ID ID, T1.validation validation,
-		T6.Description activite, T3.description client, T4.description projet, T5.description mission, T1.recup recup 
+$req = "SELECT T2.matricule trig, MONTH(T1.datejour) mois, YEAR(T1.datejour) annee, SUM(T1.valeur) jour,
+		T3.description client, T4.description projet, T5.description mission
 	FROM rob_temps T1 
 	INNER JOIN rob_user T2 ON T2.ID = T1.userID
 	INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID 
 	INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputIDl2 
 	INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputIDl3 
-	INNER JOIN rob_activite T6 ON T6.ID = T1.activID 
-	INNER JOIN rob_user_rights T7 ON T7.ID = T1.userID 
 	WHERE validation = 0".$fltuser.$flt_month.$flt_year.$flt_deb.$flt_fin
 	.$flt_clt.$flt_prj.$flt_act.$flt_col." 
-	ORDER BY T1.userID, T3.description, T4.description, T5.description, T1.datejour DESC  LIMIT 30";
+	GROUP BY T2.matricule, T3.description, T4.description, T5.description 
+	ORDER BY T1.datejour DESC  LIMIT 30";
 $result = $bdd->query($req);
 ?>
 
-<!-- ================= RESTITUTION1 =============== -->
-<div id="sstitre">Temps non valid&eacute;s</div>
-<table id="tablerestit" class="table table-striped temp-table">
-	<tr>
-		<td id="t-containertit">Trigramme</td>
-		<td id="t-containertit">Date</td>
-		<td id="t-containertit">Activit&eacute;</td>
-		<td id="t-containertit">Client</td>
-		<td id="t-containertit">Projet</td>
-		<td id="t-containertit">Mission</td>
-		<td id="t-containertit">Description</td>
-		<td id="t-containertit">Dur&eacute;e</td>
-		<td id="t-containertit">Valider</td>
-	</tr>
-	<?php
-	$i=1;
-	while ($donnee = $result->fetch())
-	{
-	?>
-		<tr>
-			<td id="t-container<?php echo $i;?>"><?php echo $donnee['trig'];?></td>
-			<td id="t-container<?php echo $i;?>"><?php echo date ("d/m/Y", strtotime($donnee['date']));?></td>
-			<td id="t-container<?php echo $i;?>"><?php echo $donnee['activite'];?></td>
-			<td id="t-container<?php echo $i;?>"><?php echo $donnee['client'];?></td>
-			<td id="t-container<?php echo $i;?>"><?php echo $donnee['projet'];?></td>
-			<td id="t-container<?php echo $i;?>"><?php echo $donnee['mission'];?></td>
-			<td id="t-container<?php echo $i;?>"><?php echo $donnee['info'];?></td>
-			<td id="t-container<?php echo $i;?>"><?php echo $donnee['jour'];?></td>
-			<td id="t-container<?php echo $i;?>">
-			<form id="ajax-form" class="autosubmit" method="POST" action="./valtemps-upd.php">
-				<input type="checkbox" name="validation" 
-				<?php if($donnee['validation'] == 0) { echo 'value="1"'; } else { echo 'value="0" checked'; } ?>
-				/>
-				<input id="where" type="hidden" name="ID" value="<?php echo $donnee['ID'] ?>" />
-			</form>
-			</td>
-		</tr>
 
-	<?php
-		if ($i == 1) { $i = 2; } else { $i = 1; }
-	}
-	?>
-</table>
+<!-- ================= RESTITUTION1 =============== -->
+<section class="container section-container" id="historique-temps">
+	<div class="section-title">
+		<h1>Temps non valid&eacute;s</h1>
+	</div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<td>Trigramme</td>
+				<td>Date</td>
+				<td>Client</td>
+				<td>Projet</td>
+				<td>Mission</td>
+				<td>Dur&eacute;e</td>
+				<td>Valider</td>
+			</tr>
+		</thead>
+		<tbody>
+		<?php
+		$i=1;
+		while ($donnee = $result->fetch())
+		{
+		?>
+			<tr>
+				<td><?php echo $donnee['trig'];?></td>
+				<td><?php if($donnee['mois'] < 10) { echo "0"; } echo $donnee['mois'].'.'.$donnee['annee'];?></td>
+				<td><?php echo $donnee['client'];?></td>
+				<td><?php echo $donnee['projet'];?></td>
+				<td><?php echo $donnee['mission'];?></td>
+				<td><?php echo $donnee['jour'];?></td>
+				<td><input type="checkbox" name="validation" /></td>
+			</tr>
+
+		<?php
+			if ($i == 1) { $i = 2; } else { $i = 1; }
+		}
+		?>
+		</tbody>
+	</table>
+</section>
 <?php
 $result->closeCursor();
 
@@ -118,8 +115,11 @@ $result = $bdd->query($req);
 ?>
 
 <!-- ================= RESTITUTION2 =============== -->
-<div id="sstitre">R&eacute;cup&eacute;ration en cours</div>
-<table id="tablerestit" class="table table-striped temp-table">
+<section class="container section-container" id="historique-temps">
+	<div class="section-title">
+		<h1>R&eacute;cup&eacute;ration en cours</h1>
+	</div>
+	<table class="table table-striped">
 	<tr>
 		<td id="t-containertit">Trigramme</td>
 		<td id="t-containertit">Date</td>

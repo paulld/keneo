@@ -10,20 +10,23 @@ include("headerlight.php");
 	$k = "";
 	?>
 	
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li>
-		<li><a class="typ" href="menu_adm.php">Administration</a></li>
-		<li><a class="typ" href="#"><span>Validation des temps</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Validation des temps</div>
-	
-	<div id="coeur" name="coeur">
+	<div class="background-temps background-image"></div>
+	<div class="overlay"></div>
+
+	<section class="container section-container section-toggle" id="saisie-temps">
+		<div class="section-title toggle-botton-margin" id="toggle-title">
+			<h1>
+				<i class="fa fa-chevron-down"></i>
+				Validation des temps
+				<i class="fa fa-chevron-down"></i>
+			</h1>
+		</div>
+
 		<?php
 		include("valtemps-coeur.php");
 		?>
 
-	</div>
+	</section>
 
 	<?php
 	include("footer.php");

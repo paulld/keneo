@@ -563,7 +563,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<form action="temps.php" method="post">
 			<?php
 			//MONTH
-			echo '<select class="form-control form-control-small" name="affmonth" class="form-control form-control-small">';
+			echo '<select class="form-control form-control-small" name="affmonth">';
 			$i=1;
 			while ($i < 13)
 			{
@@ -583,7 +583,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '</select>';
 			
 			//YEAR
-			echo '<select class="form-control form-control-small" name="affyear" class="form-control form-control-small">';
+			echo '<select class="form-control form-control-small" name="affyear">';
 			$reponsey = $bdd->query("SELECT * FROM rob_period ORDER BY year");
 			while ($option = $reponsey->fetch())
 			{
@@ -729,7 +729,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							}
 						echo '</td></form></tr>';
 					}
-					echo '<tr><td align="right" colspan="10"><strong>Total '.$month.'.'.$year.' : '.$nbjm.' jours</strong></td><td>&nbsp;</td></tr>';
+					echo '<tr><td align="right" colspan="10"><strong>Total '.$month.'.'.$year.' : '.$nbjm.' jours</strong><br/><i>';
 				}
 				$reponsea->closeCursor();
 				
@@ -746,9 +746,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				{
 					while ($donnee = $reponse->fetch())
 					{
-						echo '<tr><td align="right" colspan="10"><i>';
-								echo 'dont '.$donnee[0].' : '.$donnee[1].' jours';
-						echo '</td><td colspan="2">&nbsp;</td></tr>';
+						echo 'dont '.$donnee[0].' : '.$donnee[1].' jours<br/>';
 					}
 				}
 				$reponse->closeCursor();
@@ -758,7 +756,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					WHERE userID='".$_SESSION['ID']."' AND datejour >= '$startdate' AND datejour < '$enddate' AND ticket = '1'";
 				$reponse = $bdd->query($req);
 				$checkrep = $reponse->rowCount();
-				echo '<tr><td colspan="12"><i>Nombre de ticket restaurant &agrave; r&eacute;cup&eacute;rer : <strong>'.$checkrep.'</strong></i></td></tr>';
+				echo 'Nombre de ticket restaurant &agrave; r&eacute;cup&eacute;rer : <strong>'.$checkrep.'</strong></i></td><td colspan="2">&nbsp;</td></tr>';
 				$reponse->closeCursor();
 				?>
 			</tbody>
