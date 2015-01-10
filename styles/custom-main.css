@@ -22,6 +22,7 @@ body {
   z-index: -2;
   background-size: cover;
 }
+/* LOGIN & HOME */
 .background-login {
   background: url('../assets/images/background-stadium-full.jpg') no-repeat center center fixed;
   background-size: cover;
@@ -46,12 +47,18 @@ body {
   background: url('../assets/images/background-desert.jpg') no-repeat center center fixed;
   background-size: cover;
 }
+/* ADMINISTRATION */
 .background-administration {
   background: url('../assets/images/background-road-light.jpg') no-repeat center center fixed;
   background-size: cover;
 }
+/* DB MANAGEMENT */
 .background-db-management {
   background: url('../assets/images/background-road.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.background-competitions {
+  background: url('../assets/images/background-bike2.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 

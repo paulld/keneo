@@ -872,59 +872,69 @@ function showCurrCat(currcat)
 	xmlhttp.send();
 }
 
-//Afficher l'interface de création d'un nouveau type d'événement
-function showNewTyp(newtyp)
-{
-	if (newtyp=="0")
-	{
-		document.getElementById("ProjetHint").innerHTML="";
-		return;
-	} 
-	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","newtype.php",true);
-	xmlhttp.send();
+
+///////////////////////////////
+// SHOW / HIDE NEW AND CURRENT (USED FOR COMPETITIONS, CLIENTS...)
+function showOption(option) {
+	$('.show-option').hide();
+	$('#show-option-' + option).show();
 }
+///////////////////////////////
+
+
+//Afficher l'interface de création d'un nouveau type d'événement
+// function showNewTyp(newtyp)
+// {
+// 	if (newtyp=="0")
+// 	{
+// 		document.getElementById("ProjetHint").innerHTML="";
+// 		return;
+// 	} 
+// 	if (window.XMLHttpRequest)
+// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
+// 		xmlhttp=new XMLHttpRequest();
+// 	}
+// 	else
+// 	{// code for IE6, IE5
+// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+// 	}
+// 	xmlhttp.onreadystatechange=function()
+// 	{
+// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+// 		{
+// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
+// 		}
+// 	}
+// 	xmlhttp.open("GET","newtype.php",true);
+// 	xmlhttp.send();
+// }
 
 //Afficher l'interface de saisie d'un type d'événement existant
-function showCurrTyp(currtyp)
-{
-	if (currtyp=="1")
-	{
-		document.getElementById("ProjetHint").innerHTML="";
-		return;
-	} 
-	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","currtype.php",true);
-	xmlhttp.send();
-}
+// function showCurrTyp(currtyp)
+// {
+// 	if (currtyp=="1")
+// 	{
+// 		document.getElementById("ProjetHint").innerHTML="";
+// 		return;
+// 	} 
+// 	if (window.XMLHttpRequest)
+// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
+// 		xmlhttp=new XMLHttpRequest();
+// 	}
+// 	else
+// 	{// code for IE6, IE5
+// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+// 	}
+// 	xmlhttp.onreadystatechange=function()
+// 	{
+// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+// 		{
+// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
+// 		}
+// 	}
+// 	xmlhttp.open("GET","currtype.php",true);
+// 	xmlhttp.send();
+// }
 
 //Afficher l'interface de création d'un nouvel événement
 function showNewEve(neweve)
