@@ -60,89 +60,132 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 
 	<section class="container section-container" id="historique-frais">
 
-	<div class="section-title">
-		<h1>Comp&eacute;titions management</h1>
-	</div>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<td id="t-containertit">Comp&eacute;tition</td>
-				<td id="t-containertit">Description</td>
-				<td id="t-containertit">Alias</td>
-				<td id="t-containertit">Responsable</td>
-				<td id="t-containertit" colspan="3">Actions</td>
-			</tr>
-		</thead>
-		<tbody>
-			<?php
-			$req="SELECT T1.code, T1.description, T1. plan, T2.prenom, T2.nom ,T1.actif, T1.ID
-				FROM rob_compl1 T1
-				LEFT JOIN rob_user T2 ON T1.respfactID = T2.ID
-				ORDER BY T1.code";
-			$reponse = $bdd->query($req);
-			$i=1;
-			while ($donnee = $reponse->fetch() )
-			{
-			?>
+		<div class="section-title">
+			<h1>Comp&eacute;titions management</h1>
+		</div>
+		<table class="table table-striped">
+			<thead>
 				<tr>
-					<td id="t-container<?php echo $i;?>"><?php echo $donnee[0];?></td>
-					<td id="t-container<?php echo $i;?>"><?php if ($donnee[1] == "") { echo '-'; } else { echo $donnee[1]; }?></td>
-					<td id="t-container<?php echo $i;?>"><?php if ($donnee[2] == "") { echo '-'; } else { echo $donnee[2]; }?></td>
-					<td id="t-container<?php echo $i;?>"><?php if ($donnee[3] == "") { echo '-'; } else { echo $donnee[3].' '.$donnee[4]; }?></td>
-					<?php if ($donnee[5] == 1)
-					{ ?>
-						<td id="t-ico<?php echo $i;?>"><form action="competition.php" method="post"><input type="hidden" value="<?php echo $donnee[6];?>" name="IDinact" /><input border=0 src="images/RoB_activ.png" type=image Value=submit title="Desactiver le code"></form></td>
-						<td id="t-ico<?php echo $i;?>"><form action="comprell1l2.php" method="post"><input type="hidden" value="<?php echo $donnee[6];?>" name="IDrel" /><input border=0 src="images/RoB_relact.png" type=image Value=submit title="Vers les projets en relation avec ce client" name="relat"></form></td>
-						<?php
-					}
-					else
-					{
-						?>
-						<td id="t-ico<?php echo $i;?>"><form action="competition.php" method="post"><input type="hidden" value="<?php echo $donnee[6];?>" name="IDact" /><input border=0 src="images/RoB_deactiv.png" type=image Value=submit title="Activer le code"></form></td>
-						<td id="t-ico<?php echo $i;?>"><form action="comprell1l2.php" method="post"><input type="hidden" value="<?php echo $donnee[6];?>" name="IDrel" /><input border=0 src="images/RoB_reldeact.png" type=image Value=submit title="Vers les projets en relation avec ce client" name="relat"></form></td>
-						<?php
-					}
-					?>
-					<td id="t-ico<?php echo $i;?>"><form action="modif_competition.php" method="post"><input type="hidden" value="<?php echo $donnee[6];?>" name="IDmodif" /><input border=0 src="images/RoB_info.png" type=image Value=submit title="Modifier les informations" name="modif"></form></td>
+					<th>Comp&eacute;tition</th>
+					<th>Description</th>
+					<th>Alias</th>
+					<th>Responsable</th>
+					<th colspan="3">Actions</th>
 				</tr>
-			<?php
-				if ($i == 1) { $i = 2; } else { $i = 1; }
-			}
-			$reponse->closeCursor();
-			?>
-		</tbody>
-		</table>
-
-	<h2>Ajouter une nouvelle comp&eacute;tition</h2>
-	<table id="tablerestit" class="table table-striped temp-table">
-		<tr>
-			<td id="t-containertit">Code</td>
-			<td id="t-containertit">Comp&eacute;tition</td>
-			<td id="t-containertit">Alias</td>
-			<td id="t-containertit">Responsable</td>
-			<td id="t-containertit">Action</td>
-		</tr>
-		<form action="competition.php" method="post">
-		<tr>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="15" name="newcode" /></td>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="desc" /></td>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="3" name="plan" /></td>
-			<td id="t-container">
-				<?php echo ' <select name="respfact" id="w_input_90" >';
-					echo '<option></option>';
-					$affcollab = $bdd->query("SELECT * FROM rob_user WHERE actif='1' ORDER BY nom");
-					while ($optioncoll = $affcollab->fetch())
-					{
-						echo '<option value='.$optioncoll['ID'].'>'.substr ($optioncoll['prenom'],0,1).'. '.$optioncoll['nom'].'</option>';
-					}
-					$affcollab->closeCursor();
-				echo '</select>';
+			</thead>
+			<tbody>
+				<?php
+				$req="SELECT T1.code, T1.description, T1. plan, T2.prenom, T2.nom ,T1.actif, T1.ID
+					FROM rob_compl1 T1
+					LEFT JOIN rob_user T2 ON T1.respfactID = T2.ID
+					ORDER BY T1.code";
+				$reponse = $bdd->query($req);
+				while ($donnee = $reponse->fetch() ) {
 				?>
-			</td>
-			<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-		</tr>
+					<tr>
+						<td>
+							<?php echo $donnee[0];?>
+						</td>
+						<td>
+							<?php if ($donnee[1] == "") { echo '-'; } else { echo $donnee[1]; }?>
+						</td>
+						<td>
+							<?php if ($donnee[2] == "") { echo '-'; } else { echo $donnee[2]; }?>
+						</td>
+						<td>
+							<?php if ($donnee[3] == "") { echo '-'; } else { echo $donnee[3].' '.$donnee[4]; }?>
+						</td>
+						<?php 
+						if ($donnee[5] == 1) { 
+							?>
+							<td>
+								<form action="competition.php" method="post">
+									<input type="hidden" value="<?php echo $donnee[6];?>" name="IDinact" />
+									<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver le code"><i class="fa fa-toggle-on"></i></button>
+								</form>
+							</td>
+							<td>
+								<form action="comprell1l2.php" method="post">
+									<input type="hidden" value="<?php echo $donnee[6];?>" name="IDrel" />
+									<button class="btn btn-small btn-default btn-icon btn-orange" type="submit" title="Vers les projets en relation avec ce client" name="relat"><i class="fa fa-link"></i></button>
+								</form>
+							</td>
+							<?php
+						} else {
+							?>
+							<td>
+								<form action="competition.php" method="post">
+									<input type="hidden" value="<?php echo $donnee[6];?>" name="IDact" />
+									<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer le code"><i class="fa fa-toggle-off"></i></button>
+								</form>
+							</td>
+							<td>
+								<form action="comprell1l2.php" method="post">
+									<input type="hidden" value="<?php echo $donnee[6];?>" name="IDrel" />
+									<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Vers les projets en relation avec ce client" name="relat"><i class="fa fa-link"></i></button>
+
+								</form>
+							</td>
+							<?php
+						}
+							?>
+							<td>
+								<form action="modif_competition.php" method="post">
+									<input type="hidden" value="<?php echo $donnee[6];?>" name="IDmodif" />
+									<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
+								</form>
+							</td>
+					</tr>
+				<?php
+				}
+				$reponse->closeCursor();
+				?>
+			</tbody>
+			</table>
+
+		<h2>Ajouter une nouvelle comp&eacute;tition</h2>
+		<form action="competition.php" method="post">
+			<table class="table table-striped temp-table">
+				<thead>
+					<tr>
+						<th>Code</th>
+						<th>Comp&eacute;tition</th>
+						<th>Alias</th>
+						<th>Responsable</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<input class="form-control" type="text" size="15" name="newcode" />
+						</td>
+						<td>
+							<input class="form-control" type="text" size="50" name="desc" />
+						</td>
+						<td>
+							<input class="form-control" type="text" size="3" name="plan" />
+						</td>
+						<td>
+							<select class="form-control" name="respfact">
+								<option></option>
+								<?php 
+									$affcollab = $bdd->query("SELECT * FROM rob_user WHERE actif='1' ORDER BY nom");
+									while ($optioncoll = $affcollab->fetch()) {
+										echo '<option value='.$optioncoll['ID'].'>'.substr ($optioncoll['prenom'],0,1).'. '.$optioncoll['nom'].'</option>';
+									}
+									$affcollab->closeCursor();
+								?>
+							</select>
+						</td>
+						<td>
+							<input class="btn btn-primary" type="submit" Value="Ajouter" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</form>
-	</table>
+	</section>
 <?php
 	include("footer.php");
 }
