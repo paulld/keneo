@@ -54,6 +54,24 @@ h2 {
   text-align: left;
 }
 
+.fieldset-align-middle > p > span {
+  width: 33%;
+  text-align: right;
+  display: inline-block;
+  padding-right: 20px;
+}
+.fieldset-align-middle > p > input, 
+.fieldset-align-middle > p > select {
+  width: 50%;
+  text-align: left;
+}
+.fieldset-align-middle > p > span:nth-child(2) {
+  width: 53%;
+  text-align: left;
+  padding-left: 14px;
+}
+
+
 /* BUTTONS / INPUT / SELECT */
 
 .form-control-small {
@@ -82,7 +100,6 @@ input.checkbox {
 .form-placeholder {
   color: #555555;
 }
-
 
 /* NAVBAR WITH TABS (TRANSACTION...) */
 
