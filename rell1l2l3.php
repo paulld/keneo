@@ -194,7 +194,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 										<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
 										<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
 										<input type="hidden" value="<?php echo $donnee[2];?>" name="IDact" />
-										<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="D&eacute;sactiver la relation"><i class="fa fa-toggle-on"></i></button>
+										<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer la relation"><i class="fa fa-toggle-off"></i></button>
 									</form>
 								</td>
 								<td>

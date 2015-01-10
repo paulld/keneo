@@ -50,38 +50,4 @@ include("appel_db.php");
 				</select>
 			</div>
 		</div>
-		<!-- <table>
-			<tr>
-				<th colspan="2">Param&egrave;tres du nouveau projet</th>
-			</tr>
-			<tr>
-				<td>Code</td>
-				<td id="newimputtd"><input type="text" size="15" name="newprjcode" /></td>
-			</tr>
-			<tr>
-				<td>Alias</td>
-				<td id="newimputtd"><input type="text" size="3" name="newprjplan" /></td>
-			</tr>
-			<tr>
-				<td>Description</td>
-				<td id="newimputtd"><input type="text" size="45" name="newprjdesc" /></td>
-			</tr>
-			<tr>
-				<td>Responsable</td>
-				<td id="newimputtd">
-					<select name="newprjresp" >
-						<option value=0></option>
-						<?php
-							$affcollab = $bdd->query("SELECT * FROM rob_user WHERE actif='1' ORDER BY nom");
-							while ($optioncoll = $affcollab->fetch())
-							{
-								echo '<option value='.$optioncoll['ID'].'>'.substr ($optioncoll['prenom'],0,1).'. '.$optioncoll['nom'].'</option>';
-							}
-							$affcollab->closeCursor();
-						?> 
-					</select>
-				</td>
-			</tr>
-		</table> -->
 	</div>
-	<!-- <input type="submit" Value="Ajouter" /> -->
