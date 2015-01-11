@@ -65,6 +65,10 @@ body {
   background: url('../assets/images/background-bike2.jpg') no-repeat center center fixed;
   background-size: cover;
 }
+.background-donnees-fi {
+  background: url('../assets/images/background-lake.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 
 .overlay {
   position: fixed;

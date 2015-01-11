@@ -127,7 +127,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div class="background-db-management background-image"></div>
+	<div class="background-clients background-image"></div>
 	<div class="overlay"></div>
 
 	<section class="container section-container section-toggle" id="saisie-temps">
