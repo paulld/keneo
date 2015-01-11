@@ -27,7 +27,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<div class="section-title toggle-botton-margin" id="toggle-title">
 			<h1>
 				<i class="fa fa-chevron-down"></i>
-				Validation des temps
+				Filtrer
 				<i class="fa fa-chevron-down"></i>
 			</h1>
 		</div>

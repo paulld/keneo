@@ -7,84 +7,53 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	include("headerlight.php");
 	?>
 
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li>
-		<li><a class="typ" href="menu_adm.php">Administration</a></li>
-		<li><a class="typ" href="#"><span>Exports Excel</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Exports Excel</div>
-	
-	<div id="coeur">
-		<?php
-		if ($_SESSION['id_lev_tms'] >= 4)
-		{
-		?>
-		<div id="sstitre">Export des temps</div>
+	<div class="background-temps background-image"></div>
+	<div class="overlay"></div>
+
+	<?php
+	if ($_SESSION['id_lev_tms'] >= 4)
+	{
+	?>
+	<section class="container section-container" id="historique-temps">
+		<div class="section-title">
+			<h1>Export des temps</h1>
+		</div>
 		<form action="temps-exp.php" method="post" target="_blank">
-			<?php
-			echo 'Export des temps du <input size="8" type="text" id="datejourdeb" name="datejourdeb" value="';
-			if (isset($datejourdeb))
-			{
-				echo $datejourdeb;
-			}
-			else
-			{
-				echo date("d/m/Y");
-			}
-			echo '" /> au <input size="8" type="text" id="datejourfin" name="datejourfin" value="';
-			if (isset($datejourfin))
-			{
-				echo $datejourfin;
-			}
-			else
-			{
-				echo date("d/m/Y");
-			}
-			echo '" /> (inclu) <input id="buttonval" type="submit" Value="Extraire" name="Valider" />';
-			?> 
+			<div class="form-inner">
+				<?php
+				echo '<input class="form-control form-control-small form-control-centered" type="text" id="datejourdeb" name="datejourdeb" placeholder="A partir du..." />';
+				echo '<input class="form-control form-control-small form-control-centered" type="text" id="datejourfin" name="datejourfin" placeholder="Jusqu\'au..." />';
+				echo '<input class="btn btn-small btn-primary" type="submit" Value="Extraire" name="Valider" />';
+				?> 
+			</div>
 		</form>
-		<?php
-		}
-		if ($_SESSION['id_lev_exp'] >= 4)
-		{
-		?>
-		<div id="sstitre">Export des frais</div>
+	</section>
+	<?php
+	}
+	if ($_SESSION['id_lev_exp'] >= 4)
+	{
+	?>
+	<section class="container section-container" id="historique-temps">
+		<div class="section-title">
+			<h1>Export des frais</h1>
+		</div>
 		<form action="frais-exp.php" method="post" target="_blank">
-			<div id="f-descriptif"><?php
-			echo 'Export des frais du <input size="8" type="text" id="datejourstrt" name="datejourstrt" value="';
-				if (isset($datejourdeb))
-				{
-					echo $datejourdeb;
-				}
-				else
-				{
-					echo date("d/m/Y");
-				}
-				echo '" /> au <input size="8" type="text" id="datejourend" name="datejourend" value="';
-				if (isset($datejourfin))
-				{
-					echo $datejourfin;
-				}
-				else
-				{
-					echo date("d/m/Y");
-				}
-				echo '" /> (inclu)';
+			<div class="form-inner">
+			<?php
+			echo '<input class="form-control form-control-small form-control-centered" type="text" id="datejourstrt" name="datejourstrt" placeholder="A partir du..." />';
+			echo '<input class="form-control form-control-small form-control-centered" type="text" id="datejourend" name="datejourend" placeholder="Jusqu\'au..." />';
 			//option
-			echo ' - <select name="validation">';
+			echo '<select class="form-control form-control-small form-control-centered" name="validation">';
 				echo'<option value="2">Valid&eacute;s seulement</option>';
 				echo'<option value="1">Valid&eacute;es et en attente de validation</option>';
 				echo'<option value="0">Tous les frais</option>';
-			echo '</select> <input id="buttonval" type="submit" Value="Extraire" name="Valider" />';
+			echo '</select><input class="btn btn-small btn-primary" type="submit" Value="Extraire" name="Valider" />';
 			?> 
 			</div>
 		</form>
-		<?php
-		}
-		?>
-	</div>
+	</section>
 	<?php
+	}
 	include("footer.php");
 }
 else
