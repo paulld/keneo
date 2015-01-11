@@ -13,7 +13,9 @@
   padding: 15px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px;
 }
-
+.back-buttons a {
+  margin: -5px 10px 10px 0;
+}
 h1 {
   color: hsla(202,67%,50%,1);
   text-transform: uppercase;
