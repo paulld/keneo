@@ -718,106 +718,106 @@ function cltcalcFact(){
 
 //ADMIN REL CLIENT/...
 //Afficher l'interface de création d'un nouveau projet
-function showNewProj(newproj)
-{
-	if (newproj=="0") {
-		document.getElementById("ProjetHint").innerHTML="";
-		return;
-	} 
-	if (window.XMLHttpRequest) { 				// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	} else { 														// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","newprojet.php",true);
-	xmlhttp.send();
-}
+// function showNewProj(newproj)
+// {
+// 	if (newproj=="0") {
+// 		document.getElementById("ProjetHint").innerHTML="";
+// 		return;
+// 	} 
+// 	if (window.XMLHttpRequest) { 				// code for IE7+, Firefox, Chrome, Opera, Safari
+// 		xmlhttp=new XMLHttpRequest();
+// 	} else { 														// code for IE6, IE5
+// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+// 	}
+// 	xmlhttp.onreadystatechange=function() {
+// 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
+// 		}
+// 	}
+// 	xmlhttp.open("GET","newprojet.php",true);
+// 	xmlhttp.send();
+// }
 
 //Afficher l'interface de saisie d'un ancien projet
-function showCurrProj(currproj)
-{
-	if (currproj=="1")
-	{
-		document.getElementById("ProjetHint").innerHTML="";
-		return;
-	} 
-	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","currprojet.php",true);
-	xmlhttp.send();
-}
+// function showCurrProj(currproj)
+// {
+// 	if (currproj=="1")
+// 	{
+// 		document.getElementById("ProjetHint").innerHTML="";
+// 		return;
+// 	} 
+// 	if (window.XMLHttpRequest)
+// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
+// 		xmlhttp=new XMLHttpRequest();
+// 	}
+// 	else
+// 	{// code for IE6, IE5
+// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+// 	}
+// 	xmlhttp.onreadystatechange=function()
+// 	{
+// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+// 		{
+// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
+// 		}
+// 	}
+// 	xmlhttp.open("GET","currprojet.php",true);
+// 	xmlhttp.send();
+// }
 
 //Afficher l'interface de création d'une nouvelle mission
-function showNewMis(newmis)
-{
-	if (newmis=="0")
-	{
-		document.getElementById("ProjetHint").innerHTML="";
-		return;
-	} 
-	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","newmission.php",true);
-	xmlhttp.send();
-}
+// function showNewMis(newmis)
+// {
+// 	if (newmis=="0")
+// 	{
+// 		document.getElementById("ProjetHint").innerHTML="";
+// 		return;
+// 	} 
+// 	if (window.XMLHttpRequest)
+// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
+// 		xmlhttp=new XMLHttpRequest();
+// 	}
+// 	else
+// 	{// code for IE6, IE5
+// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+// 	}
+// 	xmlhttp.onreadystatechange=function()
+// 	{
+// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+// 		{
+// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
+// 		}
+// 	}
+// 	xmlhttp.open("GET","newmission.php",true);
+// 	xmlhttp.send();
+// }
 
 //Afficher l'interface de saisie d'une mission existante
-function showCurrMis(currmis)
-{
-	if (currmis=="1")
-	{
-		document.getElementById("ProjetHint").innerHTML="";
-		return;
-	} 
-	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","currmission.php",true);
-	xmlhttp.send();
-}
+// function showCurrMis(currmis)
+// {
+// 	if (currmis=="1")
+// 	{
+// 		document.getElementById("ProjetHint").innerHTML="";
+// 		return;
+// 	} 
+// 	if (window.XMLHttpRequest)
+// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
+// 		xmlhttp=new XMLHttpRequest();
+// 	}
+// 	else
+// 	{// code for IE6, IE5
+// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+// 	}
+// 	xmlhttp.onreadystatechange=function()
+// 	{
+// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+// 		{
+// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
+// 		}
+// 	}
+// 	xmlhttp.open("GET","currmission.php",true);
+// 	xmlhttp.send();
+// }
 
 //Afficher l'interface de création d'une nouvelle catégorie
 function showNewCat(newcat)

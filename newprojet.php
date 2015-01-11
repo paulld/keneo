@@ -1,16 +1,16 @@
 <?php
-session_start();
-include("appel_db.php");
+//session_start();
+//include("appel_db.php");
 
 	?>
-	<div class="col-sm-3">
+	<!-- <div class="col-sm-3">
 		<select class="form-control" name="client" onchange="showCurrProj(this.value)">
 			<option value="0">Projet existant</option>
 			<option value="1" selected>Ajouter un projet</option>
 		</select>
 	</div>
 
-	<div class="col-sm-8">
+	<div class="col-sm-8"> -->
 		<!-- <p>Param&egrave;tres du nouveau projet</p> -->
 
 		<div class="form-group form-group-new-project">
@@ -50,4 +50,4 @@ include("appel_db.php");
 				</select>
 			</div>
 		</div>
-	</div>
+	<!-- </div> -->
