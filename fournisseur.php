@@ -53,6 +53,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
+	<!-- Background Image Specific to each page -->
+	<div class="background-tables background-image"></div>
+	<div class="overlay"></div>
+
+	<?php include("partials/tablesnavbar.php"); ?>
+
 	<section class="container section-container section-toggle" id="effectif-interne">
 		<div class="section-title" id="toggle-title">
 			<h1>

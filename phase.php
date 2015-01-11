@@ -53,16 +53,17 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li>
-		<li><a class="typ" href="menu_setup.php"><span>DB Management</span></a></li>
-		<li><a class="typ" href="table.php"><span>Tables</span></a></li>
-		<li><a class="typ" href="#"><span>Phases</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Phases</div>
+	<!-- Background Image Specific to each page -->
+	<div class="background-tables background-image"></div>
+	<div class="overlay"></div>
 
-	<div id="coeur">
+	<?php include("partials/tablesnavbar.php"); ?>
+
+	<section class="container section-container" id="saisie-frais">
+		<div class="section-title">
+			<h1>Phases</h1>
+		</div>
+
 		<table id="tablerestit" class="table table-striped temp-table">
 			<tr>
 				<td id="t-containertit">Phase</td>
@@ -104,25 +105,26 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			$reponse->closeCursor();
 			?>
 		</table>
-	</div>
 
-	<div id="sstitre">Ajouter une nouvelle phase</div>
-	<table id="tablerestit" class="table table-striped temp-table">
-		<tr>
-			<td id="t-containertit">Phase</td>
-			<td id="t-containertit">Description</td>
-			<td id="t-containertit">A la saisie</td>
-			<td id="t-containertit">Actions</td>
-		</tr>
-		<form action="phase.php" method="post">
-		<tr>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="20" name="newPhase" /></td>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newdesc" /></td>
-			<td id="t-container"><select name="newinputOpen"><option value="0">Inactif</option><option value="1">Actif</option></select></td>
-			<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-		</tr>
-		</form>
-	</table>
+		<h2>Ajouter une nouvelle phase</h2>
+		<table id="tablerestit" class="table table-striped temp-table">
+			<tr>
+				<td id="t-containertit">Phase</td>
+				<td id="t-containertit">Description</td>
+				<td id="t-containertit">A la saisie</td>
+				<td id="t-containertit">Actions</td>
+			</tr>
+			<form action="phase.php" method="post">
+			<tr>
+				<td id="t-container"><input id="w_inputtxt_90" type="text" size="20" name="newPhase" /></td>
+				<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newdesc" /></td>
+				<td id="t-container"><select name="newinputOpen"><option value="0">Inactif</option><option value="1">Actif</option></select></td>
+				<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
+			</tr>
+			</form>
+		</table>
+
+	</section>
 <?php
 	include("footer.php");
 }

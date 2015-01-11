@@ -53,16 +53,17 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li>
-		<li><a class="typ" href="menu_setup.php"><span>DB Management</span></a></li>
-		<li><a class="typ" href="table.php"><span>Tables</span></a></li>
-		<li><a class="typ" href="#"><span>Nature 2</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Nature 2</div>
+	<!-- Background Image Specific to each page -->
+	<div class="background-tables background-image"></div>
+	<div class="overlay"></div>
 
-	<div id="coeur">
+	<?php include("partials/tablesnavbar.php"); ?>
+
+	<section class="container section-container" id="saisie-frais">
+		<div class="section-title">
+			<h1>Nature 2</h1>
+		</div>
+
 		<table id="tablerestit" class="table table-striped temp-table">
 			<tr>
 				<td id="t-containertit">Nature 2</td>
@@ -103,36 +104,38 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			$reponse->closeCursor();
 			?>
 		</table>
-	</div>
 
-	<div id="sstitre">Ajouter une nouvelle nature de niveau 2</div>
-	<table id="tablerestit" class="table table-striped temp-table">
-		<tr>
-			<td id="t-containertit">Description</td>
-			<td id="t-containertit">Compte</td>
-			<td id="t-containertit">Nature1</td>
-			<td id="t-containertit">Actions</td>
-		</tr>
-		<form action="nature2.php" method="post">
-		<tr>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newdesc" /></td>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="compte" /></td>
-			<td id="t-container">
-				<?php echo ' <select name="nat1" id="w_input_90" >';
-					echo '<option></option>';
-					$affcollab = $bdd->query("SELECT * FROM rob_nature1 WHERE actif='1' ORDER BY Description");
-					while ($optioncoll = $affcollab->fetch())
-					{
-						echo '<option value='.$optioncoll['ID'].'>'.$optioncoll['Description'].'</option>';
-					}
-					$affcollab->closeCursor();
-				echo '</select>';
-				?>
-			</td>
-			<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-		</tr>
-		</form>
-	</table>
+
+		<h2>Ajouter une nouvelle nature de niveau 2</h2>
+		<table id="tablerestit" class="table table-striped temp-table">
+			<tr>
+				<td id="t-containertit">Description</td>
+				<td id="t-containertit">Compte</td>
+				<td id="t-containertit">Nature1</td>
+				<td id="t-containertit">Actions</td>
+			</tr>
+			<form action="nature2.php" method="post">
+			<tr>
+				<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newdesc" /></td>
+				<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="compte" /></td>
+				<td id="t-container">
+					<?php echo ' <select name="nat1" id="w_input_90" >';
+						echo '<option></option>';
+						$affcollab = $bdd->query("SELECT * FROM rob_nature1 WHERE actif='1' ORDER BY Description");
+						while ($optioncoll = $affcollab->fetch())
+						{
+							echo '<option value='.$optioncoll['ID'].'>'.$optioncoll['Description'].'</option>';
+						}
+						$affcollab->closeCursor();
+					echo '</select>';
+					?>
+				</td>
+				<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
+			</tr>
+			</form>
+		</table>
+
+	</section>
 <?php
 	include("footer.php");
 }

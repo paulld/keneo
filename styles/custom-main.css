@@ -57,8 +57,20 @@ body {
   background: url('../assets/images/background-road.jpg') no-repeat center center fixed;
   background-size: cover;
 }
+.background-clients {
+  background: url('../assets/images/background-lighthouse.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 .background-competitions {
   background: url('../assets/images/background-bike2.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.background-donnees-fi {
+  background: url('../assets/images/background-lake.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.background-tables {
+  background: url('../assets/images/background-lake.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 

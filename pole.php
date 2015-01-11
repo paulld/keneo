@@ -53,16 +53,17 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li>
-		<li><a class="typ" href="menu_setup.php"><span>DB Management</span></a></li>
-		<li><a class="typ" href="table.php"><span>Tables</span></a></li>
-		<li><a class="typ" href="#"><span>P&ocirc;le</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">P&ocirc;le</div>
+	<!-- Background Image Specific to each page -->
+	<div class="background-tables background-image"></div>
+	<div class="overlay"></div>
 
-	<div id="coeur">
+	<?php include("partials/tablesnavbar.php"); ?>
+
+	<section class="container section-container" id="saisie-frais">
+		<div class="section-title">
+			<h1>P&ocirc;le</h1>
+		</div>
+
 		<table id="tablerestit" class="table table-striped temp-table">
 			<tr>
 				<td id="t-containertit">P&ocirc;le</td>
@@ -104,36 +105,37 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			$reponse->closeCursor();
 			?>
 		</table>
-	</div>
 
-	<div id="sstitre">Ajouter un nouveau p&ocirc;le</div>
-	<table id="tablerestit" class="table table-striped temp-table">
-		<tr>
-			<td id="t-containertit">Code</td>
-			<td id="t-containertit">Description</td>
-			<td id="t-containertit">Responsable</td>
-			<td id="t-containertit">Actions</td>
-		</tr>
-		<form action="pole.php" method="post">
-		<tr>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="15" name="newcode" /></td>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="desc" /></td>
-			<td id="t-container">
-				<?php echo ' <select name="respfact" id="w_input_90" >';
-					echo '<option></option>';
-					$affcollab = $bdd->query("SELECT * FROM rob_user WHERE actif='1' ORDER BY nom");
-					while ($optioncoll = $affcollab->fetch())
-					{
-						echo '<option value='.$optioncoll['ID'].'>'.substr ($optioncoll['prenom'],0,1).'. '.$optioncoll['nom'].'</option>';
-					}
-					$affcollab->closeCursor();
-				echo '</select>';
-				?>
-			</td>
-			<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-		</tr>
-		</form>
-	</table>
+		<h2>Ajouter un nouveau p&ocirc;le</h2>
+		<table id="tablerestit" class="table table-striped temp-table">
+			<tr>
+				<td id="t-containertit">Code</td>
+				<td id="t-containertit">Description</td>
+				<td id="t-containertit">Responsable</td>
+				<td id="t-containertit">Actions</td>
+			</tr>
+			<form action="pole.php" method="post">
+			<tr>
+				<td id="t-container"><input id="w_inputtxt_90" type="text" size="15" name="newcode" /></td>
+				<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="desc" /></td>
+				<td id="t-container">
+					<?php echo ' <select name="respfact" id="w_input_90" >';
+						echo '<option></option>';
+						$affcollab = $bdd->query("SELECT * FROM rob_user WHERE actif='1' ORDER BY nom");
+						while ($optioncoll = $affcollab->fetch())
+						{
+							echo '<option value='.$optioncoll['ID'].'>'.substr ($optioncoll['prenom'],0,1).'. '.$optioncoll['nom'].'</option>';
+						}
+						$affcollab->closeCursor();
+					echo '</select>';
+					?>
+				</td>
+				<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
+			</tr>
+			</form>
+		</table>
+
+	</section>
 <?php
 	include("footer.php");
 }

@@ -129,12 +129,25 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div class="background-db-management background-image"></div>
+	<div class="background-clients background-image"></div>
 	<div class="overlay"></div>
 
 	<section class="container section-container section-toggle" id="saisie-temps">
 		<div class="section-title">
 			<h1>Client-Projet-Mission-Cat&eacute;gories management</h1>
+		</div>
+
+		<div class="back-buttons">
+			<a class="btn btn-default" href="imputation.php"><i class="fa fa-arrow-left"></i> Retour &agrave; Clients</a>
+			<?php
+				if (isset($_POST['IDrel'])) { 
+					echo '<a class="btn btn-default" href="rell1l2.php?IDrel='.$_POST['IDrel'].'"><i class="fa fa-arrow-left"></i> Retour &agrave; Client-Projets</a>';
+					echo '<a class="btn btn-default" href="rell1l2l3.php?IDrel='.$_POST['IDrel'].'&amp;IDrel2='.$_POST['IDrel2'].'"><i class="fa fa-arrow-left"></i> Retour &agrave; Client-Projet-Missions</a>'; 
+				} else { 
+					echo '<a class="btn btn-default" href="rell1l2.php?IDrel='.$_GET['IDrel'].'"><i class="fa fa-arrow-left"></i> Retour &agrave; Client-Projets</a>';
+					echo '<a class="btn btn-default" href="rell1l2l3.php?IDrel='.$_GET['IDrel'].'&amp;IDrel2='.$_GET['IDrel2'].'"><i class="fa fa-arrow-left"></i> Retour &agrave; Client-Projet-Missions</a>'; 
+				}
+			?>
 		</div>
 
 	<?php
@@ -230,13 +243,16 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 
 		<h2>Ajouter une nouvelle relation Client-Projet-Mission-Categorie</h2>
 		<form action="rell1l2l3l4.php" method="post">
+			<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
+			<input type="hidden" value="<?php echo $imput2tmp; ?>" name="IDrel2" />
+			<input type="hidden" value="<?php echo $imput3tmp; ?>" name="IDrel3" />
 			<table class="table table-striped temp-table table-align-top">
 				<thead>
 					<tr>
 						<th>Client</th>
 						<th>Projet</th>
 						<th>Mission</th>
-						<th>Cat&eacute;gorie</th>
+						<th colspan="3">Cat&eacute;gorie</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -265,33 +281,22 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							$repimpid->closeCursor();
 							?>
 						</td>
+
 						<td>
-								<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
-								<input type="hidden" value="<?php echo $imput2tmp; ?>" name="IDrel2" />
-								<input type="hidden" value="<?php echo $imput3tmp; ?>" name="IDrel3" />
-								<div id="ProjetHint">
-									<div class="col-sm-4">
-										<select onchange="showNewCat(this.value)" class="form-control">
-											<option value="0">Cat&eacute;gorie existante</option>
-											<option value="1">Ajouter une cat&eacute;gorie</option>
-										</select>
-									</div>
-									<div class="col-sm-6">
-										<select name="newcomb4" class="form-control">
-											<option value=0></option>
-											<?php
-												$req = "SELECT * FROM rob_imputl4 WHERE actif=1 ORDER BY code";
-												$affpro = $bdd->query($req);
-												while ($optionpro = $affpro->fetch())
-												{
-													echo '<option value='.$optionpro['ID'].'>'.$optionpro['code'].' | '.$optionpro['description'].'</option>';
-												}
-												$affpro->closeCursor();
-											?>
-										</select>
-									</div>
-								</div>
-								<input class="btn btn-primary" type="submit" Value="Ajouter" />
+							<select onchange="showOption(this.value)" class="form-control">
+								<option value="0">Cat&eacute;gorie existante</option>
+								<option value="1">Ajouter une cat&eacute;gorie</option>
+							</select>
+						</td>
+						<td class="show-option" id="show-option-0">
+							<?php include("partials/currcategorie.php"); ?>
+						</td>
+						<td class="show-option" id="show-option-1" style="display: none;">
+							<?php include("partials/newcategorie.php"); ?>
+						</td>
+
+						<td>
+							<input class="btn btn-primary" type="submit" Value="Ajouter" />
 						</td>
 					</tr>
 				</tbody>

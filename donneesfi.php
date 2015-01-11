@@ -50,7 +50,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	?>
 	
 	
-	<div class="background-frais background-image"></div>
+	<div class="background-donnees-fi background-image"></div>
 	<div class="overlay"></div>
 
 	<section class="container section-container section-toggle" id="saisie-frais">

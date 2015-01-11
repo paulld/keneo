@@ -125,14 +125,18 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div class="background-db-management background-image"></div>
+	<div class="background-clients background-image"></div>
 	<div class="overlay"></div>
 
 	<section class="container section-container section-toggle" id="saisie-temps">
 		<div class="section-title">
 			<h1>Client-Projets management</h1>
 		</div>
-		<div id="coeur">
+
+		<div class="back-buttons">
+			<a class="btn btn-default" href="imputation.php"><i class="fa fa-arrow-left"></i> Retour &agrave; Clients</a>
+		</div>
+
 		<?php
 		if ($imputtmp !=0 AND $errvar == 0) {
 			?>
@@ -215,10 +219,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					?>
 				</tbody>
 			</table>
-		</div>
 		
-		<h2>Ajouter une nouvelle relation client-Projet</h2>
+			<h2>Ajouter une nouvelle relation client-Projet</h2>
 			<form action="rell1l2.php" method="post">
+				<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
 				<table class="table table-striped table-align-top">
 					<thead>
 						<tr>
@@ -236,32 +240,22 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								$repimpid->closeCursor();
 								?>
 							</td>
+
 							<td>
-								<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
-								<div id="ProjetHint">
-									<div class="col-sm-3">
-									<select class="form-control" name="client" onchange="showNewProj(this.value)">
+								<div class="col-sm-3">
+									<select class="form-control" name="client" onchange="showOption(this.value)">
 										<option value="0">Projet existant</option>
 										<option value="1">Ajouter un projet</option>
 									</select>
-									</div>
-									<div class="col-sm-8">
-										<?php
-										echo ' <select class="form-control" name="newcomb2">';
-											echo ' <option value="0"></option>';
-											$req = "SELECT * FROM rob_imputl2 WHERE actif=1 ORDER BY code";
-											$affpro = $bdd->query($req);
-											while ($optionpro = $affpro->fetch()) {
-												if (substr($optionpro['code'],0,3) != 'ABS') {
-													echo '<option value='.$optionpro['ID'].'>'.$optionpro['code'].' | '.$optionpro['description'].'</option>';
-												}
-											}
-										echo '</select> ';
-										$affpro->closeCursor();
-										?>
-									</div>
+								</div>
+								<div class="col-sm-8 show-option" id="show-option-0">
+									<?php include("partials/currprojet.php"); ?>
+								</div>
+								<div class="col-sm-8 show-option" id="show-option-1" style="display: none;">
+									<?php include("partials/newprojet.php"); ?>
 								</div>
 							</td>
+
 							<td>
 								<input class="btn btn-primary" type="submit" Value="Ajouter" />
 							</td>

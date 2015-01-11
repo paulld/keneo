@@ -127,7 +127,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 
 	<!-- <a class="typ" href="competition.php"><span>Comp&eacute;titions</span> -->
 	
-
 	<div class="background-competitions background-image"></div>
 	<div class="overlay"></div>
 
@@ -135,6 +134,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 
 		<div class="section-title">
 			<h1>Comp&eacute;tition-Types management</h1>
+		</div>
+
+		<div class="back-buttons">
+			<a class="btn btn-default" href="competition.php"><i class="fa fa-arrow-left"></i> Retour &agrave; Comp&eacute;titions</a>
 		</div>
 
 		<?php
@@ -226,11 +229,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		
 		<h2>Ajouter une nouvelle relation Comp&eacute;tition-Type</h2>
 		<form action="comprell1l2.php" method="post">
+			<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
 			<table class="table table-striped table-align-top">
 				<thead>
 					<tr>
 						<th>Comp&eacute;tition</th>
-						<th colspan="2">Type</th>
+						<th colspan="3">Type</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -243,33 +247,20 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							$repimpid->closeCursor();
 							?>
 						</td>
+
 						<td>
-							<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
-							<div class="col-sm-3">
-								<select class="form-control" name="client" onchange="showOption(this.value)">
-									<option value="0">Type existant</option>
-									<option value="1">Ajouter un type</option>
-								</select>
-							</div>
-							<div class="col-sm-8 show-option" id="show-option-0">
-								<select class="form-control" name="newcomb2" >
-									<option value=0></option>
-									<?php
-									$req = "SELECT * FROM rob_compl2 WHERE actif=1 ORDER BY code";
-									$affpro = $bdd->query($req);
-									while ($optionpro = $affpro->fetch()) {
-										echo '<option value='.$optionpro['ID'].'>'.$optionpro['code'].' | '.$optionpro['description'].'</option>';
-									}
-									$affpro->closeCursor();
-									?>
-								</select>
-							</div>
-							<div class="col-sm-8 show-option" id="show-option-1" style="display: none;">
-								<?php
-									include("newtype.php");
-								?>
-							</div>
+							<select class="form-control" name="client" onchange="showOption(this.value)">
+								<option value="0">Type existant</option>
+								<option value="1">Ajouter un type</option>
+							</select>
 						</td>
+						<td class="show-option" id="show-option-0">
+							<?php include("partials/currtype.php"); ?>
+						</td>
+						<td class="show-option" id="show-option-1" style="display: none;">
+							<?php include("partials/newtype.php"); ?>
+						</td>
+
 						<td>
 							<input class="btn btn-primary" type="submit" Value="Ajouter" />
 						</td>

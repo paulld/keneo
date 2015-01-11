@@ -127,12 +127,21 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div class="background-db-management background-image"></div>
+	<div class="background-clients background-image"></div>
 	<div class="overlay"></div>
 
 	<section class="container section-container section-toggle" id="saisie-temps">
 		<div class="section-title">
 			<h1>Client-Projet-Missions management</h1>
+		</div>
+
+		<div class="back-buttons">
+			<a class="btn btn-default" href="imputation.php"><i class="fa fa-arrow-left"></i> Retour &agrave; Clients</a>
+			<?php
+				if (isset($_POST['IDrel']))
+				{ echo '<a class="btn btn-default" href="rell1l2.php?IDrel='.$_POST['IDrel'].'"><i class="fa fa-arrow-left"></i> Retour &agrave; Client-Projets</a>'; }
+				else { echo '<a class="btn btn-default" href="rell1l2.php?IDrel='.$_GET['IDrel'].'"><i class="fa fa-arrow-left"></i> Retour &agrave; Client-Projets</a>'; }
+			?>
 		</div>
 
 		<?php
@@ -236,12 +245,14 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		
 		<h2>Ajouter une nouvelle relation Client-Projet-Mission</h2>
 		<form action="rell1l2l3.php" method="post">
+			<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
+			<input type="hidden" value="<?php echo $imput2tmp; ?>" name="IDrel2" />
 			<table id="tablerestit" class="table table-striped table-align-top">
 				<thead>
 					<tr>
 						<th>Client</th>
 						<th>Projet</th>
-						<th>Mission</th>
+						<th colspan="3">Mission</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -262,32 +273,22 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							$repimpid->closeCursor();
 							?>
 						</td>
+						
 						<td>
-								<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
-								<input type="hidden" value="<?php echo $imput2tmp; ?>" name="IDrel2" />
-								<div id="ProjetHint">
-									<div class="col-sm-3">
-										<select class="form-control" onchange="showNewMis(this.value)">
-											<option value="0">Mission existante</option>
-											<option value="1">Ajouter une mission</option>
-										</select>
-									</div>
-									<div class="col-sm-7">
-										<select class="form-control" name="newcomb3">
-											<option value=0></option>
-											<?php
-												$req = "SELECT * FROM rob_imputl3 WHERE actif=1 ORDER BY code";
-												$affpro = $bdd->query($req);
-												while ($optionpro = $affpro->fetch())
-												{
-													echo '<option value='.$optionpro['ID'].'>'.$optionpro['code'].' | '.$optionpro['description'].'</option>';
-												}
-												$affpro->closeCursor();
-											?>
-										</select>
-									</div>
-									<input class="btn btn-primary" type="submit" Value="Ajouter" />
-								</div>
+							<select class="form-control" onchange="showOption(this.value)">
+								<option value="0">Mission existante</option>
+								<option value="1">Ajouter une mission</option>
+							</select>
+						</td>
+						<td class="show-option" id="show-option-0">
+							<?php include("partials/currmission.php"); ?>
+						</td>
+						<td class="show-option" id="show-option-1" style="display: none;">
+							<?php include("partials/newmission.php"); ?>
+						</td>
+
+						<td>
+							<input class="btn btn-primary" type="submit" Value="Ajouter" />
 						</td>
 					</tr>
 				</tbody>

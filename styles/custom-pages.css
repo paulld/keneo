@@ -13,7 +13,9 @@
   padding: 15px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px;
 }
-
+.back-buttons a {
+  margin: -5px 10px 10px 0;
+}
 h1 {
   color: hsla(202,67%,50%,1);
   text-transform: uppercase;
@@ -103,6 +105,14 @@ input.checkbox {
 }
 .form-placeholder {
   color: #555555;
+}
+.form-control.form-control-auto {
+  width: auto;
+}
+.label-empty {
+  text-align: right;
+  font-weight: bold;
+  padding-right: 13px;
 }
 
 /* NAVBAR WITH TABS (TRANSACTION...) */
@@ -405,4 +415,48 @@ tr.tr-highlight {
 
 .form-group-new-project {
   height: 25px;
+}
+
+
+/* TABLES */
+
+.tables-nav > ul > li > a {
+  height: 60px;
+}
+.tables-links {
+  background-color: rgba(0,0,0,.4);
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+.tables-links select {
+  max-width: 260px;
+}
+.tables-links-text {
+  padding: 5px;
+  text-align: right;
+  color: #fff;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1200px) {
+  .tables-nav > ul > li > a {
+    height: 80px;
+  }
+}
+@media (max-width: 992px) {
+  .tables-nav {
+    display: none;
+  }
+  .tables-links {
+    display: block;
+  }
+}
+@media (min-width: 992px) {
+  .tables-nav {
+    display: block;
+  }
+  .tables-links {
+    display: none;
+  }
 }
