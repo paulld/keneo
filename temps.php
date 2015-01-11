@@ -718,7 +718,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							echo '<input type="hidden" value="'.$donneea[9].'" name="imputID2" />';
 							$nbjm = $nbjm + $donneea[7];
 							if ($donneea[2] <= $deadline OR $donneea['validation'] != 0) {
-									echo '<button class="btn btn-small btn-default" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-trash-o"></i></button>';
+									echo '<button class="btn btn-small btn-default" type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
 								// echo '</td></form></tr>';
 							} else {
 								// echo '<td>';

@@ -31,8 +31,8 @@
 	echo '</select>';
 
 	//DATE RANGE
-	echo ' - P&eacute;riode: <input size="8" type="text" id="datejourdeb" name="datejourdeb" value="" onchange="showFilterValtps(0)" placeholder="A partir du..." title="A partir du..." />';
-	echo '-<input size="8" type="text" id="datejourfin" name="datejourfin" value="" onchange="showFilterValtps(0)" placeholder="Jusqu\'au..." title="Jusqu\'au..." />';
+	echo '<input class="form-control form-control-small" type="text" id="datejourdeb" name="datejourdeb" value="" onchange="showFilterValtps(0)" placeholder="A partir du..." title="A partir du..." />';
+	echo '<input class="form-control form-control-small" type="text" id="datejourfin" name="datejourfin" value="" onchange="showFilterValtps(0)" placeholder="Jusqu\'au..." title="Jusqu\'au..." />';
 
 	//COLLABORATEURS
 	if ($_SESSION['id_lev_tms'] == 6) { $fltuser = ''; } else { if ($_SESSION['id_lev_tms'] == 4) { $fltuser = ' AND T2.id_hier ='.$_SESSION['ID']; } }
@@ -67,6 +67,13 @@
 		echo '<option value='.$optimput['ID'].'>'.$optimput['description'].'</option>';
 	}
 	$reqimput->closeCursor();
+	echo '</select>';
+
+	//VALIDATION
+	echo '<select name="affvalid" class="form-control form-control-small" id="affvalid" onchange="showFilterValtps(0)">';
+	echo '<option value=0 selected>Non valid&eacute;s</option>';
+	echo '<option value=1>Valid&eacute;s</option>';
+	echo '<option value=99999>Tout</option>';
 	echo '</select>';
 	?>
 	</div>

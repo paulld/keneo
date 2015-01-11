@@ -378,7 +378,7 @@ function showFilterValtps(param)
 	var d4 = d4.substring(6,10) + d4.substring(3,5) + d4.substring(0,2);
 	var p1 = document.getElementById('affclient').value;
 	var p2 = document.getElementById('affprojet').value;
-	var v1 = document.getElementById('affactivite').value;
+	var v1 = document.getElementById('affvalid').value;
 	var v2 = document.getElementById('affcollab').value;
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
