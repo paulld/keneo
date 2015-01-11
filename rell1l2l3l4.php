@@ -289,10 +289,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							</select>
 						</td>
 						<td class="show-option" id="show-option-0">
-							<?php include("currcategorie.php"); ?>
+							<?php include("partials/currcategorie.php"); ?>
 						</td>
 						<td class="show-option" id="show-option-1" style="display: none;">
-							<?php include("newcategorie.php"); ?>
+							<?php include("partials/newcategorie.php"); ?>
 						</td>
 
 						<td>
