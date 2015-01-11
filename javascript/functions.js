@@ -118,6 +118,7 @@ $(function() {
 	$( "#deadline1" ).datepicker(datepickerOptions);
 	$( "#deadline2" ).datepicker(datepickerOptions);
 	$( "#deadline3" ).datepicker(datepickerOptions);
+	$( ".datepicker" ).datepicker(datepickerOptions);
 });
 
 
@@ -872,16 +873,6 @@ function showCurrCat(currcat)
 	xmlhttp.send();
 }
 
-
-///////////////////////////////
-// SHOW / HIDE NEW AND CURRENT (USED FOR COMPETITIONS, CLIENTS...)
-function showOption(option) {
-	$('.show-option').hide();
-	$('#show-option-' + option).show();
-}
-///////////////////////////////
-
-
 //Afficher l'interface de création d'un nouveau type d'événement
 // function showNewTyp(newtyp)
 // {
@@ -937,59 +928,66 @@ function showOption(option) {
 // }
 
 //Afficher l'interface de création d'un nouvel événement
-function showNewEve(neweve)
-{
-	if (neweve=="0")
-	{
-		document.getElementById("ProjetHint").innerHTML="";
-		return;
-	} 
-	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","newevent.php",true);
-	xmlhttp.send();
-}
+// function showNewEve(neweve)
+// {
+// 	if (neweve=="0")
+// 	{
+// 		document.getElementById("ProjetHint").innerHTML="";
+// 		return;
+// 	} 
+// 	if (window.XMLHttpRequest)
+// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
+// 		xmlhttp=new XMLHttpRequest();
+// 	}
+// 	else
+// 	{// code for IE6, IE5
+// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+// 	}
+// 	xmlhttp.onreadystatechange=function()
+// 	{
+// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+// 		{
+// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
+// 		}
+// 	}
+// 	xmlhttp.open("GET","newevent.php",true);
+// 	xmlhttp.send();
+// }
 
 //Afficher l'interface de saisie d'un événement existant
-function showCurrEve(curreve)
-{
-	if (curreve=="1")
-	{
-		document.getElementById("ProjetHint").innerHTML="";
-		return;
-	} 
-	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","currevent.php",true);
-	xmlhttp.send();
-}
+// function showCurrEve(curreve)
+// {
+// 	if (curreve=="1")
+// 	{
+// 		document.getElementById("ProjetHint").innerHTML="";
+// 		return;
+// 	} 
+// 	if (window.XMLHttpRequest)
+// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
+// 		xmlhttp=new XMLHttpRequest();
+// 	}
+// 	else
+// 	{// code for IE6, IE5
+// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+// 	}
+// 	xmlhttp.onreadystatechange=function()
+// 	{
+// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+// 		{
+// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
+// 		}
+// 	}
+// 	xmlhttp.open("GET","currevent.php",true);
+// 	xmlhttp.send();
+// }
 
+
+
+// SHOW/HIDE NEW FORM VS. EXISTING FORM (CLIENTS, COMPETITIONS...)
+function showOption(option) {
+	$('.show-option').hide();
+	$('#show-option-' + option).show();
+}
 
 // SHOW/HIDE INPUT FORM (SAISI TEMPS, SAISIR FRAIS...)
 

@@ -127,7 +127,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 
 	<!-- <a class="typ" href="competition.php"><span>Comp&eacute;titions</span> -->
 	
-
 	<div class="background-competitions background-image"></div>
 	<div class="overlay"></div>
 
@@ -226,6 +225,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		
 		<h2>Ajouter une nouvelle relation Comp&eacute;tition-Type</h2>
 		<form action="comprell1l2.php" method="post">
+			<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
 			<table class="table table-striped table-align-top">
 				<thead>
 					<tr>
@@ -244,7 +244,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							?>
 						</td>
 						<td>
-							<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
 							<div class="col-sm-3">
 								<select class="form-control" name="client" onchange="showOption(this.value)">
 									<option value="0">Type existant</option>
@@ -265,9 +264,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								</select>
 							</div>
 							<div class="col-sm-8 show-option" id="show-option-1" style="display: none;">
-								<?php
-									include("newtype.php");
-								?>
+								<?php include("newtype.php"); ?>
 							</div>
 						</td>
 						<td>

@@ -104,6 +104,14 @@ input.checkbox {
 .form-placeholder {
   color: #555555;
 }
+.form-control.form-control-auto {
+  width: auto;
+}
+.label-empty {
+  text-align: right;
+  font-weight: bold;
+  padding-right: 13px;
+}
 
 /* NAVBAR WITH TABS (TRANSACTION...) */
 
