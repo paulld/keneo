@@ -423,3 +423,40 @@ tr.tr-highlight {
 .tables-nav > ul > li > a {
   height: 60px;
 }
+.tables-links {
+  background-color: rgba(0,0,0,.4);
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+.tables-links select {
+  max-width: 260px;
+}
+.tables-links-text {
+  padding: 5px;
+  text-align: right;
+  color: #fff;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1200px) {
+  .tables-nav > ul > li > a {
+    height: 80px;
+  }
+}
+@media (max-width: 992px) {
+  .tables-nav {
+    display: none;
+  }
+  .tables-links {
+    display: block;
+  }
+}
+@media (min-width: 992px) {
+  .tables-nav {
+    display: block;
+  }
+  .tables-links {
+    display: none;
+  }
+}

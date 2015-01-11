@@ -11,54 +11,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<div class="background-tables background-image"></div>
 		<div class="overlay"></div>
 
-		<div class="container nav-tabs-outer tables-nav" id="mainMenuDB">
-			<ul class="nav nav-tabs nav-justified">
-				<?php
-					$men= "SELECT * FROM rob_tables ORDER BY nom";
-			 		$menu = $bdd->query($men);
-			 		while ($donnee = $menu->fetch()) {
-			 			$class_active = $donnee['lien'] == end(explode("/", $_SERVER[REQUEST_URI])) ? ' class="active"' : '';
-						echo '<li'.$class_active.'>';
-						echo '<a role="presentation" href="'.$donnee['lien'].'">'.$donnee['nom'].'</a>';
-						echo '</li>';
-					}
-					$menu->closeCursor();
-		 		?>
-			</ul>
-		</div>
+		<?php include("partials/tablesnavbar.php"); ?>
 
-	<!-- <section class="container section-container" id="saisie-frais">
-		<div class="section-title">
-			<h1>
-				Tables
-			</h1>
-		</div>
-
-		<?php 
-			echo '<p>';
-			echo end(explode("/", $_SERVER[REQUEST_URI])); // piece1
-			echo '</p>';
-		?>
-
-
-		<div class="form-inner">
-			Acc&eacute;der &agrave; la table : <select class="form-control form-control-small" name="table" onchange="location=this.options[selectedIndex].value;" >
-			<option>...</option>
-			<?php
-			$men= "SELECT * FROM rob_tables ORDER BY nom";
-	 		$menu = $bdd->query($men);
-			//echo '<ul id="navigationTable">';
-	 		while ($donnee = $menu->fetch())
-	 		{
-				// echo '<li><a class="typ" href="'.$donnee['lien'].'"><span>'.$donnee['nom'].'</span></a></li>';
-				echo '<option value='.$donnee['lien'].'>'.$donnee['nom'].'</option>';
-			}
-			//echo '</ul>';
-			$menu->closeCursor();
-	 		?>
-			</select>
-		</div>
-	</section> -->
 	<?php
 	include("footer.php");
 }
