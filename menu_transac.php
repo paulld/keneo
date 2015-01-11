@@ -11,16 +11,16 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<div class="background-transactions background-image"></div>
 	<div class="overlay"></div>
 
-<div class="container nav-tabs-outer" id="mainMenuDB">
-	<ul class="nav nav-tabs nav-justified">
-		<li class="active"><a role="presentation" href="#"><span>Vue d'Ensemble</span></a></li>
-		<li><a role="presentation" href="devis.php"><span>Devis</span></a></li>
-		<li><a role="presentation" href="#"><span>Bons de commandes</span></a></li>
-		<li><a role="presentation" href="#"><span>Journal</span></a></li>
-	</ul>
-</div>
+	<div class="container nav-tabs-outer" id="mainMenuDB">
+		<ul class="nav nav-tabs nav-justified">
+			<li class="active"><a role="presentation" href="#"><span>Vue d'Ensemble</span></a></li>
+			<li><a role="presentation" href="devis.php"><span>Devis</span></a></li>
+			<li><a role="presentation" href="#"><span>Bons de commandes</span></a></li>
+			<li><a role="presentation" href="#"><span>Journal</span></a></li>
+		</ul>
+	</div>
 
-<section class="container section-container" id="transaction-dashboard">
+	<section class="container section-container" id="transaction-dashboard">
 		<div class="section-title">
 			<h1>Ma Vue d'Ensemble</h1>
 		</div>

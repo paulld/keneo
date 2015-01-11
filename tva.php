@@ -51,16 +51,31 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li>
-		<li><a class="typ" href="menu_setup.php"><span>DB Management</span></a></li>
-		<li><a class="typ" href="table.php"><span>Tables</span></a></li>
-		<li><a class="typ" href="#"><span>Taux de TVA</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Taux de TVA</div>
+	<!-- Background Image Specific to each page -->
+	<div class="background-tables background-image"></div>
+	<div class="overlay"></div>
 
-	<div id="coeur">
+	<div class="container nav-tabs-outer tables-nav" id="mainMenuDB">
+		<ul class="nav nav-tabs nav-justified">
+			<?php
+				$men= "SELECT * FROM rob_tables ORDER BY nom";
+		 		$menu = $bdd->query($men);
+		 		while ($donnee = $menu->fetch()) {
+		 			$class_active = $donnee['lien'] == end(explode("/", $_SERVER[REQUEST_URI])) ? ' class="active"' : '';
+					echo '<li'.$class_active.'>';
+					echo '<a role="presentation" href="'.$donnee['lien'].'">'.$donnee['nom'].'</a>';
+					echo '</li>';
+				}
+				$menu->closeCursor();
+	 		?>
+		</ul>
+	</div>
+
+	<section class="container section-container" id="saisie-frais">
+		<div class="section-title">
+			<h1>Taux de TVA</h1>
+		</div>
+
 		<table id="tablerestit" class="table table-striped temp-table">
 			<tr>
 				<td id="t-containertit">Type</td>
@@ -99,23 +114,24 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			$reponse->closeCursor();
 			?>
 		</table>
-	</div>
 
-	<div id="sstitre">Ajouter un nouveau taux</div>
-	<table id="tablerestit" class="table table-striped temp-table">
-		<tr>
-			<td id="t-containertit">Type</td>
-			<td id="t-containertit">Taux</td>
-			<td id="t-containertit">Actions</td>
-		</tr>
-		<form action="tva.php" method="post">
-		<tr>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newcode" /></td>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="10" name="desc" placeholder="0.000" /></td>
-			<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-		</tr>
-		</form>
-	</table>
+		<h2>Ajouter un nouveau taux</h2>
+		<table id="tablerestit" class="table table-striped temp-table">
+			<tr>
+				<td id="t-containertit">Type</td>
+				<td id="t-containertit">Taux</td>
+				<td id="t-containertit">Actions</td>
+			</tr>
+			<form action="tva.php" method="post">
+			<tr>
+				<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newcode" /></td>
+				<td id="t-container"><input id="w_inputtxt_90" type="text" size="10" name="desc" placeholder="0.000" /></td>
+				<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
+			</tr>
+			</form>
+		</table>
+
+	</section>
 <?php
 	include("footer.php");
 }

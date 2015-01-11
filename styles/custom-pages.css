@@ -416,3 +416,10 @@ tr.tr-highlight {
 .form-group-new-project {
   height: 25px;
 }
+
+
+/* TABLES */
+
+.tables-nav > ul > li > a {
+  height: 60px;
+}

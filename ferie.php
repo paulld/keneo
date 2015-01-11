@@ -42,16 +42,31 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		}
 	}
 	?>
-	<div id="navigationMap">
-		<ul><li><a class="typ" href="accueil.php">Home</a></li>
-		<li><a class="typ" href="menu_setup.php"><span>DB Management</span></a></li>
-		<li><a class="typ" href="table.php"><span>Tables</span></a></li>
-		<li><a class="typ" href="#"><span>Jours f&eacute;ri&eacute;s</span></a></li></ul>
-	</div>
-	<div id="clearl"></div>
-	<div id="haut">Jours f&eacute;ri&eacute;s</div>
+	<!-- Background Image Specific to each page -->
+	<div class="background-tables background-image"></div>
+	<div class="overlay"></div>
 
-	<div id="coeur">
+	<div class="container nav-tabs-outer tables-nav" id="mainMenuDB">
+		<ul class="nav nav-tabs nav-justified">
+			<?php
+				$men= "SELECT * FROM rob_tables ORDER BY nom";
+		 		$menu = $bdd->query($men);
+		 		while ($donnee = $menu->fetch()) {
+		 			$class_active = $donnee['lien'] == end(explode("/", $_SERVER[REQUEST_URI])) ? ' class="active"' : '';
+					echo '<li'.$class_active.'>';
+					echo '<a role="presentation" href="'.$donnee['lien'].'">'.$donnee['nom'].'</a>';
+					echo '</li>';
+				}
+				$menu->closeCursor();
+	 		?>
+		</ul>
+	</div>
+
+	<section class="container section-container" id="saisie-frais">
+		<div class="section-title">
+			<h1>Jours f&eacute;ri&eacute;s</h1>
+		</div>
+
 		<table id="tablerestit" class="table table-striped temp-table">
 			<tr>
 				<td id="t-containertit">Date</td>
@@ -82,23 +97,24 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			$reponse->closeCursor();
 			?>
 		</table>
-	</div>
 
-	<div id="sstitre">Ajouter un nouveau jour f&eacute;ri&eacute;</div>
-	<table id="tablerestit" class="table table-striped temp-table">
-		<tr>
-			<td id="t-containertit">Date</td>
-			<td id="t-containertit">Description</td>
-			<td id="t-containertit">Action</td>
-		</tr>
-		<form action="ferie.php" method="post">
-		<tr>
-			<td id="t-container"><input id="deadline1" type="text" size="20" name="newdateFerie" /></td>
-			<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newdesc" /></td>
-			<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-		</tr>
-		</form>
-	</table>
+		<h2>Ajouter un nouveau jour f&eacute;ri&eacute;</h2>
+		<table id="tablerestit" class="table table-striped temp-table">
+			<tr>
+				<td id="t-containertit">Date</td>
+				<td id="t-containertit">Description</td>
+				<td id="t-containertit">Action</td>
+			</tr>
+			<form action="ferie.php" method="post">
+			<tr>
+				<td id="t-container"><input id="deadline1" type="text" size="20" name="newdateFerie" /></td>
+				<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newdesc" /></td>
+				<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
+			</tr>
+			</form>
+		</table>
+
+	</section>
 <?php
 	include("footer.php");
 }
