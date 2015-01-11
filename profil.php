@@ -59,22 +59,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<div class="background-tables background-image"></div>
 	<div class="overlay"></div>
 
-	<div class="container nav-tabs-outer tables-nav" id="mainMenuDB">
-		<ul class="nav nav-tabs nav-justified">
-			<?php
-				$men= "SELECT * FROM rob_tables ORDER BY nom";
-		 		$menu = $bdd->query($men);
-		 		while ($donnee = $menu->fetch()) {
-		 			$current_page = end(explode("/", $_SERVER[REQUEST_URI]));
-		 			$class_active = $donnee['lien'] == $current_page ? ' class="active"' : '';
-					echo '<li'.$class_active.'>';
-					echo '<a role="presentation" href="'.$donnee['lien'].'">'.$donnee['nom'].'</a>';
-					echo '</li>';
-				}
-				$menu->closeCursor();
-	 		?>
-		</ul>
-	</div>
+	<?php include("partials/tablesnavbar.php"); ?>
 
 	<section class="container section-container" id="saisie-frais">
 		<div class="section-title">
