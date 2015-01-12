@@ -62,60 +62,78 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<h1>Nature 1</h1>
 		</div>
 
-		<table id="tablerestit" class="table table-striped temp-table">
-			<tr>
-				<td id="t-containertit">Code</td>
-				<td id="t-containertit">Description</td>
-				<td id="t-containertit" colspan="2">Actions</td>
-			</tr>
-			<?php
-			$req="SELECT code, Description, actif, ID
-				FROM rob_nature1
-				ORDER BY Description";
-			$reponse = $bdd->query($req);
-			$i=1;
-			while ($donnee = $reponse->fetch() )
-			{
-			?>
-				<tr>
-					<td id="t-container<?php echo $i;?>"><?php echo $donnee[0];?></td>
-					<td id="t-container<?php echo $i;?>"><?php echo $donnee[1];?></td>
-					<?php if ($donnee[2] == 1)
-					{ ?>
-						<td id="t-ico<?php echo $i;?>"><form action="nature1.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDinact" /><input border=0 src="images/RoB_activ.png" type=image Value=submit title="Desactiver le code"></form></td>
-						<?php
-					}
-					else
+		<div class="table-responsive">
+			<table class="table table-striped temp-table">
+				<thead>
+					<tr>
+						<th>Code</th>
+						<th>Description</th>
+						<th colspan="2">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$req="SELECT code, Description, actif, ID
+						FROM rob_nature1
+						ORDER BY Description";
+					$reponse = $bdd->query($req);
+					while ($donnee = $reponse->fetch() )
 					{
-						?>
-						<td id="t-ico<?php echo $i;?>"><form action="nature1.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDact" /><input border=0 src="images/RoB_deactiv.png" type=image Value=submit title="Activer le code"></form></td>
-						<?php
-					}
 					?>
-					<td id="t-ico<?php echo $i;?>"><form action="modif_nature1.php" method="post"><input type="hidden" value="<?php echo $donnee[3];?>" name="IDmodif" /><input border=0 src="images/RoB_info.png" type=image Value=submit title="Modifier les informations" name="modif"></form></td>
-				</tr>
-			<?php
-				if ($i == 1) { $i = 2; } else { $i = 1; }
-			}
-			$reponse->closeCursor();
-			?>
-		</table>
+						<tr>
+							<td><?php echo $donnee[0];?></td>
+							<td><?php echo $donnee[1];?></td>
+							<?php if ($donnee[2] == 1) { ?>
+								<td>
+									<form action="nature1.php" method="post">
+										<input type="hidden" value="<?php echo $donnee[3];?>" name="IDinact" />
+										<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver le code"><i class="fa fa-toggle-on"></i></button>
+									</form>
+								</td>
+							<?php } else { ?>
+								<td>
+									<form action="nature1.php" method="post">
+										<input type="hidden" value="<?php echo $donnee[3];?>" name="IDact" />
+										<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer le code"><i class="fa fa-toggle-off"></i></button>
+									</form>
+								</td>
+							<?php } ?>
+							<td>
+								<form action="modif_nature1.php" method="post">
+									<input type="hidden" value="<?php echo $donnee[3];?>" name="IDmodif" />
+									<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
+								</form>
+							</td>
+						</tr>
+					<?php
+					}
+					$reponse->closeCursor();
+					?>
+				</tbody>
+			</table>
+		</div>
 
 		<h2>Ajouter une nouvelle nature de niveau 1</h2>
-		<table id="tablerestit" class="table table-striped temp-table">
-			<tr>
-				<td id="t-containertit">Code</td>
-				<td id="t-containertit">Description</td>
-				<td id="t-containertit">Actions</td>
-			</tr>
+		<div class="table-responsive">
 			<form action="nature1.php" method="post">
-			<tr>
-				<td id="t-container"><input id="w_inputtxt_90" type="text" size="20" name="newcode" /></td>
-				<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newdesc" /></td>
-				<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-			</tr>
+				<table class="table table-striped temp-table">
+					<thead>
+						<tr>
+							<th>Code</th>
+							<th>Description</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input class="form-control" type="text" size="20" name="newcode" /></td>
+							<td><input class="form-control" type="text" size="50" name="newdesc" /></td>
+							<td><input class="btn btn-primary" type="submit" Value="Ajouter" /></td>
+						</tr>
+					</tbody>
+				</table>
 			</form>
-		</table>
+		</div>
 
 	</section>
 <?php
