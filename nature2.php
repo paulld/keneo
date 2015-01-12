@@ -63,77 +63,94 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<div class="section-title">
 			<h1>Nature 2</h1>
 		</div>
-
-		<table id="tablerestit" class="table table-striped temp-table">
-			<tr>
-				<td id="t-containertit">Nature 2</td>
-				<td id="t-containertit">Compte</td>
-				<td id="t-containertit">Nature 1</td>
-				<td id="t-containertit" colspan="2">Actions</td>
-			</tr>
-			<?php
-			$req="SELECT T1.Description, T1.actif, T1.ID, T2.Description, T1.Compte FROM rob_nature2 T1
-				INNER JOIN rob_nature1 T2 ON T1.natID1 = T2.ID
-				ORDER BY T2.Description, T1.Description";
-			$reponse = $bdd->query($req);
-			$i=1;
-			while ($donnee = $reponse->fetch() )
-			{
-			?>
-				<tr>
-					<td id="t-container<?php echo $i;?>"><?php echo $donnee[0];?></td>
-					<td id="t-container<?php echo $i;?>"><?php echo $donnee[4];?></td>
-					<td id="t-container<?php echo $i;?>"><?php echo $donnee[3];?></td>
-					<?php if ($donnee[1] == 1)
-					{ ?>
-						<td id="t-ico<?php echo $i;?>"><form action="nature2.php" method="post"><input type="hidden" value="<?php echo $donnee[2];?>" name="IDinact" /><input border=0 src="images/RoB_activ.png" type=image Value=submit title="Desactiver le code"></form></td>
-						<?php
-					}
-					else
-					{
-						?>
-						<td id="t-ico<?php echo $i;?>"><form action="nature2.php" method="post"><input type="hidden" value="<?php echo $donnee[2];?>" name="IDact" /><input border=0 src="images/RoB_deactiv.png" type=image Value=submit title="Activer le code"></form></td>
-						<?php
-					}
+		
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nature 2</th>
+						<th>Compte</th>
+						<th>Nature 1</th>
+						<th colspan="2">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$req="SELECT T1.Description, T1.actif, T1.ID, T2.Description, T1.Compte FROM rob_nature2 T1
+						INNER JOIN rob_nature1 T2 ON T1.natID1 = T2.ID
+						ORDER BY T2.Description, T1.Description";
+					$reponse = $bdd->query($req);
+					while ($donnee = $reponse->fetch() ) {
 					?>
-					<td id="t-ico<?php echo $i;?>"><form action="modif_nature2.php" method="post"><input type="hidden" value="<?php echo $donnee[2];?>" name="IDmodif" /><input border=0 src="images/RoB_info.png" type=image Value=submit title="Modifier les informations" name="modif"></form></td>
-				</tr>
-			<?php
-				if ($i == 1) { $i = 2; } else { $i = 1; }
-			}
-			$reponse->closeCursor();
-			?>
-		</table>
-
+						<tr>
+							<td><?php echo $donnee[0];?></td>
+							<td><?php echo $donnee[4];?></td>
+							<td><?php echo $donnee[3];?></td>
+							<?php if ($donnee[1] == 1) { ?>
+								<td>
+									<form action="nature2.php" method="post">
+										<input type="hidden" value="<?php echo $donnee[2];?>" name="IDinact" />
+										<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver le code"><i class="fa fa-toggle-on"></i></button>
+									</form>
+								</td>
+							<?php } else { ?>
+								<td>
+									<form action="nature2.php" method="post">
+										<input type="hidden" value="<?php echo $donnee[2];?>" name="IDact" />
+										<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer le code"><i class="fa fa-toggle-off"></i></button>
+									</form>
+								</td>
+							<?php } ?>
+							<td>
+								<form action="modif_nature2.php" method="post">
+									<input type="hidden" value="<?php echo $donnee[2];?>" name="IDmodif" />
+									<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
+								</form>
+							</td>
+						</tr>
+					<?php
+					}
+					$reponse->closeCursor();
+					?>
+				</tbody>
+			</table>
+		</div>
 
 		<h2>Ajouter une nouvelle nature de niveau 2</h2>
-		<table id="tablerestit" class="table table-striped temp-table">
-			<tr>
-				<td id="t-containertit">Description</td>
-				<td id="t-containertit">Compte</td>
-				<td id="t-containertit">Nature1</td>
-				<td id="t-containertit">Actions</td>
-			</tr>
+		<div class="table-responsive">
 			<form action="nature2.php" method="post">
-			<tr>
-				<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newdesc" /></td>
-				<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="compte" /></td>
-				<td id="t-container">
-					<?php echo ' <select name="nat1" id="w_input_90" >';
-						echo '<option></option>';
-						$affcollab = $bdd->query("SELECT * FROM rob_nature1 WHERE actif='1' ORDER BY Description");
-						while ($optioncoll = $affcollab->fetch())
-						{
-							echo '<option value='.$optioncoll['ID'].'>'.$optioncoll['Description'].'</option>';
-						}
-						$affcollab->closeCursor();
-					echo '</select>';
-					?>
-				</td>
-				<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-			</tr>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Description</th>
+							<th>Compte</th>
+							<th>Nature1</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input class="form-control" type="text" size="50" name="newdesc" /></td>
+							<td><input class="form-control" type="text" size="50" name="compte" /></td>
+							<td>
+								<select name="nat1" class="form-control">
+									<option></option>
+								<?php 
+									$affcollab = $bdd->query("SELECT * FROM rob_nature1 WHERE actif='1' ORDER BY Description");
+									while ($optioncoll = $affcollab->fetch())
+									{
+										echo '<option value='.$optioncoll['ID'].'>'.$optioncoll['Description'].'</option>';
+									}
+									$affcollab->closeCursor();
+								?>
+								</select>
+							</td>
+							<td><input class="btn btn-primary" type="submit" Value="Ajouter" /></td>
+						</tr>
+					</tbody>
+				</table>
 			</form>
-		</table>
+		</div>
 
 	</section>
 <?php
