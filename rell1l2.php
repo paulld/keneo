@@ -125,128 +125,132 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<?php
 		if ($imputtmp !=0 AND $errvar == 0) {
 			?>
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Client</th>
-						<th>Projet</th>
-						<th>Description</th>
-						<th colspan="3">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-					$req="SELECT T2.code codeclient, T2.description description, T0.ID id, T0.imputID inputid, T0.imputID2 inputid2, T0.actif actif, T1.code codeprojet
-						FROM rob_imprel2 T0
-						INNER JOIN rob_imputl2 T2 ON T2.ID = T0.imputID2
-						INNER JOIN rob_imputl1 T1 ON T1.ID = T0.imputID
-						WHERE T0.imputID = ".$imputtmp."
-						ORDER BY T2.description";
-						
-					$reponse = $bdd->query($req);
-					$checkrep = $reponse->rowCount();
-					if ($checkrep != 0) {
-						while ($donnee = $reponse->fetch() )
-						{
-							?>
-							<tr>
-								<td><?php echo $donnee['codeprojet'];?></td>
-								<td><?php echo $donnee['codeclient'];?></td>
-								<td><?php if ($donnee['description'] != "") { echo $donnee['description']; } ?></td>
-								<?php if ($donnee['actif'] == 1)
-								{ ?>
-									<td>
-										<form action="rell1l2.php" method="post">
-											<input type="hidden" value="<?php echo $donnee['inputid'];?>" name="IDrel" />
-											<input type="hidden" value="<?php echo $donnee['id'];?>" name="IDinact" />
-											<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver la relation"><i class="fa fa-toggle-on"></i></button>
-										</form>
-									</td>
-									<td>
-										<form action="rell1l2l3.php" method="post">
-											<input type="hidden" value="<?php echo $donnee['inputid'];?>" name="IDrel" />
-											<input type="hidden" value="<?php echo $donnee['inputid2'];?>" name="IDrel2" />
-											<button class="btn btn-small btn-default btn-icon btn-orange" type="submit" title="Vers les missions en relation" name="relat"><i class="fa fa-link"></i></button>
-										</form>
-									</td>
-									<?php
-								} else {
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Client</th>
+							<th>Projet</th>
+							<th>Description</th>
+							<th colspan="3">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+						$req="SELECT T2.code codeclient, T2.description description, T0.ID id, T0.imputID inputid, T0.imputID2 inputid2, T0.actif actif, T1.code codeprojet
+							FROM rob_imprel2 T0
+							INNER JOIN rob_imputl2 T2 ON T2.ID = T0.imputID2
+							INNER JOIN rob_imputl1 T1 ON T1.ID = T0.imputID
+							WHERE T0.imputID = ".$imputtmp."
+							ORDER BY T2.description";
+							
+						$reponse = $bdd->query($req);
+						$checkrep = $reponse->rowCount();
+						if ($checkrep != 0) {
+							while ($donnee = $reponse->fetch() )
+							{
+								?>
+								<tr>
+									<td><?php echo $donnee['codeprojet'];?></td>
+									<td><?php echo $donnee['codeclient'];?></td>
+									<td><?php if ($donnee['description'] != "") { echo $donnee['description']; } ?></td>
+									<?php if ($donnee['actif'] == 1)
+									{ ?>
+										<td>
+											<form action="rell1l2.php" method="post">
+												<input type="hidden" value="<?php echo $donnee['inputid'];?>" name="IDrel" />
+												<input type="hidden" value="<?php echo $donnee['id'];?>" name="IDinact" />
+												<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver la relation"><i class="fa fa-toggle-on"></i></button>
+											</form>
+										</td>
+										<td>
+											<form action="rell1l2l3.php" method="post">
+												<input type="hidden" value="<?php echo $donnee['inputid'];?>" name="IDrel" />
+												<input type="hidden" value="<?php echo $donnee['inputid2'];?>" name="IDrel2" />
+												<button class="btn btn-small btn-default btn-icon btn-orange" type="submit" title="Vers les missions en relation" name="relat"><i class="fa fa-link"></i></button>
+											</form>
+										</td>
+										<?php
+									} else {
+										?>
+										<td>
+											<form action="rell1l2.php" method="post">
+												<input type="hidden" value="<?php echo $donnee['inputid'];?>" name="IDrel" />
+												<input type="hidden" value="<?php echo $donnee['id'];?>" name="IDact" />
+												<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer la relation"><i class="fa fa-toggle-off"></i></button>
+											</form>
+										</td>
+										<td>
+											<form action="rell1l2l3.php" method="post">
+												<input type="hidden" value="<?php echo $donnee['inputid'];?>" name="IDrel" />
+												<input type="hidden" value="<?php echo $donnee['inputid2'];?>" name="IDrel2" />
+												<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Vers les missions en relation" name="relat"><i class="fa fa-link"></i></button>
+											</form>
+										</td>
+										<?php
+									}
 									?>
 									<td>
-										<form action="rell1l2.php" method="post">
-											<input type="hidden" value="<?php echo $donnee['inputid'];?>" name="IDrel" />
-											<input type="hidden" value="<?php echo $donnee['id'];?>" name="IDact" />
-											<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer la relation"><i class="fa fa-toggle-off"></i></button>
+										<form action="modif_imputl2.php" method="post">
+											<input type="hidden" value="<?php echo $donnee['inputid2'];?>" name="IDmodif" />
+											<input type="hidden" value="<?php echo $imputtmp;?>" name="IDrel" />
+											<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
 										</form>
 									</td>
-									<td>
-										<form action="rell1l2l3.php" method="post">
-											<input type="hidden" value="<?php echo $donnee['inputid'];?>" name="IDrel" />
-											<input type="hidden" value="<?php echo $donnee['inputid2'];?>" name="IDrel2" />
-											<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Vers les missions en relation" name="relat"><i class="fa fa-link"></i></button>
-										</form>
-									</td>
-									<?php
-								}
-								?>
-								<td>
-									<form action="modif_imputl2.php" method="post">
-										<input type="hidden" value="<?php echo $donnee['inputid2'];?>" name="IDmodif" />
-										<input type="hidden" value="<?php echo $imputtmp;?>" name="IDrel" />
-										<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
-									</form>
-								</td>
-							</tr>
-						<?php
+								</tr>
+							<?php
+							}
 						}
-					}
-					$reponse->closeCursor();
-					?>
-				</tbody>
-			</table>
+						$reponse->closeCursor();
+						?>
+					</tbody>
+				</table>
+			</div>
 		
 			<h2>Ajouter une nouvelle relation client-Projet</h2>
 			<form action="rell1l2.php" method="post">
 				<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
-				<table class="table table-striped table-align-top">
-					<thead>
-						<tr>
-							<th>Client</th>
-							<th colspan="3">Projet</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								<?php
-								$repimpid = $bdd->query("SELECT * FROM rob_imputl1 WHERE ID='$imputtmp'");
-								$donimpid = $repimpid->fetch();
-								echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
-								$repimpid->closeCursor();
-								?>
-							</td>
+				<div class="table-responsive">
+					<table class="table table-striped table-align-top">
+						<thead>
+							<tr>
+								<th>Client</th>
+								<th colspan="3">Projet</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<?php
+									$repimpid = $bdd->query("SELECT * FROM rob_imputl1 WHERE ID='$imputtmp'");
+									$donimpid = $repimpid->fetch();
+									echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
+									$repimpid->closeCursor();
+									?>
+								</td>
 
-							<td>
-								<div class="col-sm-3">
-									<select class="form-control" name="client" onchange="showOption(this.value)">
-										<option value="0">Projet existant</option>
-										<option value="1">Ajouter un projet</option>
-									</select>
-								</div>
-								<div class="col-sm-8 show-option" id="show-option-0">
-									<?php include("partials/currprojet.php"); ?>
-								</div>
-								<div class="col-sm-8 show-option" id="show-option-1" style="display: none;">
-									<?php include("partials/newprojet.php"); ?>
-								</div>
-							</td>
+								<td>
+									<div class="col-xs-3">
+										<select class="form-control" name="client" onchange="showOption(this.value)">
+											<option value="0">Projet existant</option>
+											<option value="1">Ajouter un projet</option>
+										</select>
+									</div>
+									<div class="col-xs-8 show-option" id="show-option-0">
+										<?php include("partials/currprojet.php"); ?>
+									</div>
+									<div class="col-xs-8 show-option" id="show-option-1" style="display: none;">
+										<?php include("partials/newprojet.php"); ?>
+									</div>
+								</td>
 
-							<td>
-								<input class="btn btn-primary" type="submit" Value="Ajouter" />
-							</td>
-						</tr>
-					</tbody>
-				</table>
+								<td>
+									<input class="btn btn-primary" type="submit" Value="Ajouter" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</form>
 
 		<?php

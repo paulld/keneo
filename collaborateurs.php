@@ -113,80 +113,82 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			</h1>
 		</div>
 		<div id="toggle-content" style="display: none;">
-		<table class="table table-striped" id="effectif-interne-table">
-		<thead>
-			<tr>
-				<td>Nom</td>
-				<td>Trig.</td>
-				<td>Acc&egrave;s menu</td>
-				<td>Timesheet</td>
-				<td>Frais</td>
-				<td>Journal</td>
-				<td>Resp.</td>
-				<td>Pole</td>
-				<td colspan="2">Actions</td>
-			</tr>
-		</thead>
-		<tbody>
-			<?php
-			$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, T2.actif, T2.ID
-					FROM rob_user_rights T1 
-					INNER JOIN rob_user T2 ON T1.ID = T2.ID
-					INNER JOIN rob_level T3 ON T1.id_lev_menu = T3.ID
-					INNER JOIN rob_level T4 ON T1.id_lev_exp = T4.ID
-					INNER JOIN rob_level T5 ON T1.id_lev_jrl = T5.ID
-					INNER JOIN rob_level T8 ON T1.id_lev_tms = T8.ID
-					INNER JOIN rob_user T6 ON T1.id_hier = T6.ID
-					INNER JOIN rob_pole T7 ON T1.id_pole = T7.ID
-					WHERE T1.id_lev_menu <= ".$_SESSION['id_lev_menu']." AND T7.actif = 1 AND extstd = 2 ORDER BY T2.nom";
-			$reponse = $bdd->query($req );
-			while ($donnee = $reponse->fetch() )
-			{
-				?>
-				<tr>
-					<td><?php echo $donnee[0].'. '.substr ($donnee[1],0,1);?></td>
-					<td><?php echo $donnee[2];?></td>
-					<td><?php echo $donnee[5];?></td>
-					<td><?php echo $donnee[6];?></td>
-					<td><?php echo $donnee[7];?></td>
-					<td><?php echo $donnee[8];?></td>
-					<td><?php echo $donnee[3];?></td>
-					<td><?php echo $donnee[4];?></td>
-					<?php if ($donnee[9] == 1)
+			<div class="table-responsive">
+				<table class="table table-striped" id="effectif-interne-table">
+					<thead>
+						<tr>
+							<td>Nom</td>
+							<td>Trig.</td>
+							<td>Acc&egrave;s menu</td>
+							<td>Timesheet</td>
+							<td>Frais</td>
+							<td>Journal</td>
+							<td>Resp.</td>
+							<td>Pole</td>
+							<td colspan="2">Actions</td>
+						</tr>
+					</thead>
+					<tbody>
+					<?php
+					$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, T2.actif, T2.ID
+							FROM rob_user_rights T1 
+							INNER JOIN rob_user T2 ON T1.ID = T2.ID
+							INNER JOIN rob_level T3 ON T1.id_lev_menu = T3.ID
+							INNER JOIN rob_level T4 ON T1.id_lev_exp = T4.ID
+							INNER JOIN rob_level T5 ON T1.id_lev_jrl = T5.ID
+							INNER JOIN rob_level T8 ON T1.id_lev_tms = T8.ID
+							INNER JOIN rob_user T6 ON T1.id_hier = T6.ID
+							INNER JOIN rob_pole T7 ON T1.id_pole = T7.ID
+							WHERE T1.id_lev_menu <= ".$_SESSION['id_lev_menu']." AND T7.actif = 1 AND extstd = 2 ORDER BY T2.nom";
+					$reponse = $bdd->query($req );
+					while ($donnee = $reponse->fetch() )
 					{
 						?>
-						<form action="collaborateurs.php" method="post">
-							<td>
-								<input type="hidden" value="<?php echo $donnee[10];?>" name="IDinact" />
-								<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver un collaborateur"><i class="fa fa-toggle-on"></i></button>
-							</td>
-						</form>
+						<tr>
+							<td><?php echo $donnee[0].'. '.substr ($donnee[1],0,1);?></td>
+							<td><?php echo $donnee[2];?></td>
+							<td><?php echo $donnee[5];?></td>
+							<td><?php echo $donnee[6];?></td>
+							<td><?php echo $donnee[7];?></td>
+							<td><?php echo $donnee[8];?></td>
+							<td><?php echo $donnee[3];?></td>
+							<td><?php echo $donnee[4];?></td>
+							<?php if ($donnee[9] == 1)
+							{
+								?>
+								<form action="collaborateurs.php" method="post">
+									<td>
+										<input type="hidden" value="<?php echo $donnee[10];?>" name="IDinact" />
+										<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver un collaborateur"><i class="fa fa-toggle-on"></i></button>
+									</td>
+								</form>
+								<?php
+							}
+							else 
+							{
+								?>
+								<form action="collaborateurs.php" method="post">
+									<td>
+										<input type="hidden" value="<?php echo $donnee[10];?>" name="IDact" />
+										<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer un collaborateur"><i class="fa fa-toggle-off"></i></button>
+									</td>
+								</form>
+								<?php 
+							} 
+							?>
+							<form action="modif_collab.php" method="post">
+								<td>
+									<input type="hidden" value="<?php echo $donnee[10];?>" name="IDmodif" />
+									<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
+								</td>
+							</form>
+						</tr>
 						<?php
 					}
-					else 
-					{
-						?>
-						<form action="collaborateurs.php" method="post">
-							<td>
-								<input type="hidden" value="<?php echo $donnee[10];?>" name="IDact" />
-								<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer un collaborateur"><i class="fa fa-toggle-off"></i></button>
-							</td>
-						</form>
-						<?php 
-					} 
 					?>
-					<form action="modif_collab.php" method="post">
-						<td>
-							<input type="hidden" value="<?php echo $donnee[10];?>" name="IDmodif" />
-							<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
-						</td>
-					</form>
-				</tr>
-				<?php
-			}
-			?>
-			</tbody>
-		</table>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</section>
 
@@ -199,78 +201,80 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			</h1>
 		</div>
 		<div id="toggle-content2" style="display: none;">
-		<table class="table table-striped" id="effectif-externe-table">
-			<thead>
-				<tr>
-					<td>Nom</td>
-					<td>Trig.</td>
-					<td>Acc&egrave;s menu</td>
-					<td>Timesheet</td>
-					<td>Frais</td>
-					<td>Journal</td>
-					<td>Resp.</td>
-					<td>Pole</td>
-					<td colspan="2">Actions</td>
-				</tr>
-			</thead>
-			<tbody>
-			<?php
-			$reponse->closeCursor();			
-			$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, T2.actif, T2.ID
-					FROM rob_user_rights T1 
-					INNER JOIN rob_user T2 ON T1.ID = T2.ID
-					INNER JOIN rob_level T3 ON T1.id_lev_menu = T3.ID
-					INNER JOIN rob_level T4 ON T1.id_lev_exp = T4.ID
-					INNER JOIN rob_level T5 ON T1.id_lev_jrl = T5.ID
-					INNER JOIN rob_level T8 ON T1.id_lev_tms = T8.ID
-					INNER JOIN rob_user T6 ON T1.id_hier = T6.ID
-					INNER JOIN rob_pole T7 ON T1.id_pole = T7.ID
-					WHERE T1.id_lev_menu <= ".$_SESSION['id_lev_menu']." AND T7.actif = 1 AND extstd = 1 ORDER BY T2.nom";
-			$reponse = $bdd->query($req );
-			while ($donnee = $reponse->fetch() ) {
-				?>
-				<tr>
-					<td><?php echo $donnee[0].'. '.substr ($donnee[1],0,1);?></td>
-					<td><?php echo $donnee[2];?></td>
-					<td><?php echo $donnee[5];?></td>
-					<td><?php echo $donnee[6];?></td>
-					<td><?php echo $donnee[7];?></td>
-					<td><?php echo $donnee[8];?></td>
-					<td><?php echo $donnee[3];?></td>
-					<td><?php echo $donnee[4];?></td>
-					<?php if ($donnee[9] == 1) {
+			<div class="table-responsive">
+				<table class="table table-striped" id="effectif-externe-table">
+					<thead>
+						<tr>
+							<td>Nom</td>
+							<td>Trig.</td>
+							<td>Acc&egrave;s menu</td>
+							<td>Timesheet</td>
+							<td>Frais</td>
+							<td>Journal</td>
+							<td>Resp.</td>
+							<td>Pole</td>
+							<td colspan="2">Actions</td>
+						</tr>
+					</thead>
+					<tbody>
+					<?php
+					$reponse->closeCursor();			
+					$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, T2.actif, T2.ID
+							FROM rob_user_rights T1 
+							INNER JOIN rob_user T2 ON T1.ID = T2.ID
+							INNER JOIN rob_level T3 ON T1.id_lev_menu = T3.ID
+							INNER JOIN rob_level T4 ON T1.id_lev_exp = T4.ID
+							INNER JOIN rob_level T5 ON T1.id_lev_jrl = T5.ID
+							INNER JOIN rob_level T8 ON T1.id_lev_tms = T8.ID
+							INNER JOIN rob_user T6 ON T1.id_hier = T6.ID
+							INNER JOIN rob_pole T7 ON T1.id_pole = T7.ID
+							WHERE T1.id_lev_menu <= ".$_SESSION['id_lev_menu']." AND T7.actif = 1 AND extstd = 1 ORDER BY T2.nom";
+					$reponse = $bdd->query($req );
+					while ($donnee = $reponse->fetch() ) {
 						?>
-						<form action="collaborateurs.php" method="post">
-							<td>
-								<input type="hidden" value="<?php echo $donnee[10];?>" name="IDinact" />
-								<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver un collaborateur"><i class="fa fa-toggle-on"></i></button>
-							</td>
-						</form>
+						<tr>
+							<td><?php echo $donnee[0].'. '.substr ($donnee[1],0,1);?></td>
+							<td><?php echo $donnee[2];?></td>
+							<td><?php echo $donnee[5];?></td>
+							<td><?php echo $donnee[6];?></td>
+							<td><?php echo $donnee[7];?></td>
+							<td><?php echo $donnee[8];?></td>
+							<td><?php echo $donnee[3];?></td>
+							<td><?php echo $donnee[4];?></td>
+							<?php if ($donnee[9] == 1) {
+								?>
+								<form action="collaborateurs.php" method="post">
+									<td>
+										<input type="hidden" value="<?php echo $donnee[10];?>" name="IDinact" />
+										<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver un collaborateur"><i class="fa fa-toggle-on"></i></button>
+									</td>
+								</form>
+								<?php
+							} else {
+								?>
+								<form action="collaborateurs.php" method="post">
+									<td>
+										<input type="hidden" value="<?php echo $donnee[10];?>" name="IDact" />
+										<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer un collaborateur"><i class="fa fa-toggle-off"></i></button>
+									</td>
+								</form>
+								<?php 
+							} 
+							?>
+							<form action="modif_collab.php" method="post">
+								<td>
+									<input type="hidden" value="<?php echo $donnee[10];?>" name="IDmodif" />
+									<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
+								</td>
+							</form>
+						</tr>
 						<?php
-					} else {
-						?>
-						<form action="collaborateurs.php" method="post">
-							<td>
-								<input type="hidden" value="<?php echo $donnee[10];?>" name="IDact" />
-								<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer un collaborateur"><i class="fa fa-toggle-off"></i></button>
-							</td>
-						</form>
-						<?php 
-					} 
+					}
+					$reponse->closeCursor();			
 					?>
-					<form action="modif_collab.php" method="post">
-						<td>
-							<input type="hidden" value="<?php echo $donnee[10];?>" name="IDmodif" />
-							<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
-						</td>
-					</form>
-				</tr>
-				<?php
-			}
-			$reponse->closeCursor();			
-			?>
-			</tbody>
-		</table>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</section>
 
@@ -285,101 +289,103 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		</div>
 		<div id="toggle-content3">
 			<form action="collaborateurs.php" method="post">
-				<table class="table table-striped temp-table">
-					<thead>
-						<tr>
-							<td>Nom Pr&eacute;nom</td>
-							<td>Trig.</td>
-							<td>Resp.</td>
-							<td>Pole</td>
-							<td>Acc&egrave;s menu</td>
-							<td>Timesheet</td>
-							<td>Frais</td>
-							<td>Journal</td>
-							<td>&nbsp;</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								<input class="form-control" type="text" size="12" name="new_nom" placeholder="NOM" value=""/>
-								<input class="form-control" type="text" size="10" name="new_prenom" placeholder="Pr&eacute;nom" value=""/>
-							</td>
-							<td>
-								<input class="form-control" type="text" size="5" name="new_mat" placeholder="XXX" value=""/>
-							</td>
-							<td>
-								<?php
-								echo '<select class="form-control" name="new_resp"><option value=1>Resp...</option>';
-								$reponse = $bdd->query("SELECT matricule, ID FROM rob_user WHERE actif=1 ORDER BY matricule");
-								while ($donnee = $reponse->fetch() ) {
-									echo '<option value="'.$donnee['ID'].'">'.$donnee['matricule'].'</option>';
-								}
-								$reponse->closeCursor();
-								echo '</select>';
-								?>
-							</td>
-							<td>
-								<?php
-								echo '<select class="form-control" name="new_pole">';
-								$reponse = $bdd->query("SELECT code, ID FROM rob_pole WHERE actif=1 ORDER BY ID");
-								while ($donnee = $reponse->fetch() ) {
-									echo '<option value="'.$donnee['ID'].'">'.$donnee['code'].'</option>';
-								}
-								$reponse->closeCursor();
-								echo '</select>';
-								?>
-							</td>
-							<td>
-								<?php
-								echo '<select class="form-control" name="new_user">';
-								$reponse = $bdd->query("SELECT menu, ID FROM rob_level WHERE menu <> '' ORDER BY ID");
-								while ($donnee = $reponse->fetch() ) {
-									echo '<option value="'.$donnee['ID'].'">'.$donnee['menu'].'</option>';
-								}
-								$reponse->closeCursor();
-								echo '</select>';
-								?>
-							</td>
-							<td>
-								<?php
-								echo '<select class="form-control" name="new_tms">';
-								$reponse = $bdd->query("SELECT tms, ID FROM rob_level WHERE tms <> '' ORDER BY ID");
-								while ($donnee = $reponse->fetch() ) {
-									echo '<option value="'.$donnee['ID'].'">'.$donnee['tms'].'</option>';
-								}
-								$reponse->closeCursor();
-								echo '</select>';
-								?>
-							</td>
-							<td>
-								<?php
-								echo '<select class="form-control" name="new_exp">';
-								$reponse = $bdd->query("SELECT exp, ID FROM rob_level WHERE exp <> '' ORDER BY ID");
-								while ($donnee = $reponse->fetch() ) {
-									echo '<option value="'.$donnee['ID'].'">'.$donnee['exp'].'</option>';
-								}
-								$reponse->closeCursor();
-								echo '</select>';
-								?>
-							</td>
-							<td>
-								<?php
-								echo '<select class="form-control" name="new_jrl">';
-								$reponse = $bdd->query("SELECT jrl, ID FROM rob_level WHERE jrl <> '' ORDER BY ID");
-								while ($donnee = $reponse->fetch() ) {
-									echo '<option value="'.$donnee['ID'].'">'.$donnee['jrl'].'</option>';
-								}
-								$reponse->closeCursor();
-								echo '</select>';
-								?>
-							</td>				
-							<td>
-								<input class="btn btn-primary" type="submit" Value="Ajouter" />
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="table-responsive">
+					<table class="table table-striped temp-table">
+						<thead>
+							<tr>
+								<td>Nom Pr&eacute;nom</td>
+								<td>Trig.</td>
+								<td>Resp.</td>
+								<td>Pole</td>
+								<td>Acc&egrave;s menu</td>
+								<td>Timesheet</td>
+								<td>Frais</td>
+								<td>Journal</td>
+								<td>&nbsp;</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<input class="form-control" type="text" size="12" name="new_nom" placeholder="NOM" value=""/>
+									<input class="form-control" type="text" size="10" name="new_prenom" placeholder="Pr&eacute;nom" value=""/>
+								</td>
+								<td>
+									<input class="form-control" type="text" size="5" name="new_mat" placeholder="XXX" value=""/>
+								</td>
+								<td>
+									<?php
+									echo '<select class="form-control" name="new_resp"><option value=1>Resp...</option>';
+									$reponse = $bdd->query("SELECT matricule, ID FROM rob_user WHERE actif=1 ORDER BY matricule");
+									while ($donnee = $reponse->fetch() ) {
+										echo '<option value="'.$donnee['ID'].'">'.$donnee['matricule'].'</option>';
+									}
+									$reponse->closeCursor();
+									echo '</select>';
+									?>
+								</td>
+								<td>
+									<?php
+									echo '<select class="form-control" name="new_pole">';
+									$reponse = $bdd->query("SELECT code, ID FROM rob_pole WHERE actif=1 ORDER BY ID");
+									while ($donnee = $reponse->fetch() ) {
+										echo '<option value="'.$donnee['ID'].'">'.$donnee['code'].'</option>';
+									}
+									$reponse->closeCursor();
+									echo '</select>';
+									?>
+								</td>
+								<td>
+									<?php
+									echo '<select class="form-control" name="new_user">';
+									$reponse = $bdd->query("SELECT menu, ID FROM rob_level WHERE menu <> '' ORDER BY ID");
+									while ($donnee = $reponse->fetch() ) {
+										echo '<option value="'.$donnee['ID'].'">'.$donnee['menu'].'</option>';
+									}
+									$reponse->closeCursor();
+									echo '</select>';
+									?>
+								</td>
+								<td>
+									<?php
+									echo '<select class="form-control" name="new_tms">';
+									$reponse = $bdd->query("SELECT tms, ID FROM rob_level WHERE tms <> '' ORDER BY ID");
+									while ($donnee = $reponse->fetch() ) {
+										echo '<option value="'.$donnee['ID'].'">'.$donnee['tms'].'</option>';
+									}
+									$reponse->closeCursor();
+									echo '</select>';
+									?>
+								</td>
+								<td>
+									<?php
+									echo '<select class="form-control" name="new_exp">';
+									$reponse = $bdd->query("SELECT exp, ID FROM rob_level WHERE exp <> '' ORDER BY ID");
+									while ($donnee = $reponse->fetch() ) {
+										echo '<option value="'.$donnee['ID'].'">'.$donnee['exp'].'</option>';
+									}
+									$reponse->closeCursor();
+									echo '</select>';
+									?>
+								</td>
+								<td>
+									<?php
+									echo '<select class="form-control" name="new_jrl">';
+									$reponse = $bdd->query("SELECT jrl, ID FROM rob_level WHERE jrl <> '' ORDER BY ID");
+									while ($donnee = $reponse->fetch() ) {
+										echo '<option value="'.$donnee['ID'].'">'.$donnee['jrl'].'</option>';
+									}
+									$reponse->closeCursor();
+									echo '</select>';
+									?>
+								</td>				
+								<td>
+									<input class="btn btn-primary" type="submit" Value="Ajouter" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</form>
 	</section>

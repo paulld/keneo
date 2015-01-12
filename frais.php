@@ -516,161 +516,163 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		</div>
 		
 		<h2><?php echo $titrestrict; ?></h2>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Date</th>
-					<th colspan="2">Nature</th>
-					<th>Client/Projet/Mission/Cat&eacute;gorie</th>
-					<th>Comp&eacute;tition/Type/&Eacute;v&eacute;nement</th>
-					<th>Activit&eacute;</th>
-					<th>Description</th>
-					<th>Flag</th>
-					<th align="right">Montant TTC</th>
-					<th align="center" width="80px">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-				$nbjm = 0;
-				$startdate = $year.'-'.$month.'-01';
-				if ($month < 12) { $tmpmonth = $month + 1; $tmpyear = $year; } else {$tmpmonth = 1; $tmpyear = $year + 1; }
-				if ($tmpmonth < 10) { $tmpmonth = "0".$tmpmonth; }
-				$enddate = $tmpyear.'-'.$tmpmonth.'-01';
-				if (isset($_POST['collaborateur']))
-				{
-					$pseudo=$_POST['collaborateur'];
-				}
-				else
-				{
-					if (isset($_POST['affcoll']))
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th colspan="2">Nature</th>
+						<th>Client/Projet/Mission/Cat&eacute;gorie</th>
+						<th>Comp&eacute;tition/Type/&Eacute;v&eacute;nement</th>
+						<th>Activit&eacute;</th>
+						<th>Description</th>
+						<th>Flag</th>
+						<th align="right">Montant TTC</th>
+						<th align="center" width="80px">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$nbjm = 0;
+					$startdate = $year.'-'.$month.'-01';
+					if ($month < 12) { $tmpmonth = $month + 1; $tmpyear = $year; } else {$tmpmonth = 1; $tmpyear = $year + 1; }
+					if ($tmpmonth < 10) { $tmpmonth = "0".$tmpmonth; }
+					$enddate = $tmpyear.'-'.$tmpmonth.'-01';
+					if (isset($_POST['collaborateur']))
 					{
-						$pseudo=$_POST['affcoll'];
+						$pseudo=$_POST['collaborateur'];
 					}
 					else
 					{
-						$pseudo=$_SESSION['ID'];
+						if (isset($_POST['affcoll']))
+						{
+							$pseudo=$_POST['affcoll'];
+						}
+						else
+						{
+							$pseudo=$_SESSION['ID'];
+						}
 					}
-				}
-				if (isset($_POST['toutfrais'])) { $txtrestrict=" AND datejour >= '$startdate' AND datejour < '$enddate'"; 
-				} else { $txtrestrict=" AND T1.validation < 2"; }
-				$req = "SELECT T1.ID, T2.matricule, T1.datejour, 
-					T3.Description, T4.Description, T5.Description, T6.Description, 
-					T7.Description, T8.Description, T9.Description, 
-					T1.info, T1.totalHT, T1.totalTVA, T1.totalTTC, T1.refact, T11.Description,
-					T4.ID, T5.ID, T6.ID, T8.ID, T9.ID, T1.noteNum, T1.validation, T12.Description FROM rob_frais T1 
-					INNER JOIN rob_user T2 ON T2.ID = T1.userID
-					INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID 
-					INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputIDl2 
-					INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputIDl3 
-					INNER JOIN rob_imputl4 T6 ON T6.ID = T1.imputIDl4 
-					INNER JOIN rob_compl1 T7 ON T7.ID = T1.compID 
-					INNER JOIN rob_compl2 T8 ON T8.ID = T1.compID2 
-					INNER JOIN rob_compl3 T9 ON T9.ID = T1.compID3 
-					INNER JOIN rob_nature2 T11 ON T11.ID = T1.nature2ID
-					INNER JOIN rob_activite T12 ON T12.ID = T1.activID
-					WHERE T1.userID='$pseudo'".$txtrestrict."
-					ORDER BY T1.datejour, T11.Description, T3.code, T4.code";
-				$reponsea = $bdd->query($req);
-				$checkrep=$reponsea->rowCount();
+					if (isset($_POST['toutfrais'])) { $txtrestrict=" AND datejour >= '$startdate' AND datejour < '$enddate'"; 
+					} else { $txtrestrict=" AND T1.validation < 2"; }
+					$req = "SELECT T1.ID, T2.matricule, T1.datejour, 
+						T3.Description, T4.Description, T5.Description, T6.Description, 
+						T7.Description, T8.Description, T9.Description, 
+						T1.info, T1.totalHT, T1.totalTVA, T1.totalTTC, T1.refact, T11.Description,
+						T4.ID, T5.ID, T6.ID, T8.ID, T9.ID, T1.noteNum, T1.validation, T12.Description FROM rob_frais T1 
+						INNER JOIN rob_user T2 ON T2.ID = T1.userID
+						INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID 
+						INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputIDl2 
+						INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputIDl3 
+						INNER JOIN rob_imputl4 T6 ON T6.ID = T1.imputIDl4 
+						INNER JOIN rob_compl1 T7 ON T7.ID = T1.compID 
+						INNER JOIN rob_compl2 T8 ON T8.ID = T1.compID2 
+						INNER JOIN rob_compl3 T9 ON T9.ID = T1.compID3 
+						INNER JOIN rob_nature2 T11 ON T11.ID = T1.nature2ID
+						INNER JOIN rob_activite T12 ON T12.ID = T1.activID
+						WHERE T1.userID='$pseudo'".$txtrestrict."
+						ORDER BY T1.datejour, T11.Description, T3.code, T4.code";
+					$reponsea = $bdd->query($req);
+					$checkrep=$reponsea->rowCount();
 
-				if ($checkrep != 0)
-				{
-					while ($donneea = $reponsea->fetch())
+					if ($checkrep != 0)
 					{
-						if ($donneea[2] <= $deadline OR $donneea[21] != '' OR $donneea[22] == 2) { 
-							$l = " disabled"; 
-							$highlight ="v"; 
-						} else { 
-							$l = ""; 
-							$highlight = "no-highlight";
-						}
-						
-						echo '<tr class="tr-'.$highlight.'">';
-						echo '<td>'.date("d/m/Y", strtotime($donneea[2])).'</td>';
-						//date du jour
-						//refact
-						if ($donneea[14] == 1) {
-							echo '<td><i class="fa fa-circle fa-circle-validate" title="Refacturable"></i></td>';
-						} else { 
-							echo '<td><i class="fa fa-circle fa-circle-no-validate" title="Non refacturable"></i></td>';
-						}
-						//nature2
-						echo '<td>'.$donneea[15].'</td>';
-						//clients
-						echo '<td>'.$donneea[3];
-							if ($donneea[16] != 0) { echo '<br/>&harr;'.$donneea[4];
-								if ($donneea[17] != 0) { echo '<br/>&nbsp;&harr;'.$donneea[5];
-									if ($donneea[18] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.$donneea[6]; } } }
-						echo '</td>';
-						//Compétition
-						echo '<td>'.$donneea[7];
-							if ($donneea[19] != 0) { echo '<br/>&harr;'.$donneea[8];
-								if ($donneea[20] != 0) { echo '<br/>&nbsp;&harr;'.$donneea[9].'</td>'; } }
-						echo '</td>';
-						//activité
-						echo '<td>'.$donneea[23].'</td>';
-						//info
-						echo '<td>'.$donneea[10].'</td>';
-						//flag
-						echo '<td>'.$donneea[21].'</td>';
-						//valeurs
-						echo '<td align="right">'.$donneea[13].'</td>';
-						//status
-						echo '<td>';
-						echo '<form action="frais.php" method="post" class="duplicate-edit-remove">';
-							//echo '<input type="text" size="5" value="'.$donneea[11].'" name="modht" />HT<br/>';
-							echo '<input type="hidden" value="'.$pseudo.'" name="affcoll" />';
-							echo '<input type="hidden" value="'.$year.'" name="affyear" />';
-							echo '<input type="hidden" value="'.$month.'" name="affmonth" />';
-							echo '<input type="hidden" value="'.$donneea[0].'" name="modid" />';
-							echo '<input type="hidden" value="'.$donneea[2].'" name="moddate" />';
-							echo '<input type="hidden" value="'.$donneea[7].'" name="oldval" />';
-							echo '<input type="hidden" value="'.$donneea[9].'" name="imputID2" />';
-							echo '<input type="hidden" value="'.$donneea[21].'" name="flag" />';
-							// echo '<input type="text" size="5" value="'.$donneea[12].'" name="mdtva" />TVA<br/>';
-							// echo '<input type="text" size="5" value="'.$donneea[13].'" name="modttc" />TTC</td>';
-							if ($donneea[2] <= $deadline OR $donneea[22] == 2) {
-								echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
-								// echo '</form></td></tr>';
-							} else {
-								if ($donneea[21] != '') {
-									echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
-									echo '<button type="submit" Value="V" title="D&eacute;v&eacute;rouiller cette note de frais" name="deverr" onclick="return(confirm(\'Etes-vous sur de vouloir d&eacute;v&eacute;rouiller l\int&eacute;gralit&eacute; de cette note de frais?\'))"><i class="fa fa-unlock"></i></button>';
-								} else {
-									//echo '<td><button type="submit" Value="Mod." name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps de cette ligne?\'))" /><br/>';
-									echo '<button type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>';
-									echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
-									echo '<button type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>';
-								}
+						while ($donneea = $reponsea->fetch())
+						{
+							if ($donneea[2] <= $deadline OR $donneea[21] != '' OR $donneea[22] == 2) { 
+								$l = " disabled"; 
+								$highlight ="v"; 
+							} else { 
+								$l = ""; 
+								$highlight = "no-highlight";
 							}
-						echo '</form></td></tr>';
-						if ($i == 1) { $i = 2; } else { $i = 1; }
+							
+							echo '<tr class="tr-'.$highlight.'">';
+							echo '<td>'.date("d/m/Y", strtotime($donneea[2])).'</td>';
+							//date du jour
+							//refact
+							if ($donneea[14] == 1) {
+								echo '<td><i class="fa fa-circle fa-circle-validate" title="Refacturable"></i></td>';
+							} else { 
+								echo '<td><i class="fa fa-circle fa-circle-no-validate" title="Non refacturable"></i></td>';
+							}
+							//nature2
+							echo '<td>'.$donneea[15].'</td>';
+							//clients
+							echo '<td>'.$donneea[3];
+								if ($donneea[16] != 0) { echo '<br/>&harr;'.$donneea[4];
+									if ($donneea[17] != 0) { echo '<br/>&nbsp;&harr;'.$donneea[5];
+										if ($donneea[18] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.$donneea[6]; } } }
+							echo '</td>';
+							//Compétition
+							echo '<td>'.$donneea[7];
+								if ($donneea[19] != 0) { echo '<br/>&harr;'.$donneea[8];
+									if ($donneea[20] != 0) { echo '<br/>&nbsp;&harr;'.$donneea[9].'</td>'; } }
+							echo '</td>';
+							//activité
+							echo '<td>'.$donneea[23].'</td>';
+							//info
+							echo '<td>'.$donneea[10].'</td>';
+							//flag
+							echo '<td>'.$donneea[21].'</td>';
+							//valeurs
+							echo '<td align="right">'.$donneea[13].'</td>';
+							//status
+							echo '<td>';
+							echo '<form action="frais.php" method="post" class="duplicate-edit-remove">';
+								//echo '<input type="text" size="5" value="'.$donneea[11].'" name="modht" />HT<br/>';
+								echo '<input type="hidden" value="'.$pseudo.'" name="affcoll" />';
+								echo '<input type="hidden" value="'.$year.'" name="affyear" />';
+								echo '<input type="hidden" value="'.$month.'" name="affmonth" />';
+								echo '<input type="hidden" value="'.$donneea[0].'" name="modid" />';
+								echo '<input type="hidden" value="'.$donneea[2].'" name="moddate" />';
+								echo '<input type="hidden" value="'.$donneea[7].'" name="oldval" />';
+								echo '<input type="hidden" value="'.$donneea[9].'" name="imputID2" />';
+								echo '<input type="hidden" value="'.$donneea[21].'" name="flag" />';
+								// echo '<input type="text" size="5" value="'.$donneea[12].'" name="mdtva" />TVA<br/>';
+								// echo '<input type="text" size="5" value="'.$donneea[13].'" name="modttc" />TTC</td>';
+								if ($donneea[2] <= $deadline OR $donneea[22] == 2) {
+									echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+									// echo '</form></td></tr>';
+								} else {
+									if ($donneea[21] != '') {
+										echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+										echo '<button type="submit" Value="V" title="D&eacute;v&eacute;rouiller cette note de frais" name="deverr" onclick="return(confirm(\'Etes-vous sur de vouloir d&eacute;v&eacute;rouiller l\int&eacute;gralit&eacute; de cette note de frais?\'))"><i class="fa fa-unlock"></i></button>';
+									} else {
+										//echo '<td><button type="submit" Value="Mod." name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps de cette ligne?\'))" /><br/>';
+										echo '<button type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>';
+										echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+										echo '<button type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>';
+									}
+								}
+							echo '</form></td></tr>';
+							if ($i == 1) { $i = 2; } else { $i = 1; }
+						}
 					}
-				}
-				$reponsea->closeCursor();
-				
-				//<!-- =================== RESTITUTION: TABLEAU SOUS TOTAL ================= -->
-				$req = "SELECT sum(T1.totalHT), sum(T1.totalTVA), sum(T1.totalTTC) FROM rob_frais T1
-					WHERE T1.userID='$pseudo'".$txtrestrict;
-				$reponse = $bdd->query($req);
-				$checkrep = $reponse->rowCount();
-				if ($checkrep != 0)
-				{
-					while ($donnee = $reponse->fetch())
+					$reponsea->closeCursor();
+					
+					//<!-- =================== RESTITUTION: TABLEAU SOUS TOTAL ================= -->
+					$req = "SELECT sum(T1.totalHT), sum(T1.totalTVA), sum(T1.totalTTC) FROM rob_frais T1
+						WHERE T1.userID='$pseudo'".$txtrestrict;
+					$reponse = $bdd->query($req);
+					$checkrep = $reponse->rowCount();
+					if ($checkrep != 0)
 					{
-						echo '<tr><td align="right" colspan="8">Total</td>';
-						echo '<td align="right">';
-						//echo $donnee[0].' HT<br/>';
-						//echo $donnee[1].' TVA<br/>';
-						echo $donnee[2];
-						echo '</td><td>&nbsp;</td></tr>';
+						while ($donnee = $reponse->fetch())
+						{
+							echo '<tr><td align="right" colspan="8">Total</td>';
+							echo '<td align="right">';
+							//echo $donnee[0].' HT<br/>';
+							//echo $donnee[1].' TVA<br/>';
+							echo $donnee[2];
+							echo '</td><td>&nbsp;</td></tr>';
+						}
 					}
-				}
-				$reponse->closeCursor();
-				?>
-			</tbody>
-		</table>
+					$reponse->closeCursor();
+					?>
+				</tbody>
+			</table>
+		</div>
 	</section>
 		
 <?php include("footer.php"); 

@@ -129,6 +129,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<?php
 		if ($imputtmp !=0 AND $errvar == 0) {
 		?>
+		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -211,48 +212,50 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					?>
 				</tbody>
 			</table>
-		
+		</div>
 		
 		<h2>Ajouter une nouvelle relation Comp&eacute;tition-Type</h2>
 		<form action="comprell1l2.php" method="post">
 			<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
-			<table class="table table-striped table-align-top">
-				<thead>
-					<tr>
-						<th>Comp&eacute;tition</th>
-						<th colspan="3">Type</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<?php
-							$repimpid = $bdd->query("SELECT * FROM rob_compl1 WHERE ID='$imputtmp'");
-							$donimpid = $repimpid->fetch();
-							echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
-							$repimpid->closeCursor();
-							?>
-						</td>
+			<div class="table-responsive">
+				<table class="table table-striped table-align-top">
+					<thead>
+						<tr>
+							<th>Comp&eacute;tition</th>
+							<th colspan="3">Type</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<?php
+								$repimpid = $bdd->query("SELECT * FROM rob_compl1 WHERE ID='$imputtmp'");
+								$donimpid = $repimpid->fetch();
+								echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
+								$repimpid->closeCursor();
+								?>
+							</td>
 
-						<td>
-							<select class="form-control" name="client" onchange="showOption(this.value)">
-								<option value="0">Type existant</option>
-								<option value="1">Ajouter un type</option>
-							</select>
-						</td>
-						<td class="show-option" id="show-option-0">
-							<?php include("partials/currtype.php"); ?>
-						</td>
-						<td class="show-option" id="show-option-1" style="display: none;">
-							<?php include("partials/newtype.php"); ?>
-						</td>
+							<td>
+								<select class="form-control" name="client" onchange="showOption(this.value)">
+									<option value="0">Type existant</option>
+									<option value="1">Ajouter un type</option>
+								</select>
+							</td>
+							<td class="show-option" id="show-option-0">
+								<?php include("partials/currtype.php"); ?>
+							</td>
+							<td class="show-option" id="show-option-1" style="display: none;">
+								<?php include("partials/newtype.php"); ?>
+							</td>
 
-						<td>
-							<input class="btn btn-primary" type="submit" Value="Ajouter" />
-						</td>
-					</tr>
-				</tbody>
-			</table>
+							<td>
+								<input class="btn btn-primary" type="submit" Value="Ajouter" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</form>
 
 	<?php

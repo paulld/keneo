@@ -133,7 +133,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<?php
 		if ($imputtmp !=0 AND $imput2tmp !=0 AND $errvar == 0) {
 		?>
-		
+		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -227,58 +227,60 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				?>
 				</tbody>
 			</table>
-		
+		</div>
 		
 		<h2>Ajouter une nouvelle relation Client-Projet-Mission</h2>
 		<form action="rell1l2l3.php" method="post">
 			<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
 			<input type="hidden" value="<?php echo $imput2tmp; ?>" name="IDrel2" />
-			<table id="tablerestit" class="table table-striped table-align-top">
-				<thead>
-					<tr>
-						<th>Client</th>
-						<th>Projet</th>
-						<th colspan="3">Mission</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<?php
-							$repimpid = $bdd->query("SELECT * FROM rob_imputl1 WHERE ID='$imputtmp'");
-							$donimpid = $repimpid->fetch();
-							echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
-							$repimpid->closeCursor();
-							?>
-						</td>
-						<td>
-							<?php
-							$repimpid = $bdd->query("SELECT * FROM rob_imputl2 WHERE ID='$imput2tmp'");
-							$donimpid = $repimpid->fetch();
-							echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
-							$repimpid->closeCursor();
-							?>
-						</td>
-						
-						<td>
-							<select class="form-control" onchange="showOption(this.value)">
-								<option value="0">Mission existante</option>
-								<option value="1">Ajouter une mission</option>
-							</select>
-						</td>
-						<td class="show-option" id="show-option-0">
-							<?php include("partials/currmission.php"); ?>
-						</td>
-						<td class="show-option" id="show-option-1" style="display: none;">
-							<?php include("partials/newmission.php"); ?>
-						</td>
+			<div class="table-responsive">
+				<table id="tablerestit" class="table table-striped table-align-top">
+					<thead>
+						<tr>
+							<th>Client</th>
+							<th>Projet</th>
+							<th colspan="3">Mission</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<?php
+								$repimpid = $bdd->query("SELECT * FROM rob_imputl1 WHERE ID='$imputtmp'");
+								$donimpid = $repimpid->fetch();
+								echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
+								$repimpid->closeCursor();
+								?>
+							</td>
+							<td>
+								<?php
+								$repimpid = $bdd->query("SELECT * FROM rob_imputl2 WHERE ID='$imput2tmp'");
+								$donimpid = $repimpid->fetch();
+								echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
+								$repimpid->closeCursor();
+								?>
+							</td>
+							
+							<td>
+								<select class="form-control" onchange="showOption(this.value)">
+									<option value="0">Mission existante</option>
+									<option value="1">Ajouter une mission</option>
+								</select>
+							</td>
+							<td class="show-option" id="show-option-0">
+								<?php include("partials/currmission.php"); ?>
+							</td>
+							<td class="show-option" id="show-option-1" style="display: none;">
+								<?php include("partials/newmission.php"); ?>
+							</td>
 
-						<td>
-							<input class="btn btn-primary" type="submit" Value="Ajouter" />
-						</td>
-					</tr>
-				</tbody>
-			</table>
+							<td>
+								<input class="btn btn-primary" type="submit" Value="Ajouter" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</form>
 		<?php
 	} else {
