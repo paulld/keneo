@@ -73,6 +73,17 @@ h2 {
   padding-left: 14px;
 }
 
+/* RESPONSIVE TABLES */
+
+@media screen and (max-width: 992px) {
+  .table-responsive {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-y: hidden;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: none;
+  }
+}
 
 /* BUTTONS / INPUT / SELECT */
 

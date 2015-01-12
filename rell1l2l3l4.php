@@ -140,153 +140,155 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	if ($imputtmp !=0 AND $imput2tmp !=0 AND $imput3tmp !=0 AND $errvar == 0)
 	{
 		?>
-		
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Client</th>
-					<th>Projet</th>
-					<th>Mission</th>
-					<th>Cat&eacute;gorie</th>
-					<th>Description</th>
-					<th colspan="3">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-				$req="SELECT T4.code, T4.description, T0.ID, T0.imputID, T0.imputID2, T0.imputID3, T0.imputID4, T0.actif, T1.code, T2.code, T3.code
-					FROM rob_imprel4 T0
-					INNER JOIN rob_imputl4 T4 ON T4.ID = T0.imputID4
-					INNER JOIN rob_imputl3 T3 ON T3.ID = T0.imputID3
-					INNER JOIN rob_imputl2 T2 ON T2.ID = T0.imputID2
-					INNER JOIN rob_imputl1 T1 ON T1.ID = T0.imputID
-					WHERE T0.imputID3 = ".$imput3tmp." AND T0.imputID2 = ".$imput2tmp." AND T0.imputID = ".$imputtmp."
-					ORDER BY T4.description";
-				$reponse = $bdd->query($req);
-				$checkrep = $reponse->rowCount();
-				if ($checkrep != 0)
-				{
-					
-					while ($donnee = $reponse->fetch() )
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Client</th>
+						<th>Projet</th>
+						<th>Mission</th>
+						<th>Cat&eacute;gorie</th>
+						<th>Description</th>
+						<th colspan="3">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$req="SELECT T4.code, T4.description, T0.ID, T0.imputID, T0.imputID2, T0.imputID3, T0.imputID4, T0.actif, T1.code, T2.code, T3.code
+						FROM rob_imprel4 T0
+						INNER JOIN rob_imputl4 T4 ON T4.ID = T0.imputID4
+						INNER JOIN rob_imputl3 T3 ON T3.ID = T0.imputID3
+						INNER JOIN rob_imputl2 T2 ON T2.ID = T0.imputID2
+						INNER JOIN rob_imputl1 T1 ON T1.ID = T0.imputID
+						WHERE T0.imputID3 = ".$imput3tmp." AND T0.imputID2 = ".$imput2tmp." AND T0.imputID = ".$imputtmp."
+						ORDER BY T4.description";
+					$reponse = $bdd->query($req);
+					$checkrep = $reponse->rowCount();
+					if ($checkrep != 0)
 					{
-						?>
-						<tr>
-							<td><?php echo $donnee[8];?></td>
-							<td><?php echo $donnee[9];?></td>
-							<td><?php echo $donnee[10];?></td>
-							<td><?php echo $donnee[0];?></td>
-							<td><?php if ($donnee[1] != "") { echo $donnee[1]; } ?></td>
-							<?php if ($donnee[7] == 1)
-							{ ?>
-								<td>&nbsp;</td>
-								<td>
-									<form action="rell1l2l3l4.php" method="post">
-										<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
-										<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
-										<input type="hidden" value="<?php echo $donnee[5];?>" name="IDrel3" />
-										<input type="hidden" value="<?php echo $donnee[2];?>" name="IDinact" />
-										<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver la relation"><i class="fa fa-toggle-on"></i></button>
-									</form>
-								</td>
-								<?php
-							}
-							else
-							{
-								?>
-								<td>&nbsp;</td>
-								<td>
-									<form action="rell1l2l3l4.php" method="post">
-										<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
-										<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
-										<input type="hidden" value="<?php echo $donnee[5];?>" name="IDrel3" />
-										<input type="hidden" value="<?php echo $donnee[2];?>" name="IDact" />
-										<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer la relation"><i class="fa fa-toggle-off"></i></button>
-									</form>
-								</td>
-								<?php
-							}
+						
+						while ($donnee = $reponse->fetch() )
+						{
 							?>
-							<td>
-								<form action="modif_imputl4.php" method="post">
-									<input type="hidden" value="<?php echo $donnee[6];?>" name="IDmodif" />
-									<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
-									<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
-									<input type="hidden" value="<?php echo $donnee[5];?>" name="IDrel3" />
-									<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
-								</form>
-							</td>
-						</tr>
-						<?php
+							<tr>
+								<td><?php echo $donnee[8];?></td>
+								<td><?php echo $donnee[9];?></td>
+								<td><?php echo $donnee[10];?></td>
+								<td><?php echo $donnee[0];?></td>
+								<td><?php if ($donnee[1] != "") { echo $donnee[1]; } ?></td>
+								<?php if ($donnee[7] == 1)
+								{ ?>
+									<td>&nbsp;</td>
+									<td>
+										<form action="rell1l2l3l4.php" method="post">
+											<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
+											<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
+											<input type="hidden" value="<?php echo $donnee[5];?>" name="IDrel3" />
+											<input type="hidden" value="<?php echo $donnee[2];?>" name="IDinact" />
+											<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver la relation"><i class="fa fa-toggle-on"></i></button>
+										</form>
+									</td>
+									<?php
+								}
+								else
+								{
+									?>
+									<td>&nbsp;</td>
+									<td>
+										<form action="rell1l2l3l4.php" method="post">
+											<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
+											<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
+											<input type="hidden" value="<?php echo $donnee[5];?>" name="IDrel3" />
+											<input type="hidden" value="<?php echo $donnee[2];?>" name="IDact" />
+											<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer la relation"><i class="fa fa-toggle-off"></i></button>
+										</form>
+									</td>
+									<?php
+								}
+								?>
+								<td>
+									<form action="modif_imputl4.php" method="post">
+										<input type="hidden" value="<?php echo $donnee[6];?>" name="IDmodif" />
+										<input type="hidden" value="<?php echo $donnee[3];?>" name="IDrel" />
+										<input type="hidden" value="<?php echo $donnee[4];?>" name="IDrel2" />
+										<input type="hidden" value="<?php echo $donnee[5];?>" name="IDrel3" />
+										<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
+									</form>
+								</td>
+							</tr>
+							<?php
+						}
+					} else {
+						echo '<tr><td colspan="6">Pas de relation existante</td></tr>';
 					}
-				} else {
-					echo '<tr><td colspan="6">Pas de relation existante</td></tr>';
-				}
-				$reponse->closeCursor();
-				?>
-			</tbody>
-		</table>
-		
+					$reponse->closeCursor();
+					?>
+				</tbody>
+			</table>
+		</div>
 
 		<h2>Ajouter une nouvelle relation Client-Projet-Mission-Categorie</h2>
 		<form action="rell1l2l3l4.php" method="post">
 			<input type="hidden" value="<?php echo $imputtmp; ?>" name="IDrel" />
 			<input type="hidden" value="<?php echo $imput2tmp; ?>" name="IDrel2" />
 			<input type="hidden" value="<?php echo $imput3tmp; ?>" name="IDrel3" />
-			<table class="table table-striped temp-table table-align-top">
-				<thead>
-					<tr>
-						<th>Client</th>
-						<th>Projet</th>
-						<th>Mission</th>
-						<th colspan="3">Cat&eacute;gorie</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<?php
-							$repimpid = $bdd->query("SELECT * FROM rob_imputl1 WHERE ID='$imputtmp'");
-							$donimpid = $repimpid->fetch();
-							echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
-							$repimpid->closeCursor();
-							?>
-						</td>
-						<td>
-							<?php
-							$repimpid = $bdd->query("SELECT * FROM rob_imputl2 WHERE ID='$imput2tmp'");
-							$donimpid = $repimpid->fetch();
-							echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
-							$repimpid->closeCursor();
-							?>
-						</td>
-						<td>
-							<?php
-							$repimpid = $bdd->query("SELECT * FROM rob_imputl3 WHERE ID='$imput3tmp'");
-							$donimpid = $repimpid->fetch();
-							echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
-							$repimpid->closeCursor();
-							?>
-						</td>
+			<div class="table-responsive">
+				<table class="table table-striped temp-table table-align-top">
+					<thead>
+						<tr>
+							<th>Client</th>
+							<th>Projet</th>
+							<th>Mission</th>
+							<th colspan="3">Cat&eacute;gorie</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<?php
+								$repimpid = $bdd->query("SELECT * FROM rob_imputl1 WHERE ID='$imputtmp'");
+								$donimpid = $repimpid->fetch();
+								echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
+								$repimpid->closeCursor();
+								?>
+							</td>
+							<td>
+								<?php
+								$repimpid = $bdd->query("SELECT * FROM rob_imputl2 WHERE ID='$imput2tmp'");
+								$donimpid = $repimpid->fetch();
+								echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
+								$repimpid->closeCursor();
+								?>
+							</td>
+							<td>
+								<?php
+								$repimpid = $bdd->query("SELECT * FROM rob_imputl3 WHERE ID='$imput3tmp'");
+								$donimpid = $repimpid->fetch();
+								echo '<input class="form-control" type="text" size="15" value="'.$donimpid['code'].'" disabled="disabled" />';
+								$repimpid->closeCursor();
+								?>
+							</td>
 
-						<td>
-							<select onchange="showOption(this.value)" class="form-control">
-								<option value="0">Cat&eacute;gorie existante</option>
-								<option value="1">Ajouter une cat&eacute;gorie</option>
-							</select>
-						</td>
-						<td class="show-option" id="show-option-0">
-							<?php include("partials/currcategorie.php"); ?>
-						</td>
-						<td class="show-option" id="show-option-1" style="display: none;">
-							<?php include("partials/newcategorie.php"); ?>
-						</td>
+							<td>
+								<select onchange="showOption(this.value)" class="form-control">
+									<option value="0">Cat&eacute;gorie existante</option>
+									<option value="1">Ajouter une cat&eacute;gorie</option>
+								</select>
+							</td>
+							<td class="show-option" id="show-option-0">
+								<?php include("partials/currcategorie.php"); ?>
+							</td>
+							<td class="show-option" id="show-option-1" style="display: none;">
+								<?php include("partials/newcategorie.php"); ?>
+							</td>
 
-						<td>
-							<input class="btn btn-primary" type="submit" Value="Ajouter" />
-						</td>
-					</tr>
-				</tbody>
-			</table>
+							<td>
+								<input class="btn btn-primary" type="submit" Value="Ajouter" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</form>
 	<?php
 	} else {

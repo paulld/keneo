@@ -425,164 +425,166 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		</div>
 		
 		<h2><?php echo $titrestrict; ?></h2>
-		<table id="tablerestit" class="table table-striped">
-			<thead>
-				<tr>
-					<th id="t-containertit">Num</th>
-					<th id="t-containertit">Version</th>
-					<th id="t-containertit">Client/ Projet/ Mission/ Cat&eacute;gorie</th>
-					<th id="t-containertit">Comp&eacute;tition/ Type/ &Eacute;v&eacute;nement</th>
-					<th id="t-containertit">Date</th>
-					<th id="t-containertit">Nature</th>
-					<th id="t-containertit">Description</th>
-					<th id="t-containertit" align="right">Co&ucirc;t unitaire HT</th>
-					<th id="t-containertit" align="right">Nombre</th>
-					<th id="t-containertit" align="right">Total HT</th>
-					<th id="t-containertit" align="center" width="85px">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-				$nbjm = 0;
-				$startdate = $year.'-'.$month.'-01';
-				if ($month < 12) { $tmpmonth = $month + 1; $tmpyear = $year; } else {$tmpmonth = 1; $tmpyear = $year + 1; }
-				if ($tmpmonth < 10) { $tmpmonth = "0".$tmpmonth; }
-				$enddate = $tmpyear.'-'.$tmpmonth.'-01';
-				if (isset($_POST['collaborateur']))
-				{
-					$pseudo=$_POST['collaborateur'];
-				}
-				else
-				{
-					if (isset($_POST['affcoll']))
+		<div class="table-responsive">
+			<table id="tablerestit" class="table table-striped">
+				<thead>
+					<tr>
+						<th id="t-containertit">Num</th>
+						<th id="t-containertit">Version</th>
+						<th id="t-containertit">Client/ Projet/ Mission/ Cat&eacute;gorie</th>
+						<th id="t-containertit">Comp&eacute;tition/ Type/ &Eacute;v&eacute;nement</th>
+						<th id="t-containertit">Date</th>
+						<th id="t-containertit">Nature</th>
+						<th id="t-containertit">Description</th>
+						<th id="t-containertit" align="right">Co&ucirc;t unitaire HT</th>
+						<th id="t-containertit" align="right">Nombre</th>
+						<th id="t-containertit" align="right">Total HT</th>
+						<th id="t-containertit" align="center" width="85px">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$nbjm = 0;
+					$startdate = $year.'-'.$month.'-01';
+					if ($month < 12) { $tmpmonth = $month + 1; $tmpyear = $year; } else {$tmpmonth = 1; $tmpyear = $year + 1; }
+					if ($tmpmonth < 10) { $tmpmonth = "0".$tmpmonth; }
+					$enddate = $tmpyear.'-'.$tmpmonth.'-01';
+					if (isset($_POST['collaborateur']))
 					{
-						$pseudo=$_POST['affcoll'];
+						$pseudo=$_POST['collaborateur'];
 					}
 					else
 					{
-						$pseudo=$_SESSION['ID'];
-					}
-				}
-				if (isset($_POST['toutdevis'])) { $txtrestrict=" AND T1.dateTransac >= '$startdate' AND T1.dateTransac < '$enddate'"; 
-				} else { $txtrestrict=" AND T1.validation < 2"; }
-				$req = "SELECT T1.ID ID, T2.matricule userID, T1.dateTransac dateTransac, 
-					T3.Description client, T4.Description projet, T5.Description mission, T6.Description categorie, 
-					T7.Description type, T8.Description competition, T9.Description evenement, T11.Description nature1, 
-					T1.descriptif descriptif, T1.unitaire unitaire, T1.quantite quantite, T1.total total, T1.devisNum devisNum, T1.devisVersion devisVersion,
-					T4.ID projetID, T5.ID missionID, T6.ID categorieID, T8.ID competitionID, T9.ID evenementID FROM rob_devis T1 
-					INNER JOIN rob_user T2 ON T2.ID = T1.userID
-					INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID1 
-					INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputID2 
-					INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputID3 
-					INNER JOIN rob_imputl4 T6 ON T6.ID = T1.imputID4 
-					INNER JOIN rob_compl1 T7 ON T7.ID = T1.compID1 
-					INNER JOIN rob_compl2 T8 ON T8.ID = T1.compID2 
-					INNER JOIN rob_compl3 T9 ON T9.ID = T1.compID3 
-					INNER JOIN rob_nature1 T11 ON T11.ID = T1.nature1ID
-					WHERE T1.userID='$pseudo'".$txtrestrict."
-					ORDER BY T1.devisNum DESC, T1.devisVersion DESC, T3.code, T4.code, T11.Description";
-				$reponsea = $bdd->query($req);
-				$checkrep=$reponsea->rowCount();
-				$devisNumTmp = "";
-				$devisVersTmp = "";
-				$devisTotTmp = 0;
-
-				if ($checkrep != 0)
-				{
-					while ($donneea = $reponsea->fetch())
-					{
-						if ($devisNumTmp == "")
+						if (isset($_POST['affcoll']))
 						{
-							$devisNumTmp = $donneea['devisNum'];
-							$devisVersTmp = $donneea['devisVersion'];
-							$devisTotTmp = $devisTotTmp + $donneea['total'];
+							$pseudo=$_POST['affcoll'];
 						}
 						else
 						{
-							if ($devisNumTmp != $donneea['devisNum'] OR $devisVersTmp != $donneea['devisVersion'])
+							$pseudo=$_SESSION['ID'];
+						}
+					}
+					if (isset($_POST['toutdevis'])) { $txtrestrict=" AND T1.dateTransac >= '$startdate' AND T1.dateTransac < '$enddate'"; 
+					} else { $txtrestrict=" AND T1.validation < 2"; }
+					$req = "SELECT T1.ID ID, T2.matricule userID, T1.dateTransac dateTransac, 
+						T3.Description client, T4.Description projet, T5.Description mission, T6.Description categorie, 
+						T7.Description type, T8.Description competition, T9.Description evenement, T11.Description nature1, 
+						T1.descriptif descriptif, T1.unitaire unitaire, T1.quantite quantite, T1.total total, T1.devisNum devisNum, T1.devisVersion devisVersion,
+						T4.ID projetID, T5.ID missionID, T6.ID categorieID, T8.ID competitionID, T9.ID evenementID FROM rob_devis T1 
+						INNER JOIN rob_user T2 ON T2.ID = T1.userID
+						INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID1 
+						INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputID2 
+						INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputID3 
+						INNER JOIN rob_imputl4 T6 ON T6.ID = T1.imputID4 
+						INNER JOIN rob_compl1 T7 ON T7.ID = T1.compID1 
+						INNER JOIN rob_compl2 T8 ON T8.ID = T1.compID2 
+						INNER JOIN rob_compl3 T9 ON T9.ID = T1.compID3 
+						INNER JOIN rob_nature1 T11 ON T11.ID = T1.nature1ID
+						WHERE T1.userID='$pseudo'".$txtrestrict."
+						ORDER BY T1.devisNum DESC, T1.devisVersion DESC, T3.code, T4.code, T11.Description";
+					$reponsea = $bdd->query($req);
+					$checkrep=$reponsea->rowCount();
+					$devisNumTmp = "";
+					$devisVersTmp = "";
+					$devisTotTmp = 0;
+
+					if ($checkrep != 0)
+					{
+						while ($donneea = $reponsea->fetch())
+						{
+							if ($devisNumTmp == "")
 							{
-								echo '<tr class="tr-'.$highlight.'">';
-								echo '<td><strong>'.$devisNumTmp.'</strong></td>';
-								echo '<td><strong>'.$devisVersTmp.'</strong></td>';
-								echo '<td colspan=7><strong>&nbsp;</strong></td>';
-								echo '<td align="right"><strong>'.$devisTotTmp.'</strong></td>';
-								echo '<td>&nbsp;</td>';
 								$devisNumTmp = $donneea['devisNum'];
 								$devisVersTmp = $donneea['devisVersion'];
-								$devisTotTmp = $donneea['total'];
+								$devisTotTmp = $devisTotTmp + $donneea['total'];
 							}
 							else
 							{
-								$devisTotTmp = $devisTotTmp + $donneea['total'];
+								if ($devisNumTmp != $donneea['devisNum'] OR $devisVersTmp != $donneea['devisVersion'])
+								{
+									echo '<tr class="tr-'.$highlight.'">';
+									echo '<td><strong>'.$devisNumTmp.'</strong></td>';
+									echo '<td><strong>'.$devisVersTmp.'</strong></td>';
+									echo '<td colspan=7><strong>&nbsp;</strong></td>';
+									echo '<td align="right"><strong>'.$devisTotTmp.'</strong></td>';
+									echo '<td>&nbsp;</td>';
+									$devisNumTmp = $donneea['devisNum'];
+									$devisVersTmp = $donneea['devisVersion'];
+									$devisTotTmp = $donneea['total'];
+								}
+								else
+								{
+									$devisTotTmp = $devisTotTmp + $donneea['total'];
+								}
 							}
-						}
-						//if ($donneea[2] <= $deadline OR $donneea[21] != '' OR $donneea[22] == 2) { 
-						//	$l = " disabled"; 
-						//	$highlight ="v"; 
-						//} else { 
-							$l = ""; 
-							$highlight = "no-highlight";
-						//}
-						
-						echo '<tr class="tr-'.$highlight.'">';
-						echo '<td>'.$donneea['devisNum'].'</td>';
-						echo '<td>'.$donneea['devisVersion'].'</td>';
-						//clients
-						echo '<td>'.$donneea['client'];
-							if ($donneea['projetID'] != 0) { echo '<br/>&harr;'.$donneea['projet'];
-								if ($donneea['missionID'] != 0) { echo '<br/>&nbsp;&harr;'.$donneea['mission'];
-									if ($donneea['categorieID'] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.$donneea['categorie']; } } }
-						echo '</td>';
-						//Compétition
-						echo '<td>'.$donneea['type'];
-							if ($donneea['competitionID'] != 0) { echo '<br/>&harr;'.$donneea['competition'];
-								if ($donneea['evenementID'] != 0) { echo '<br/>&nbsp;&harr;'.$donneea['evenement'].'</td>'; } }
-						echo '</td>';
-						//date du jour
-						echo '<td>'.date("d/m/Y", strtotime($donneea['dateTransac'])).'</td>';
-						//nature1
-						echo '<td>'.$donneea['nature1'].'</td>';
-						//info
-						echo '<td>'.$donneea['descriptif'].'</td>';
-						//valeurs
-						echo '<td align="right">'.$donneea['unitaire'].'</td>';
-						echo '<td align="right">'.$donneea['quantite'].'</td>';
-						echo '<td align="right">'.$donneea['total'].'</td>';
-						//status
-						echo '<td>';
-						echo '<form action="devis.php" method="post" class="duplicate-edit-remove">';
-							echo '<input type="hidden" value="'.$pseudo.'" name="affcoll" />';
-							echo '<input type="hidden" value="'.$year.'" name="affyear" />';
-							echo '<input type="hidden" value="'.$month.'" name="affmonth" />';
-							echo '<input type="hidden" value="'.$donneea['ID'].'" name="modid" />';
-							//if ($donneea[2] <= $deadline OR $donneea[22] == 2) {
-							//	echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
-								// echo '</form></td></tr>';
-							//} else {
-							//	if ($donneea[21] != '') {
-							//		echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
-							//		echo '<button type="submit" Value="V" title="D&eacute;v&eacute;rouiller cette note de frais" name="deverr" onclick="return(confirm(\'Etes-vous sur de vouloir d&eacute;v&eacute;rouiller l\int&eacute;gralit&eacute; de cette note de frais?\'))"><i class="fa fa-unlock"></i></button>';
-							//	} else {
-									//echo '<td><button type="submit" Value="Mod." name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps de cette ligne?\'))" /><br/>';
-									echo '<button type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>';
-									echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
-									echo '<button type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>';
-							//	}
+							//if ($donneea[2] <= $deadline OR $donneea[21] != '' OR $donneea[22] == 2) { 
+							//	$l = " disabled"; 
+							//	$highlight ="v"; 
+							//} else { 
+								$l = ""; 
+								$highlight = "no-highlight";
 							//}
-						echo '</form></td></tr>';
-						if ($i == 1) { $i = 2; } else { $i = 1; }
+							
+							echo '<tr class="tr-'.$highlight.'">';
+							echo '<td>'.$donneea['devisNum'].'</td>';
+							echo '<td>'.$donneea['devisVersion'].'</td>';
+							//clients
+							echo '<td>'.$donneea['client'];
+								if ($donneea['projetID'] != 0) { echo '<br/>&harr;'.$donneea['projet'];
+									if ($donneea['missionID'] != 0) { echo '<br/>&nbsp;&harr;'.$donneea['mission'];
+										if ($donneea['categorieID'] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.$donneea['categorie']; } } }
+							echo '</td>';
+							//Compétition
+							echo '<td>'.$donneea['type'];
+								if ($donneea['competitionID'] != 0) { echo '<br/>&harr;'.$donneea['competition'];
+									if ($donneea['evenementID'] != 0) { echo '<br/>&nbsp;&harr;'.$donneea['evenement'].'</td>'; } }
+							echo '</td>';
+							//date du jour
+							echo '<td>'.date("d/m/Y", strtotime($donneea['dateTransac'])).'</td>';
+							//nature1
+							echo '<td>'.$donneea['nature1'].'</td>';
+							//info
+							echo '<td>'.$donneea['descriptif'].'</td>';
+							//valeurs
+							echo '<td align="right">'.$donneea['unitaire'].'</td>';
+							echo '<td align="right">'.$donneea['quantite'].'</td>';
+							echo '<td align="right">'.$donneea['total'].'</td>';
+							//status
+							echo '<td>';
+							echo '<form action="devis.php" method="post" class="duplicate-edit-remove">';
+								echo '<input type="hidden" value="'.$pseudo.'" name="affcoll" />';
+								echo '<input type="hidden" value="'.$year.'" name="affyear" />';
+								echo '<input type="hidden" value="'.$month.'" name="affmonth" />';
+								echo '<input type="hidden" value="'.$donneea['ID'].'" name="modid" />';
+								//if ($donneea[2] <= $deadline OR $donneea[22] == 2) {
+								//	echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+									// echo '</form></td></tr>';
+								//} else {
+								//	if ($donneea[21] != '') {
+								//		echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+								//		echo '<button type="submit" Value="V" title="D&eacute;v&eacute;rouiller cette note de frais" name="deverr" onclick="return(confirm(\'Etes-vous sur de vouloir d&eacute;v&eacute;rouiller l\int&eacute;gralit&eacute; de cette note de frais?\'))"><i class="fa fa-unlock"></i></button>';
+								//	} else {
+										//echo '<td><button type="submit" Value="Mod." name="Mod" onclick="return(confirm(\'Etes-vous sur de vouloir modifier les temps de cette ligne?\'))" /><br/>';
+										echo '<button type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>';
+										echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
+										echo '<button type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>';
+								//	}
+								//}
+							echo '</form></td></tr>';
+							if ($i == 1) { $i = 2; } else { $i = 1; }
+						}
+						echo '<tr class="tr-'.$highlight.'">';
+						echo '<td><strong>'.$devisNumTmp.'</strong></td>';
+						echo '<td><strong>'.$devisVersTmp.'</strong></td>';
+						echo '<td colspan=7><strong>&nbsp;</strong></td>';
+						echo '<td align="right"><strong>'.$devisTotTmp.'</strong></td>';
+						echo '<td>&nbsp;</td>';
 					}
-					echo '<tr class="tr-'.$highlight.'">';
-					echo '<td><strong>'.$devisNumTmp.'</strong></td>';
-					echo '<td><strong>'.$devisVersTmp.'</strong></td>';
-					echo '<td colspan=7><strong>&nbsp;</strong></td>';
-					echo '<td align="right"><strong>'.$devisTotTmp.'</strong></td>';
-					echo '<td>&nbsp;</td>';
-				}
-				$reponsea->closeCursor();
-				?>
-			</tbody>
-		</table>
+					$reponsea->closeCursor();
+					?>
+				</tbody>
+			</table>
+		</div>
 	</section>
 		
 <?php include("footer.php"); 

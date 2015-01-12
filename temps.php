@@ -632,6 +632,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	</div>
 		
 	<!-- =================== RESTITUTION: TABLEAU ================= -->
+	<div class="table-responsive">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -644,7 +645,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					<th>Description</th>
 					<th>T.R.</th>
 					<th>Jours</th>
-					<th align="center" width="80px">Actions</th>
+					<th align="center">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -785,6 +786,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				?>
 			</tbody>
 		</table>
+	</div>
 
 </section>
 
