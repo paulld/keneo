@@ -34,60 +34,46 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			{
 				if ($imputtmp != 0 AND $imput2tmp != 0)
 				{
-					if (isset($_POST['newmiscode']))
+					if ($_POST['newmiscode'] != '')
 					{
-						if ($_POST['newmiscode'] != '')
+						$newmiscode = strtoupper($_POST['newmiscode']);
+						$reponsesel = $bdd->query("SELECT * FROM rob_imputl3 WHERE code='$newmiscode'");
+						$checkrep = $reponsesel->rowCount();
+						$reponsesel->closeCursor();
+						$newmisplan = strtoupper($_POST['newmisplan']);
+						$newmisdesc = $_POST['newmisdesc'];
+						$newmisdesc = str_replace("'","\'",$newmisdesc);
+						$newmisresp = $_POST['newmisresp'];
+						if ($checkrep != 0)
 						{
-							$newmiscode = strtoupper($_POST['newmiscode']);
-							$reponsesel = $bdd->query("SELECT * FROM rob_imputl3 WHERE code='$newmiscode'");
-							$checkrep = $reponsesel->rowCount();
-							$reponsesel->closeCursor();
-							$newmisplan = strtoupper($_POST['newmisplan']);
-							$newmisdesc = $_POST['newmisdesc'];
-							$newmisdesc = str_replace("'","\'",$newmisdesc);
-							$newmisresp = $_POST['newmisresp'];
-							if ($checkrep != 0)
-							{
-								$info = 'Cette mission &eacute;xiste d&eacute;j&agrave';
-							}
-							else
-							{
-								$bdd->query("INSERT INTO rob_imputl3 VALUES('', '$newmiscode', '$newmisdesc', '$newmisresp', 1, '$newmisplan')") or die();
-							}
-							$reponsesel = $bdd->query("SELECT ID FROM rob_imputl3 WHERE code='$newmiscode' LIMIT 1");
-							$checkrep = $reponsesel->rowCount();
-							if ($checkrep != 0)
-							{
-								$donneesel = $reponsesel->fetch();
-								$newcomb3 = $donneesel['ID'];
-							}
-							else
-							{
-								$test = 'Probl&egrave;me au moment de l\'insertion de la mission';
-							}
-							$reponsesel->closeCursor();
+							$info = 'Cette mission &eacute;xiste d&eacute;j&agrave';
 						}
 						else
 						{
-							$test = 'Code mission inexistant (1)';
+							$bdd->query("INSERT INTO rob_imputl3 VALUES('', '$newmiscode', '$newmisdesc', '$newmisresp', 1, '$newmisplan')") or die();
 						}
+						$reponsesel = $bdd->query("SELECT ID FROM rob_imputl3 WHERE code='$newmiscode' LIMIT 1");
+						$checkrep = $reponsesel->rowCount();
+						if ($checkrep != 0)
+						{
+							$donneesel = $reponsesel->fetch();
+							$newcomb3 = $donneesel['ID'];
+						}
+						else
+						{
+							$test = 'Probl&egrave;me au moment de l\'insertion de la mission';
+						}
+						$reponsesel->closeCursor();
 					}
 					else
 					{
-						if (isset($_POST['newcomb3']))
+						if ($_POST['newcomb3'] != 0)
 						{
-							if ($_POST['newcomb3'] != 0)
-							{
-								$newcomb3 = $_POST['newcomb3'];
-							}
-							else
-							{
-								$test = 'Code mission inexistant (2)';
-							}
+							$newcomb3 = $_POST['newcomb3'];
 						}
 						else
 						{
-							$test = 'Code mission inexistant (3)';
+							$test = 'Code mission inexistant (2)';
 						}
 					}
 					if ($test == '')

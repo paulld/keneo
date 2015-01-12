@@ -34,60 +34,46 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			{
 				if ($imputtmp != 0 AND $imput2tmp != 0)
 				{
-					if (isset($_POST['newevecode']))
+					if ($_POST['newevecode'] != '')
 					{
-						if ($_POST['newevecode'] != '')
+						$newevecode = strtoupper($_POST['newevecode']);
+						$reponsesel = $bdd->query("SELECT * FROM rob_compl3 WHERE code='$newevecode'");
+						$checkrep = $reponsesel->rowCount();
+						$reponsesel->closeCursor();
+						$neweveplan = strtoupper($_POST['neweveplan']);
+						$newevedesc = $_POST['newevedesc'];
+						$newevedesc = str_replace("'","\'",$newevedesc);
+						$neweveresp = $_POST['neweveresp'];
+						if ($checkrep != 0)
 						{
-							$newevecode = strtoupper($_POST['newevecode']);
-							$reponsesel = $bdd->query("SELECT * FROM rob_compl3 WHERE code='$newevecode'");
-							$checkrep = $reponsesel->rowCount();
-							$reponsesel->closeCursor();
-							$neweveplan = strtoupper($_POST['neweveplan']);
-							$newevedesc = $_POST['newevedesc'];
-							$newevedesc = str_replace("'","\'",$newevedesc);
-							$neweveresp = $_POST['neweveresp'];
-							if ($checkrep != 0)
-							{
-								$info = 'Cet &Eacute;v&eacute;nement &eacute;xiste d&eacute;j&agrave';
-							}
-							else
-							{
-								$bdd->query("INSERT INTO rob_compl3 VALUES('', '$newevecode', '$newevedesc', '$neweveresp', 1, '$neweveplan')") or die();
-							}
-							$reponsesel = $bdd->query("SELECT ID FROM rob_compl3 WHERE code='$newevecode' LIMIT 1");
-							$checkrep = $reponsesel->rowCount();
-							if ($checkrep != 0)
-							{
-								$donneesel = $reponsesel->fetch();
-								$newcomb3 = $donneesel['ID'];
-							}
-							else
-							{
-								$test = 'Probl&egrave;me au moment de l\'insertion de l\'&Eacute;v&eacute;nement';
-							}
-							$reponsesel->closeCursor();
+							$info = 'Cet &Eacute;v&eacute;nement &eacute;xiste d&eacute;j&agrave';
 						}
 						else
 						{
-							$test = 'Code &Eacute;v&eacute;nement inexistant (1)';
+							$bdd->query("INSERT INTO rob_compl3 VALUES('', '$newevecode', '$newevedesc', '$neweveresp', 1, '$neweveplan')") or die();
 						}
+						$reponsesel = $bdd->query("SELECT ID FROM rob_compl3 WHERE code='$newevecode' LIMIT 1");
+						$checkrep = $reponsesel->rowCount();
+						if ($checkrep != 0)
+						{
+							$donneesel = $reponsesel->fetch();
+							$newcomb3 = $donneesel['ID'];
+						}
+						else
+						{
+							$test = 'Probl&egrave;me au moment de l\'insertion de l\'&Eacute;v&eacute;nement';
+						}
+						$reponsesel->closeCursor();
 					}
 					else
 					{
-						if (isset($_POST['newcomb3']))
+						if ($_POST['newcomb3'] != 0)
 						{
-							if ($_POST['newcomb3'] != 0)
-							{
-								$newcomb3 = $_POST['newcomb3'];
-							}
-							else
-							{
-								$test = 'Code &Eacute;v&eacute;nement inexistant (2)';
-							}
+							$newcomb3 = $_POST['newcomb3'];
 						}
 						else
 						{
-							$test = 'Code &Eacute;v&eacute;nement inexistant (3)';
+							$test = 'Code &Eacute;v&eacute;nement inexistant (2)';
 						}
 					}
 					if ($test == '')
@@ -102,7 +88,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						else
 						{
 							if (isset($_POST['rellieu'])) { $rellieu = strtoupper($_POST['rellieu']); } else { $rellieu = ""; }
-							if (isset($_POST['reldate'])) { $reldate = $_POST['reldate']; } else { $reldate = "0000-00-00"; }
+							if (isset($_POST['reldate'])) { $reldate = date('Y-m-d',mktime(0,0,0,substr($_POST['reldate'],3,2),substr($_POST['reldate'],0,2),substr($_POST['reldate'],6,4))); } else { $reldate = "0000-00-00"; }
 							$bdd->query("INSERT INTO rob_comprel3 VALUES('', '$imputtmp', '$imput2tmp', '$newcomb3', 1, '$rellieu', '$reldate')");
 						}
 						$reponse->closeCursor();
@@ -131,7 +117,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					{
 						$modIDrel = $_POST['modIDrel'];
 						$lieu = strtoupper($_POST['modlieu']);
-						$date = $_POST['moddate'];
+						$date = date('Y-m-d',mktime(0,0,0,substr($_POST['moddate'],3,2),substr($_POST['moddate'],0,2),substr($_POST['moddate'],6,4)));
 						$bdd->query("UPDATE rob_comprel3 SET lieu='$lieu', date='$date' WHERE ID='$modIDrel'");
 					}
 				}
@@ -197,7 +183,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								<td><?php echo $donnee[0];?></td>
 								<td><?php if ($donnee[1] != "") { echo $donnee[1]; } ?></td>
 								<td><?php echo $donnee[9]; ?></td>
-								<td><?php if ($donnee[10] != "0000-00-00") { echo $donnee[10]; } ?></td>
+								<td><?php if ($donnee[10] != "0000-00-00") { echo date("d/m/Y",strtotime($donnee[10])); } ?></td>
 								<?php if ($donnee[6] == 1)
 								{ ?>
 									<td>

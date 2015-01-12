@@ -36,60 +36,46 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			{
 				if ($imputtmp != 0 AND $imput2tmp != 0 AND $imput3tmp != 0)
 				{
-					if (isset($_POST['newcatcode']))
+					if ($_POST['newcatcode'] != '')
 					{
-						if ($_POST['newcatcode'] != '')
+						$newcatcode = strtoupper($_POST['newcatcode']);
+						$reponsesel = $bdd->query("SELECT * FROM rob_imputl4 WHERE code='$newcatcode'");
+						$checkrep = $reponsesel->rowCount();
+						$reponsesel->closeCursor();
+						$newcatplan = strtoupper($_POST['newcatplan']);
+						$newcatdesc = $_POST['newcatdesc'];
+						$newcatdesc = str_replace("'","\'",$newcatdesc);
+						$newcatresp = $_POST['newcatresp'];
+						if ($checkrep != 0)
 						{
-							$newcatcode = strtoupper($_POST['newcatcode']);
-							$reponsesel = $bdd->query("SELECT * FROM rob_imputl4 WHERE code='$newcatcode'");
-							$checkrep = $reponsesel->rowCount();
-							$reponsesel->closeCursor();
-							$newcatplan = strtoupper($_POST['newcatplan']);
-							$newcatdesc = $_POST['newcatdesc'];
-							$newcatdesc = str_replace("'","\'",$newcatdesc);
-							$newcatresp = $_POST['newcatresp'];
-							if ($checkrep != 0)
-							{
-								$info = 'Cette cat&eactute;gorie &eacute;xiste d&eacute;j&agrave';
-							}
-							else
-							{
-								$bdd->query("INSERT INTO rob_imputl4 VALUES('', '$newcatcode', '$newcatdesc', '$newcatresp', 1, '$newcatplan')") or die();
-							}
-							$reponsesel = $bdd->query("SELECT ID FROM rob_imputl4 WHERE code='$newcatcode' LIMIT 1");
-							$checkrep = $reponsesel->rowCount();
-							if ($checkrep != 0)
-							{
-								$donneesel = $reponsesel->fetch();
-								$newcomb4 = $donneesel['ID'];
-							}
-							else
-							{
-								$test = 'Probl&egrave;me au moment de l\'insertion de la cat&eactute;gorie';
-							}
-							$reponsesel->closeCursor();
+							$info = 'Cette cat&eactute;gorie &eacute;xiste d&eacute;j&agrave';
 						}
 						else
 						{
-							$test = 'Code cat&eactute;gorie inexistant (1)';
+							$bdd->query("INSERT INTO rob_imputl4 VALUES('', '$newcatcode', '$newcatdesc', '$newcatresp', 1, '$newcatplan')") or die();
 						}
+						$reponsesel = $bdd->query("SELECT ID FROM rob_imputl4 WHERE code='$newcatcode' LIMIT 1");
+						$checkrep = $reponsesel->rowCount();
+						if ($checkrep != 0)
+						{
+							$donneesel = $reponsesel->fetch();
+							$newcomb4 = $donneesel['ID'];
+						}
+						else
+						{
+							$test = 'Probl&egrave;me au moment de l\'insertion de la cat&eactute;gorie';
+						}
+						$reponsesel->closeCursor();
 					}
 					else
 					{
-						if (isset($_POST['newcomb4']))
+						if ($_POST['newcomb4'] != 0)
 						{
-							if ($_POST['newcomb4'] != 0)
-							{
-								$newcomb4 = $_POST['newcomb4'];
-							}
-							else
-							{
-								$test = 'Code cat&eactute;gorie inexistant (2)';
-							}
+							$newcomb4 = $_POST['newcomb4'];
 						}
 						else
 						{
-							$test = 'Code cat&eactute;gorie inexistant (3)';
+							$test = 'Code cat&eactute;gorie inexistant (2)';
 						}
 					}
 					if ($test == '')

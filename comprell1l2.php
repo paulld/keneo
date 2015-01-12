@@ -33,60 +33,46 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			{
 				if ($imputtmp != 0)
 				{
-					if (isset($_POST['newtypcode']))
+					if ($_POST['newtypcode'] != '')
 					{
-						if ($_POST['newtypcode'] != '')
+						$newtypcode = strtoupper($_POST['newtypcode']);
+						$checkcode = $bdd->query("SELECT code FROM rob_imputl1 WHERE code='$newtypcode'");
+						$codepris = $checkcode->rowCount();
+						$checkcode->closeCursor();
+						$newtypplan = strtoupper($_POST['newtypplan']);
+						$newtypdesc = $_POST['newtypdesc'];
+						$newtypdesc = str_replace("'","\'",$newtypdesc);
+						$newtypresp = $_POST['newtypresp'];
+						if ($codepris != 0)
 						{
-							$newtypcode = strtoupper($_POST['newtypcode']);
-							$checkcode = $bdd->query("SELECT code FROM rob_imputl1 WHERE code='$newtypcode'");
-							$codepris = $checkcode->rowCount();
-							$checkcode->closeCursor();
-							$newtypplan = strtoupper($_POST['newtypplan']);
-							$newtypdesc = $_POST['newtypdesc'];
-							$newtypdesc = str_replace("'","\'",$newtypdesc);
-							$newtypresp = $_POST['newtypresp'];
-							if ($codepris != 0)
-							{
-								$info = 'Ce type existe d&eacute;j&agrave';
-							}
-							else
-							{
-								$bdd->query("INSERT INTO rob_compl2 VALUES('', '$newtypcode', '$newtypdesc', '$newtypresp', 1, '$newtypplan')") or die();
-							}
-							$reponsesel = $bdd->query("SELECT ID FROM rob_compl2 WHERE code='$newtypcode' LIMIT 1");
-							$repl = $reponsesel->rowCount();
-							if ($repl != 0)
-							{
-								$donneesel = $reponsesel->fetch();
-								$newcomb2 = $donneesel['ID'];
-							}
-							else
-							{
-								$test = 'Probl&egrave;me au moment de l\'insertion du type';
-							}
-							$reponsesel->closeCursor();
+							$info = 'Ce type existe d&eacute;j&agrave';
 						}
 						else
 						{
-							$test = 'Code type inexistant 1';
+							$bdd->query("INSERT INTO rob_compl2 VALUES('', '$newtypcode', '$newtypdesc', '$newtypresp', 1, '$newtypplan')") or die();
 						}
+						$reponsesel = $bdd->query("SELECT ID FROM rob_compl2 WHERE code='$newtypcode' LIMIT 1");
+						$repl = $reponsesel->rowCount();
+						if ($repl != 0)
+						{
+							$donneesel = $reponsesel->fetch();
+							$newcomb2 = $donneesel['ID'];
+						}
+						else
+						{
+							$test = 'Probl&egrave;me au moment de l\'insertion du type';
+						}
+						$reponsesel->closeCursor();
 					}
 					else
 					{
-						if (isset($_POST['newcomb2']))
+						if ($_POST['newcomb2'] != 0)
 						{
-							if ($_POST['newcomb2'] != 0)
-							{
-								$newcomb2 = $_POST['newcomb2'];
-							}
-							else
-							{
-								$test = 'Code type inexistant 2';
-							}
+							$newcomb2 = $_POST['newcomb2'];
 						}
 						else
 						{
-							$test = 'Code type inexistant 3';
+							$test = 'Code type inexistant 2';
 						}
 					}
 					if ($test == '')

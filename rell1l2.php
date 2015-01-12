@@ -14,7 +14,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	//Variables relationelles
 	if (isset($_POST['IDrel']) ) { $imputtmp = $_POST['IDrel']; } else { if (isset($_GET['IDrel'])) { $imputtmp = $_GET['IDrel']; } else { $errvar = 1; } };
 
-
 	if (isset($_POST['IDinact']))
 	{
 		$id = $_POST['IDinact'];
@@ -33,60 +32,46 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			{
 				if ($imputtmp != 0)
 				{
-					if (isset($_POST['newprjcode']))
+					if ($_POST['newprjcode'] != '')
 					{
-						if ($_POST['newprjcode'] != '')
+						$newprjcode = strtoupper($_POST['newprjcode']);
+						$reponsesel = $bdd->query("SELECT * FROM rob_imputl2 WHERE code='$newprjcode'");
+						$checkrep = $reponsesel->rowCount();
+						$reponsesel->closeCursor();
+						$newprjplan = strtoupper($_POST['newprjplan']);
+						$newprjdesc = $_POST['newprjdesc'];
+						$newprjdesc = str_replace("'","\'",$newprjdesc);
+						$newprjresp = $_POST['newprjresp'];
+						if ($checkrep != 0)
 						{
-							$newprjcode = strtoupper($_POST['newprjcode']);
-							$reponsesel = $bdd->query("SELECT * FROM rob_imputl2 WHERE code='$newprjcode'");
-							$checkrep = $reponsesel->rowCount();
-							$reponsesel->closeCursor();
-							$newprjplan = strtoupper($_POST['newprjplan']);
-							$newprjdesc = $_POST['newprjdesc'];
-							$newprjdesc = str_replace("'","\'",$newprjdesc);
-							$newprjresp = $_POST['newprjresp'];
-							if ($checkrep != 0)
-							{
-								$info = 'Ce projet existe d&eacute;j&agrave';
-							}
-							else
-							{
-								$bdd->query("INSERT INTO rob_imputl2 VALUES('', '$newprjcode', '$newprjdesc', '$newprjresp', 1, '$newprjplan')") or die();
-							}
-							$reponsesel = $bdd->query("SELECT ID FROM rob_imputl2 WHERE code='$newprjcode' LIMIT 1");
-							$checkrep = $reponsesel->rowCount();
-							if ($checkrep != 0)
-							{
-								$donneesel = $reponsesel->fetch();
-								$newcomb2 = $donneesel['ID'];
-							}
-							else
-							{
-								$test = 'Probl&egrave;me au moment de l\'insertion du projet';
-							}
-							$reponsesel->closeCursor();
+							$info = 'Ce projet existe d&eacute;j&agrave';
 						}
 						else
 						{
-							$test = 'Code projet inexistant 1';
+							$bdd->query("INSERT INTO rob_imputl2 VALUES('', '$newprjcode', '$newprjdesc', '$newprjresp', 1, '$newprjplan')") or die();
 						}
+						$reponsesel = $bdd->query("SELECT ID FROM rob_imputl2 WHERE code='$newprjcode' LIMIT 1");
+						$checkrep = $reponsesel->rowCount();
+						if ($checkrep != 0)
+						{
+							$donneesel = $reponsesel->fetch();
+							$newcomb2 = $donneesel['ID'];
+						}
+						else
+						{
+							$test = 'Probl&egrave;me au moment de l\'insertion du projet';
+						}
+						$reponsesel->closeCursor();
 					}
 					else
 					{
-						if (isset($_POST['newcomb2']))
+						if ($_POST['newcomb2'] != 0)
 						{
-							if ($_POST['newcomb2'] != 0)
-							{
-								$newcomb2 = $_POST['newcomb2'];
-							}
-							else
-							{
-								$test = 'Code projet inexistant 2';
-							}
+							$newcomb2 = $_POST['newcomb2'];
 						}
 						else
 						{
-							$test = 'Code projet inexistant 3';
+							$test = 'Code projet inexistant 2';
 						}
 					}
 					if ($test == '')
