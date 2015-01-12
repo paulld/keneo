@@ -7,14 +7,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	date_default_timezone_set('Europe/Paris');
 	if (isset($_GET['month']) AND isset($_GET['year']) AND isset($_GET['matricule']) AND $_SESSION['ID']==$_GET['matricule'])
 	{
-		?>
-		<html>
-			<head>
-				<meta http-equiv="content-type" content="text/html; charset=ISO-8850-1" />	
-				<title>Timesheet</title>
-			</head>
-		<body>
-		<?php
 		// get the HTML
 		ob_start();
 
@@ -23,23 +15,23 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<br/>
 			<table cellspacing="0" style="width: 100%;" align="center">
 				<tr>
-					<td style="color: #012E4F; font-size: 200%;" align="center">TIMESHEET</td>
+					<td style="color: #012E4F; font-size: 150%;" align="center">TIMESHEET</td>
 				</tr>
 			</table>
 			<br/>
 
 			<table cellspacing="0" style="width: 100%; text-align: left; font-size: 12px">
 				<tr>
-					<td style="width: 5%; font-size: 120%;">&nbsp;</td>
-					<td style="width: 20%; font-size: 120%; color: #012E4F;">NOM Pr&eacute;nom :</td>
-					<td style="width: 70%; font-size: 120%; color: #012E4F;"><strong><?php echo htmlentities($_SESSION['nom']).' '.htmlentities($_SESSION['prenom']);?></strong></td>
-					<td style="width: 5%; font-size: 120%;">&nbsp;</td>
+					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
+					<td style="width: 20%; font-size: 100%; color: #012E4F;">NOM Pr&eacute;nom :</td>
+					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo htmlentities($_SESSION['nom']).' '.htmlentities($_SESSION['prenom']);?></strong></td>
+					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 				</tr>
 				<tr>
-					<td style="width: 5%; font-size: 120%;">&nbsp;</td>
-					<td style="width: 20%; font-size: 120%; color: #012E4F;">P&eacute;riode :</td>
-					<td style="width: 20%; font-size: 120%; color: #012E4F;"><strong><?php echo $_GET['year'].'.'.$_GET['month'];?></strong></td>
-					<td style="width: 55%; font-size: 120%;">&nbsp;</td>
+					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
+					<td style="width: 20%; font-size: 100%; color: #012E4F;">P&eacute;riode :</td>
+					<td style="width: 20%; font-size: 100%; color: #012E4F;"><strong><?php echo $_GET['year'].'.'.$_GET['month'];?></strong></td>
+					<td style="width: 55%; font-size: 100%;">&nbsp;</td>
 				</tr>
 			</table>
 
@@ -56,8 +48,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			if ($checkrep1 != 0)
 			{
 				$donnee1 = $reponse1->fetch();
-				echo '<table cellspacing="0" style="width: 100%; border: 1px solid #cccccc; border-collapse: collapse; text-align: left; font-size: 12px">';
-				echo '<tr><td style="width: 5%;">&nbsp;</td><td style="width: 90%; font-size: 110%; color: #012E4F;; font-weight: bold;" align="right">Total des temps pour '.$month.'.'.$year.': '.number_format($donnee1[0],2,".","").' jours</td><td style="width: 5%;">&nbsp;</td></tr>';
+				echo '<table cellspacing="0" style="width: 100%; border: 1px solid #cccccc; border-collapse: collapse; text-align: left; font-size: 10px">';
+				echo '<tr><td style="width: 5%;">&nbsp;</td><td style="width: 90%; font-size: 100%; color: #012E4F;; font-weight: bold;" align="right">Total des temps pour '.$month.'.'.$year.': '.number_format($donnee1[0],2,".","").' jours</td><td style="width: 5%;">&nbsp;</td></tr>';
 				$req = "SELECT T3.description, sum(T1.valeur) FROM rob_temps T1 
 					INNER JOIN rob_imputl1 T3 ON T3.ID = T1.imputID 
 					WHERE T1.userID='".$matricule."' AND T1.datejour >= '".$startdate."' AND T1.datejour < '".$enddate."'
@@ -69,7 +61,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				{
 					while ($donnee = $reponse->fetch())
 					{
-						echo '<tr><td style="width: 5%;">&nbsp;</td><td style="width: 90%; font-size: 110%; color: #012E4F;" align="right">Dont '.$donnee[0].': '.number_format($donnee[1],2,".","").' jours</td><td style="width: 5%;">&nbsp;</td></tr>';
+						echo '<tr><td style="width: 5%;">&nbsp;</td><td style="width: 90%; font-size: 100%; color: #012E4F;" align="right">Dont '.$donnee[0].': '.number_format($donnee[1],2,".","").' jours</td><td style="width: 5%;">&nbsp;</td></tr>';
 					}
 				}
 				$reponse->closeCursor();
@@ -121,8 +113,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				?>
 			</table>
 		</page>
-		</body>
-		</html>
 
 		<?php
 		$content = ob_get_clean();

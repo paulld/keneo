@@ -11,6 +11,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	$comptrepl = 0;
 	$comptchg = 0;
 	$globval = 0;
+	$globval2 = 0;
 	$comptprblmmod = 0;
 	$recupmsg = 0;
 	$recupmsguse = 0;
@@ -91,49 +92,72 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							//on en trouve
 							if ($checkrow != 0)
 							{
-								$dchk = $check->fetch();
-								//pas assez
-								if ($dchk[0] - $val < 0)
+								//On verifie l'existence d'enregistrement
+								$req2 = "SELECT sum(valeur) FROM rob_temps 
+									WHERE userID='$collab' AND datejour='$datejourtmp' AND phaseID='1'
+									GROUP BY userID, datejour, phaseID";
+								$check2 = $bdd->query($req2);
+								$checkrow2=$check2->rowCount();
+								if ($checkrow2 != 0)
 								{
-									$comptprblmrec = $comptprblmrec + 1;
-								//assez
-								} else {
-									//Flag de la plus vielle journee de recup
-									$recuptmp = $val;
-									$req2 = "SELECT ID, recup FROM rob_temps WHERE userID='$collab' AND recup <> 0 AND phaseID='1' AND recupValid IS NULL 
-											ORDER BY datejour";
-									$flagrec = $bdd->query($req2);
-									while ($testrec = $flagrec->fetch())
+									$dchk2 = $check2->fetch();
+									$globval2 = $dchk2[0] + $val;
+									if ($globval2 > 1)
 									{
-										if($recuptmp > 0)
+										//On n'insère pas la donnée
+										$comptprblm = $comptprblm + 1;
+										$probldata = 1;
+									}
+								}
+								$check2->closeCursor();
+								
+								//il y a des recup et il n'y a pas de données pour ce jour
+								if ($comptprblm == 0)
+								{
+									$dchk = $check->fetch();
+									//pas assez
+									if ($dchk[0] - $val < 0)
+									{
+										$comptprblmrec = $comptprblmrec + 1;
+									//assez
+									} else {
+										//Flag de la plus vielle journee de recup
+										$recuptmp = $val;
+										$req2 = "SELECT ID, recup FROM rob_temps WHERE userID='$collab' AND recup <> 0 AND phaseID='1' AND recupValid IS NULL 
+												ORDER BY datejour";
+										$flagrec = $bdd->query($req2);
+										while ($testrec = $flagrec->fetch())
 										{
-											$IDtmp = $testrec['ID'];
-											//jour de recup en ligne avec jour de recup qu'on possède
-											if ($recuptmp == $val)
+											if($recuptmp > 0)
 											{
-												$recuptmp = 0;
-												$newrecup = 0;
-												$bdd->query("UPDATE rob_temps SET recup='$newrecup', recupValid='$datejourtmp' WHERE ID='$IDtmp'");
-
-											//sinon
-											} else {
-												if ($recuptmp > $val)
+												$IDtmp = $testrec['ID'];
+												//jour de recup en ligne avec jour de recup qu'on possède
+												if ($recuptmp == $val)
 												{
 													$recuptmp = 0;
-													$newrecup = $testrec['recup'] - $val;
-													$bdd->query("UPDATE rob_temps SET recup='$newrecup' WHERE ID='$IDtmp'");
+													$newrecup = 0;
+													$bdd->query("UPDATE rob_temps SET recup='$newrecup', recupValid='$datejourtmp' WHERE ID='$IDtmp'");
 
+												//sinon
 												} else {
-													$recuptmp = $val - $testrec['recup'];
-													$newrecup = $testrec['recup'];
-													$bdd->query("UPDATE rob_temps SET recup='$newrecup' WHERE ID='$IDtmp'");
+													if ($recuptmp > $val)
+													{
+														$recuptmp = 0;
+														$newrecup = $testrec['recup'] - $val;
+														$bdd->query("UPDATE rob_temps SET recup='$newrecup' WHERE ID='$IDtmp'");
 
+													} else {
+														$recuptmp = $val - $testrec['recup'];
+														$newrecup = $testrec['recup'];
+														$bdd->query("UPDATE rob_temps SET recup='$newrecup' WHERE ID='$IDtmp'");
+
+													}
 												}
+												$recupmsguse = $recupmsguse + $val;
 											}
-											$recupmsguse = $recupmsguse + $val;
 										}
+										$flagrec->closeCursor();
 									}
-									$flagrec->closeCursor();
 								}
 							}
 							//on en trouve pas
@@ -146,7 +170,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						}
 						
 						//Si pas de problème de recup
-						if ($comptprblmrec == 0)
+						if ($comptprblmrec == 0 and $comptprblm == 0)
 						{
 							//On verifie l'existence d'enregistrement
 							$req = "SELECT sum(valeur) FROM rob_temps 

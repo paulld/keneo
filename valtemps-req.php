@@ -65,13 +65,13 @@ $result = $bdd->query($req);
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<td>Trigramme</td>
-				<td>Date</td>
-				<td>Client</td>
-				<td>Projet</td>
-				<td>Mission</td>
-				<td>Dur&eacute;e</td>
-				<td>Valider</td>
+				<th>Trigramme</th>
+				<th>Date</th>
+				<th>Client</th>
+				<th>Projet</th>
+				<th>Mission</th>
+				<th>Dur&eacute;e</th>
+				<th>Valider</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -138,15 +138,16 @@ $result = $bdd->query($req);
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<td>Trigramme</td>
-				<td>Date</td>
-				<td>Activit&eacute;</td>
-				<td>Client</td>
-				<td>Projet</td>
-				<td>Mission</td>
-				<td>Description</td>
-				<td>Dur&eacute;e</td>
-				<td>Suppr.</td>
+				<th></th>
+				<th>Trigramme</th>
+				<th>Date</th>
+				<th>Activit&eacute;</th>
+				<th>Client</th>
+				<th>Projet</th>
+				<th>Mission</th>
+				<th>Description</th>
+				<th>Dur&eacute;e</th>
+				<th>Suppr.</th>
 			</tr>
 		</thead>
 		</tbody>
@@ -154,10 +155,11 @@ $result = $bdd->query($req);
 			$i=1;
 			while ($donnee = $result->fetch())
 			{
-				if (strtotime(date("Y-m-d")) - strtotime($donnee['date']) > 1814400) {$val="no-validate";} else { $val="validate";}
+				if (strtotime(date("Y-m-d")) - strtotime($donnee['date']) > 1814400) {$val="no-validate"; $highlight="highlight";} else { $val="validate"; $highlight="no-highlight";}
 			?>
-				<tr class="tr-'.$highlight.'">
-					<td><?php echo '<i class="fa fa-circle fa-circle-'.$val.'"></i>'.$donnee['trig'];?></td>
+				<tr class="tr-<?php echo $highlight; ?>">
+					<td><?php echo '<i class="fa fa-circle fa-circle-'.$val.'"></i>';?></td>
+					<td><?php echo $donnee['trig'];?></td>
 					<td><?php echo date ("d/m/Y", strtotime($donnee['date']));?></td>
 					<td><?php echo $donnee['activite'];?></td>
 					<td><?php echo $donnee['client'];?></td>
@@ -167,7 +169,7 @@ $result = $bdd->query($req);
 					<td><?php echo $donnee['jour'];?></td>
 					<td>
 					<form id="ajax-form" class="autosubmit" method="POST" action="./valrecup-upd.php">
-						<input type="checkbox" name="recup" value="0" />
+						<input type="checkbox" name="recup" value="0" title="cocher pour supprimer la r&eacute;cup&eacute;ration" />
 						<input id="where" type="hidden" name="ID" value="<?php echo $donnee['ID'] ?>" />
 					</form>
 					</td>
@@ -206,13 +208,13 @@ $result = $bdd->query($req);
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<td>Trigramme</td>
-				<td>Date</td>
-				<td>Client</td>
-				<td>Projet</td>
-				<td>Mission</td>
-				<td>Dur&eacute;e</td>
-				<td>Valider</td>
+				<th>Trigramme</th>
+				<th>Date</th>
+				<th>Client</th>
+				<th>Projet</th>
+				<th>Mission</th>
+				<th>Dur&eacute;e</th>
+				<th>Valider</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -240,6 +242,8 @@ $result = $bdd->query($req);
 		?>
 		</tbody>
 	</table>
+</section>
+
 <?php
 $result->closeCursor();
 ?>
