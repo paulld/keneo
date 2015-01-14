@@ -53,52 +53,67 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<h1>Jours f&eacute;ri&eacute;s</h1>
 		</div>
 
-		<table id="tablerestit" class="table table-striped temp-table">
-			<tr>
-				<td id="t-containertit">Date</td>
-				<td id="t-containertit">Description</td>
-				<td id="t-containertit" width="60px">Actions</td>
-			</tr>
-			<?php
-			$req="SELECT dateFerie, Description
-				FROM rob_ferie
-				ORDER BY dateFerie DESC";
-			$reponse = $bdd->query($req);
-			$i=1;
-			while ($donnee = $reponse->fetch() )
-			{
-			?><form action="ferie.php" method="post">
-				<tr>
-					<td id="t-container<?php echo $i;?>"><?php echo date("d/m/Y", strtotime($donnee[0]));?></td>
-					<td id="t-container<?php echo $i;?>"><input id="w_input_90" type="text" size="50" value="<?php echo $donnee[1];?>" name="moddesc" /></td>
-					<td id="t-ico<?php echo $i;?>">
-						<input type="hidden" value="<?php echo $donnee[0];?>" name="moddateFerie" />
-						&nbsp;<input id="btValid" type="submit" Value="V" title="Valider la modification" name="modif">
-						&nbsp;<input id="btSuppr" type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))" />
-					</td>
-				</tr>
-			</form><?php
-				if ($i == 1) { $i = 2; } else { $i = 1; }
-			}
-			$reponse->closeCursor();
-			?>
-		</table>
+		<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Description</th>
+							<th width="60px">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+						$req="SELECT dateFerie, Description
+							FROM rob_ferie
+							ORDER BY dateFerie DESC";
+						$reponse = $bdd->query($req);
+						while ($donnee = $reponse->fetch() ) {
+						?>
+						<form action="ferie.php" method="post">
+							<tr>
+								<td>
+									<?php echo date("d/m/Y", strtotime($donnee[0]));?>
+								</td>
+								<td>
+									<input class="form-control" type="text" size="50" value="<?php echo $donnee[1];?>" name="moddesc" />
+								</td>
+								<td style="width: 92px;">
+									<input type="hidden" value="<?php echo $donnee[0];?>" name="moddateFerie" />
+									<input class="btn btn-success" id="btValid" type="submit" value="V" title="Valider la modification" name="modif">
+									<input class="btn btn-danger" id="btSuppr" type="submit" value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))" />
+								</td>
+							</tr>
+						</form>
+						<?php
+						}
+						$reponse->closeCursor();
+						?>
+					</tbody>
+				</table>
+		</div>
 
 		<h2>Ajouter un nouveau jour f&eacute;ri&eacute;</h2>
-		<table id="tablerestit" class="table table-striped temp-table">
-			<tr>
-				<td id="t-containertit">Date</td>
-				<td id="t-containertit">Description</td>
-				<td id="t-containertit">Action</td>
-			</tr>
+		<div class="table-responsive">
 			<form action="ferie.php" method="post">
-			<tr>
-				<td id="t-container"><input id="deadline1" type="text" size="20" name="newdateFerie" /></td>
-				<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newdesc" /></td>
-				<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-			</tr>
+				<table class="table table-striped temp-table">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Description</th>
+							<th>Action</td>
+						</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td><input class="form-control" type="text" size="20" name="newdateFerie" /></td>
+						<td><input class="form-control" type="text" size="50" name="newdesc" /></td>
+						<td><input class="btn btn-primary" type="submit" Value="Ajouter" /></td>
+					</tr>
+					</tbody>
+				</table>
 			</form>
-		</table>
+		</div>
 
 	</section>
 <?php
