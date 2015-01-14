@@ -37,35 +37,33 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<div class="section-title">
 			<h1>Gestion tickets restaurant</h1>
 		</div>
+		
 		<h2>Extraction</h2>
 		<form action="ticket-exp.php" method="post" target="_blank">
 			<div class="form-inner">
-				<?php
-				echo '<input class="form-control form-control-small form-control-centered" type="text" id="datejourdeb" name="datejourdeb" placeholder="A partir du..." />';
-				echo '<input class="form-control form-control-small form-control-centered" type="text" id="datejourfin" name="datejourfin" placeholder="Jusqu\'au..." />';
-				echo '<input type="checkbox" name="remb" /> Inclure les tickets restaurant d&eacute;j&agrave; "rembours&eacute;s"&nbsp;&nbsp;';
-				echo '<input class="btn btn-small btn-primary" type="submit" Value="Extraire" name="Valider" />';
-				?> 
+				<input class="form-control form-control-small form-control-centered" type="text" id="datejourdeb" name="datejourdeb" placeholder="A partir du..." />
+				<input class="form-control form-control-small form-control-centered" type="text" id="datejourfin" name="datejourfin" placeholder="Jusqu&#39;au..." />
+				<input type="checkbox" name="remb" /> 
+				<span>Inclure les tickets restaurant d&eacute;j&agrave; "rembours&eacute;s"</span>
+				<input class="btn btn-small btn-primary" type="submit" Value="Extraire" name="Valider" />
 			</div>
 		</form>
 		
 		<h2>V&eacute;rrouillage</h2>
 		<form action="choixticket.php" method="post" target="_blank">
 			<div class="form-inner">
-				<?php
-				echo '<input class="form-control form-control-small form-control-centered" type="text" id="deadline1" name="deadline1" />';
-				echo '<input class="btn btn-small btn-primary" type="submit" Value="Verrouiller" name="Valider" onclick="return(confirm(\'Etes-vous s&ucirc;r de vouloir d&eacute;clarer tous les tickets restaurant jusqu &agrave; cette date comme rembours&eacute;s?\'))" />'.$majinfo;
-				?> 
+				<input class="form-control form-control-small form-control-centered" type="text" id="deadline1" name="deadline1" />
+				<input class="btn btn-small btn-primary" type="submit" Value="Verrouiller" name="Valider" onclick="return(confirm(\'Etes-vous s&ucirc;r de vouloir d&eacute;clarer tous les tickets restaurant jusqu &agrave; cette date comme rembours&eacute;s?\'))" />
+				<?php $majinfo; ?> 
 			</div>
 		</form>
 
 		<h2>D&eacute;clarer tous les tickets restaurant comme &eacute;tant non rembours&eacute;s</h2>
 		<form action="choixticket.php" method="post" target="_blank">
 			<div class="form-inner">
-				<?php
-				echo '<input type="hidden" name="deverr" />';
-				echo '<input class="btn btn-small btn-primary" type="submit" Value="Deverrouiller" name="Valider" onclick="return(confirm(\'Etes-vous s&ucirc;r de vouloir d&eacute;clarer tous les tickets restaurant comme non rembours&eacute;s?\'))" />'.$majinfo2;
-				?> 
+				<input type="hidden" name="deverr" />
+				<input class="btn btn-small btn-primary" type="submit" Value="Deverrouiller" name="Valider" onclick="return(confirm(\'Etes-vous s&ucirc;r de vouloir d&eacute;clarer tous les tickets restaurant comme non rembours&eacute;s?\'))" />
+				<?php $majinfo2; ?> 
 			</div>
 		</form>
 	</section>

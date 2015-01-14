@@ -9,7 +9,7 @@
   min-width: 100%;
   margin: -15px -15px 25px;
   background: rgba(240,240,240,.5);
-  height: 50px;
+  height: auto;
   padding: 15px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px;
 }
@@ -24,6 +24,9 @@ h1 {
   margin: 0 auto 20px;
   text-align: center;
   text-shadow: 1px 1px 1px #aaa;
+}
+.section-title h1 { 
+  margin: 0 auto;
 }
 h2 {
   font-size: 16px;
@@ -469,5 +472,26 @@ tr.tr-highlight {
   }
   .tables-links {
     display: none;
+  }
+}
+
+
+.form-verr {
+  width: 130px;
+  padding-right: 10px;
+  display: inline-block;
+  text-align: right;
+}
+@media (max-width: 482px) {
+  .form-verr {
+    display: block;
+    margin: 15px auto 10px;
+    text-align: center;
+    padding: 0;
+    width: 100%;
+    font-weight: bold;
+  }
+  .form-verr:after {
+    content: ":";
   }
 }

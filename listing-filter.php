@@ -30,7 +30,7 @@ echo '</select>';
 
 //DATE RANGE
 echo ' - P&eacute;riode: <input size="8" type="text" id="datejourdeb" name="datejourdeb" value="" onchange="showFilterResult(0)" placeholder="A partir du..." title="A partir du..." />';
-echo '-<input size="8" type="text" id="datejourfin" name="datejourfin" value="" onchange="showFilterResult(0)" placeholder="Jusqu\'au..." title="Jusqu\'au..." />';
+echo '-<input size="8" type="text" id="datejourfin" name="datejourfin" value="" onchange="showFilterResult(0)" placeholder="Jusqu&#39;au..." title="Jusqu&#39;au..." />';
 
 //PHASE
 echo '<br/><select name="affphase" id="affphase" onchange="showFilterResult(0)">';

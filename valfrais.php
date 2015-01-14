@@ -27,7 +27,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	?>
 
 		
-    <!-- =================== SAISIE ================= -->
+  <!-- =================== SAISIE ================= -->
 	<div class="background-temps background-image"></div>
 	<div class="overlay"></div>
 
@@ -36,42 +36,48 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<h1>Validation des frais</h1>
 		</div>
 		<form action="valfrais.php" method="post">
-			<div class="form-inner">
-				<select class="form-control form-control-small form-control-centered" name="flag" />
-					<option>S&eacute;lectionez la note...</option>
-					<?php
-					$reqimput = $bdd->query("SELECT DISTINCT noteNum FROM rob_frais WHERE validation != 2 AND noteNum != '' ORDER BY noteNum");
-					while ($optimput = $reqimput->fetch())
-					{
-						echo '<option value='.$optimput['noteNum'].'>'.$optimput['noteNum'].'</option>';
-					}
-					$reqimput->closeCursor();
-					?>
-				</select>
-				<input class="btn btn-small btn-primary" type="submit" Value="Valider la note" name="Valider" />
+			<div class="row">
+				<div class="col-sm-4 col-sm-offset-3 col-xs-7">
+					<select class="form-control form-control-centered" name="flag" />
+						<option>S&eacute;lectionez la note...</option>
+						<?php
+						$reqimput = $bdd->query("SELECT DISTINCT noteNum FROM rob_frais WHERE validation != 2 AND noteNum != '' ORDER BY noteNum");
+						while ($optimput = $reqimput->fetch()) {
+							echo '<option value='.$optimput['noteNum'].'>'.$optimput['noteNum'].'</option>';
+						}
+						$reqimput->closeCursor();
+						?>
+					</select>
+				</div>
+				<div class="col-sm-5 col-xs-5 text-left">
+					<input class="btn btn-small btn-primary" type="submit" Value="Valider la note" name="Valider" />
+				</div>
 			</div>
 		</form>
 		<?php
-			if ($ok != '' and isset($_POST['Valider']))
-			{
+			if ($ok != '' and isset($_POST['Valider'])) {
 				echo '<div class="form-error-message">'.$ok.'</b></div>';
 			}
 		?>
 	</section>
 		
-	<section class="container section-container section-toggle" id="saisie-temps">
+	<section class="container section-container" id="saisie-temps">
 		<div class="section-title">
 			<h1>Rejeter une note de frais</h1>
 		</div>
+
 		<form action="valfrais.php" method="post">
-			<div class="form-inner">
-				<input class="form-control form-control-small form-control-centered" type="text" name="flagrej" />
-				<input class="btn btn-small btn-primary" type="submit" Value="Rejeter la note" name="Rejeter" />
+			<div class="row">
+				<div class="col-sm-4 col-sm-offset-3 col-xs-7">
+					<input class="form-control form-control-centered" type="text" name="flagrej" />
+				</div>
+				<div class="col-sm-5 col-xs-5 text-left">
+					<input class="btn btn-small btn-primary" type="submit" Value="Rejeter la note" name="Rejeter" />
+				</div>
 			</div>
 		</form>
 		<?php
-			if ($ok != '' and isset($_POST['Rejeter']))
-			{
+			if ($ok != '' and isset($_POST['Rejeter'])) {
 				echo '<div class="form-error-message">'.$ok.'</b></div>';
 			}
 		?>

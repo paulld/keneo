@@ -62,54 +62,53 @@ $result = $bdd->query($req);
 	<div class="section-title">
 		<h1>Validation des temps</h1>
 	</div>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Trigramme</th>
-				<th>Date</th>
-				<th>Client</th>
-				<th>Projet</th>
-				<th>Mission</th>
-				<th>Dur&eacute;e</th>
-				<th>Valider</th>
-			</tr>
-		</thead>
-		<tbody>
-		<?php
-		$i=1;
-		while ($donnee = $result->fetch())
-		{
-		?>
-			<tr>
-				<td><?php echo $donnee['trig'];?></td>
-				<td><?php if($donnee['mois'] < 10) { echo "0"; } echo $donnee['mois'].'.'.$donnee['annee'];?></td>
-				<td><?php echo $donnee['client'];?></td>
-				<td><?php echo $donnee['projet'];?></td>
-				<td><?php echo $donnee['mission'];?></td>
-				<td><?php echo $donnee['jour'];?></td>
-				<td>
-					<form action="valtemps.php" method="post">
-						<input type="hidden" value="<?php echo $donnee['clientid'];?>" name="vimputIDl1" />
-						<input type="hidden" value="<?php echo $donnee['projetid'];?>" name="vimputIDl2" />
-						<input type="hidden" value="<?php echo $donnee['missionid'];?>" name="vimputIDl3" />
-						<input type="hidden" value="<?php echo $donnee['userID'];?>" name="vuserID" />
-						<input type="hidden" value="<?php echo $donnee['mois'];?>" name="vdatejour" />
-						<?php if ($donnee['validation'] == 0) { 
-							echo '<input type="hidden" value=1 name="valtps" />';
-							echo '<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Valider"><i class="fa fa-toggle-on"></i></button>'; } else {
-							echo '<input type="hidden" value=0 name="valtps" />';
-							echo '<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="Rejeter"><i class="fa fa-toggle-on"></i></button>'; }
-						?>
-					</form>
-				</td>
-			</tr>
-
-		<?php
-			if ($i == 1) { $i = 2; } else { $i = 1; }
-		}
-		?>
-		</tbody>
-	</table>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Trigramme</th>
+					<th>Date</th>
+					<th>Client</th>
+					<th>Projet</th>
+					<th>Mission</th>
+					<th>Dur&eacute;e</th>
+					<th>Valider</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+				while ($donnee = $result->fetch()) {
+				?>
+					<tr>
+						<td><?php echo $donnee['trig'];?></td>
+						<td><?php if($donnee['mois'] < 10) { echo "0"; } echo $donnee['mois'].'.'.$donnee['annee'];?></td>
+						<td><?php echo $donnee['client'];?></td>
+						<td><?php echo $donnee['projet'];?></td>
+						<td><?php echo $donnee['mission'];?></td>
+						<td><?php echo $donnee['jour'];?></td>
+						<td>
+							<form class="ajax-val-temps" action="valtemps.php" method="post">
+								<input type="hidden" value="<?php echo $donnee['clientid'];?>" name="vimputIDl1" />
+								<input type="hidden" value="<?php echo $donnee['projetid'];?>" name="vimputIDl2" />
+								<input type="hidden" value="<?php echo $donnee['missionid'];?>" name="vimputIDl3" />
+								<input type="hidden" value="<?php echo $donnee['userID'];?>" name="vuserID" />
+								<input type="hidden" value="<?php echo $donnee['mois'];?>" name="vdatejour" />
+								<?php if ($donnee['validation'] == 0) { ?>
+									<input type="hidden" value="1" name="valtps" />
+									<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Valider"><i class="fa fa-toggle-off"></i></button>
+								<?php } else { ?>
+									<input type="hidden" value="0" name="valtps" />
+									<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="Rejeter"><i class="fa fa-toggle-on"></i></button>
+								<?php } ?>
+							</form>
+						</td>
+					</tr>
+				<?php
+				}
+				?>
+			</tbody>
+		</table>
+	</div>
 </section>
 <?php
 $result->closeCursor();
@@ -135,52 +134,55 @@ $result = $bdd->query($req);
 	<div class="section-title">
 		<h1>R&eacute;cup&eacute;ration en cours</h1>
 	</div>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th></th>
-				<th>Trigramme</th>
-				<th>Date</th>
-				<th>Activit&eacute;</th>
-				<th>Client</th>
-				<th>Projet</th>
-				<th>Mission</th>
-				<th>Description</th>
-				<th>Dur&eacute;e</th>
-				<th>Suppr.</th>
-			</tr>
-		</thead>
-		</tbody>
-			<?php
-			$i=1;
-			while ($donnee = $result->fetch())
-			{
-				if (strtotime(date("Y-m-d")) - strtotime($donnee['date']) > 1814400) {$val="no-validate"; $highlight="highlight";} else { $val="validate"; $highlight="no-highlight";}
-			?>
-				<tr class="tr-<?php echo $highlight; ?>">
-					<td><?php echo '<i class="fa fa-circle fa-circle-'.$val.'"></i>';?></td>
-					<td><?php echo $donnee['trig'];?></td>
-					<td><?php echo date ("d/m/Y", strtotime($donnee['date']));?></td>
-					<td><?php echo $donnee['activite'];?></td>
-					<td><?php echo $donnee['client'];?></td>
-					<td><?php echo $donnee['projet'];?></td>
-					<td><?php echo $donnee['mission'];?></td>
-					<td><?php echo $donnee['info'];?></td>
-					<td><?php echo $donnee['jour'];?></td>
-					<td>
-					<form id="ajax-form" class="autosubmit" method="POST" action="./valrecup-upd.php">
-						<input type="checkbox" name="recup" value="0" title="cocher pour supprimer la r&eacute;cup&eacute;ration" />
-						<input id="where" type="hidden" name="ID" value="<?php echo $donnee['ID'] ?>" />
-					</form>
-					</td>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Trigramme</th>
+					<th>Date</th>
+					<th>Activit&eacute;</th>
+					<th>Client</th>
+					<th>Projet</th>
+					<th>Mission</th>
+					<th>Description</th>
+					<th>Dur&eacute;e</th>
+					<th>Suppr.</th>
 				</tr>
-
-			<?php
-				if ($i == 1) { $i = 2; } else { $i = 1; }
-			}
-			?>
-		</tbody>
-	</table>
+			</thead>
+			</tbody>
+				<?php
+				while ($donnee = $result->fetch()) {
+					if (strtotime(date("Y-m-d")) - strtotime($donnee['date']) > 1814400) {
+							$val="no-validate"; $highlight="highlight";
+						} else { 
+							$val="validate"; $highlight="no-highlight";
+						}
+				?>
+					<tr class="tr-<?php echo $highlight; ?>">
+						<td><?php echo '<i class="fa fa-circle fa-circle-'.$val.'"></i>';?></td>
+						<td><?php echo $donnee['trig'];?></td>
+						<td><?php echo date ("d/m/Y", strtotime($donnee['date']));?></td>
+						<td><?php echo $donnee['activite'];?></td>
+						<td><?php echo $donnee['client'];?></td>
+						<td><?php echo $donnee['projet'];?></td>
+						<td><?php echo $donnee['mission'];?></td>
+						<td><?php echo $donnee['info'];?></td>
+						<td><?php echo $donnee['jour'];?></td>
+						<td>
+						<form class="ajax-recup-absences" method="POST" action="./valrecup-upd.php">
+							<!-- <input type="submit" name="recup" value="0" title="cocher pour supprimer la r&eacute;cup&eacute;ration" /> -->
+							<button name="recup" value="0" title="Supprimer la r&eacute;cup&eacute;ration" class="btn btn-small btn-default btn-icon btn-red"><i class="fa fa-times"></i></button>
+							<input class="where" type="hidden" name="ID" value="<?php echo $donnee['ID'] ?>" />
+						</form>
+						</td>
+					</tr>
+				<?php
+				}
+				?>
+			</tbody>
+		</table>
+	</div>
 </section>
 <?php
 $result->closeCursor();
@@ -203,45 +205,46 @@ $result = $bdd->query($req);
 <!-- ================= RESTITUTION3 =============== -->
 <section class="container section-container" id="historique-temps">
 	<div class="section-title">
-		<h1>Validation des abscences (hors r&eacute;cup&eacute;ration)</h1>
+		<h1>Validation des absences (hors r&eacute;cup&eacute;ration)</h1>
 	</div>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Trigramme</th>
-				<th>Date</th>
-				<th>Client</th>
-				<th>Projet</th>
-				<th>Mission</th>
-				<th>Dur&eacute;e</th>
-				<th>Valider</th>
-			</tr>
-		</thead>
-		<tbody>
-		<?php
-		while ($donnee = $result->fetch())
-		{
-		?>
-			<tr>
-				<td><?php echo $donnee['trig'];?></td>
-				<td><?php echo $donnee['datejour'];?></td>
-				<td><?php echo $donnee['client'];?></td>
-				<td><?php echo $donnee['projet'];?></td>
-				<td><?php echo $donnee['mission'];?></td>
-				<td><?php echo $donnee['jour'];?></td>
-				<td>
-					<form id="ajax-form" class="autosubmit" method="POST" action="./valtemps-upd.php">
-						<input type="checkbox" name="validation" value="1" />
-						<input id="where" type="hidden" name="ID" value="<?php echo $donnee['ID'] ?>" />
-					</form>
-				</td>
-			</tr>
-
-		<?php
-		}
-		?>
-		</tbody>
-	</table>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Trigramme</th>
+					<th>Date</th>
+					<th>Client</th>
+					<th>Projet</th>
+					<th>Mission</th>
+					<th>Dur&eacute;e</th>
+					<th>Valider</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+				while ($donnee = $result->fetch()) {
+				?>
+					<tr>
+						<td><?php echo $donnee['trig'];?></td>
+						<td><?php echo $donnee['datejour'];?></td>
+						<td><?php echo $donnee['client'];?></td>
+						<td><?php echo $donnee['projet'];?></td>
+						<td><?php echo $donnee['mission'];?></td>
+						<td><?php echo $donnee['jour'];?></td>
+						<td>
+							<form class="ajax-form autosubmit" method="POST" action="./valtemps-upd.php">
+								<!-- <input type="checkbox" name="validation" value="1" /> -->
+								<button name="validation" value="1" title="Valider" class="btn btn-small btn-default btn-icon btn-green"><i class="fa fa-check"></i></button>
+								<input class="where" type="hidden" name="ID" value="<?php echo $donnee['ID'] ?>" />
+							</form>
+						</td>
+					</tr>
+				<?php
+				}
+				?>
+			</tbody>
+		</table>
+	</div>
 </section>
 
 <?php
