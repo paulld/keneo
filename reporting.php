@@ -17,13 +17,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			</h1>
 		</div>
 	
-		<div id="coeur">
-			<?php
-			if ($_SESSION['id_lev_tms'] >= 4)
-			{
+		<?php
+			if ($_SESSION['id_lev_tms'] >= 4) {
+				// code goes here
 			}
-			?>
-		</div>
+		?>
+
 	</section>
 	<?php
 	include("footer.php");

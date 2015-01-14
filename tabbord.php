@@ -4,9 +4,6 @@
 
 	if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass'] AND ($_SESSION['id_lev_menu'] == 4 OR $_SESSION['id_lev_menu'] ==6)) {
 		include("headerlight.php");
-		// TODO: REMOVE THE 2 NEXT LINES AFTER CHECK THAT THEY'RE USELESS
-		$i = 1;
-		$k = "";
 ?>
 	
 <!-- Background Image Specific to each page -->
@@ -20,11 +17,6 @@
 			</h1>
 		</div>
 
-
-	<!-- <div id="haut">Tableaux de bord</div> -->
-	
-	<div id="coeur" name="coeur">
-		
 		<div id="filt" name="filt">
 			<?php include("tabbord-filter.php"); ?>
 		</div>
@@ -33,7 +25,7 @@
 			<?php include("tabbord-req.php"); ?>
 		</div>
 
-	</div>
+	</section>
 
 	<?php
 	include("footer.php");

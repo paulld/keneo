@@ -50,6 +50,7 @@ $bdd->query($req3);
 
 <!-- ================= RESTITUTION =============== -->
 <h2>R&eacute;cup&eacute;rations et cong&eacute;s</h2>
+<div class="table-responsive">
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -84,6 +85,7 @@ $bdd->query($req3);
 		?>
 	</tbody>
 </table>
+</div>
 <?php
 $result->closeCursor();
 ?>

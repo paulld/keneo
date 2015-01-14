@@ -1,56 +1,101 @@
-//AJAX - VALTEMPS
-$(function(){
-	$('#ajax-form INPUT').autoSubmit();
+$(document).ready(function(){
+  $(document).on('click', '.ajax-recup-absences button', function(e){
+  	// Prevent the form from being submitted with preventDefault
+    e.preventDefault();
+    var button = $(this);
+		var column = button.attr('name');
+		// VARIABLES: Form-specific
+		var form = button.parents('form');
+		var method = form.attr('method');
+		var action = form.attr('action');
+		// VARIABLES: Where to update in database
+		var where_val = form.find('.where').val();
+		var where_col = form.find('.where').attr('name');
+		var value = button.val();
+		console.log (column, method, action, where_val, where_col, value);
+		var tr = form.parents('tr')
+
+		$.ajax({
+			url: action,
+			type: method,
+			data: {
+				val: value,
+				col: column,
+				w_col: where_col,
+				w_val: where_val
+				},
+			cache: false,
+			timeout: 10000,
+			success: function(data) {
+				// Alert if update failed
+				if (data) {
+					alert(data);
+				}
+				// Load output into a P
+				else {
+					tr.fadeOut();
+				}
+			}
+		});
+  });
 });
 
-(function($)
-{
-	$.fn.autoSubmit = function(options) {
-		return $.each(this, function() {
-			// VARIABLES: Input-specific
-			var input = $(this);
-			var column = input.attr('name');
-			// VARIABLES: Form-specific
-			var form = input.parents('form');
-			var method = form.attr('method');
-			var action = form.attr('action');
-			// VARIABLES: Where to update in database
-			var where_val = form.find('#where').val();
-			var where_col = form.find('#where').attr('name');
-			// ONBLUR: Dynamic value send through Ajax
-			input.bind('blur', function(event) {
-				// Get latest value
-				var value = input.val();
-				// AJAX: Send values
-				$.ajax({
-					url: action,
-					type: method,
-					data: {
-						val: value,
-						col: column,
-						w_col: where_col,
-						w_val: where_val
-						},
-					cache: false,
-					timeout: 10000,
-					success: function(data) {
-						// Alert if update failed
-						if (data) {
-							alert(data);
-						}
-						// Load output into a P
-						else {
-							$('#notice').text('Updated');
-							$('#notice').fadeOut().fadeIn();
-						}
-					}
-				});
-			// Prevent normal submission of form
-			return false;
-			})
-		});
-	}
-})(jQuery);
+
+// AJAX - VALTEMPS
+// $(function(){
+	// $('.ajax-form button').autoSubmit();
+// });
+
+// (function($)
+// {
+// 	$.fn.autoSubmit = function(options) {
+// 		return $.each(this, function() {
+// 			// VARIABLES: Input-specific
+// 			var input = $(this);
+// 			var column = input.attr('name');
+// 			// VARIABLES: Form-specific
+// 			var form = input.parents('form');
+// 			var tr = form.parents('tr')
+// 			var method = form.attr('method');
+// 			var action = form.attr('action');
+// 			// VARIABLES: Where to update in database
+// 			var where_val = form.find('.where').val();
+// 			var where_col = form.find('.where').attr('name');
+// 			// ONBLUR: Dynamic value send through Ajax
+// 			input.bind('blur', function(event) {
+// 				// Get latest value
+// 				var value = input.val();
+// 				// AJAX: Send values
+// 				$.ajax({
+// 					url: action,
+// 					type: method,
+// 					data: {
+// 						val: value,
+// 						col: column,
+// 						w_col: where_col,
+// 						w_val: where_val
+// 						},
+// 					cache: false,
+// 					timeout: 10000,
+// 					success: function(data) {
+// 						// Alert if update failed
+// 						if (data) {
+// 							alert(data);
+// 						}
+// 						// Load output into a P
+// 						else {
+// 							tr.fadeOut();
+// 							// $('#notice').text('Updated');
+// 							// $('#notice').fadeOut().fadeIn();
+// 						}
+// 					}
+// 				});
+// 			// Prevent normal submission of form
+// 			return false;
+// 			})
+// 		});
+// 	}
+// })(jQuery);
 
 //CALENDRIER
 $(function() {
@@ -714,272 +759,6 @@ function cltcalcFact(){
 		document.getElementById('cltFact').value = parseFloat(cltMarge * frsCtTotHT).toFixed(2);
 	}
 }
-
-
-//ADMIN REL CLIENT/...
-//Afficher l'interface de création d'un nouveau projet
-// function showNewProj(newproj)
-// {
-// 	if (newproj=="0") {
-// 		document.getElementById("ProjetHint").innerHTML="";
-// 		return;
-// 	} 
-// 	if (window.XMLHttpRequest) { 				// code for IE7+, Firefox, Chrome, Opera, Safari
-// 		xmlhttp=new XMLHttpRequest();
-// 	} else { 														// code for IE6, IE5
-// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-// 	}
-// 	xmlhttp.onreadystatechange=function() {
-// 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-// 		}
-// 	}
-// 	xmlhttp.open("GET","newprojet.php",true);
-// 	xmlhttp.send();
-// }
-
-//Afficher l'interface de saisie d'un ancien projet
-// function showCurrProj(currproj)
-// {
-// 	if (currproj=="1")
-// 	{
-// 		document.getElementById("ProjetHint").innerHTML="";
-// 		return;
-// 	} 
-// 	if (window.XMLHttpRequest)
-// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
-// 		xmlhttp=new XMLHttpRequest();
-// 	}
-// 	else
-// 	{// code for IE6, IE5
-// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-// 	}
-// 	xmlhttp.onreadystatechange=function()
-// 	{
-// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-// 		{
-// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-// 		}
-// 	}
-// 	xmlhttp.open("GET","currprojet.php",true);
-// 	xmlhttp.send();
-// }
-
-//Afficher l'interface de création d'une nouvelle mission
-// function showNewMis(newmis)
-// {
-// 	if (newmis=="0")
-// 	{
-// 		document.getElementById("ProjetHint").innerHTML="";
-// 		return;
-// 	} 
-// 	if (window.XMLHttpRequest)
-// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
-// 		xmlhttp=new XMLHttpRequest();
-// 	}
-// 	else
-// 	{// code for IE6, IE5
-// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-// 	}
-// 	xmlhttp.onreadystatechange=function()
-// 	{
-// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-// 		{
-// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-// 		}
-// 	}
-// 	xmlhttp.open("GET","newmission.php",true);
-// 	xmlhttp.send();
-// }
-
-//Afficher l'interface de saisie d'une mission existante
-// function showCurrMis(currmis)
-// {
-// 	if (currmis=="1")
-// 	{
-// 		document.getElementById("ProjetHint").innerHTML="";
-// 		return;
-// 	} 
-// 	if (window.XMLHttpRequest)
-// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
-// 		xmlhttp=new XMLHttpRequest();
-// 	}
-// 	else
-// 	{// code for IE6, IE5
-// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-// 	}
-// 	xmlhttp.onreadystatechange=function()
-// 	{
-// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-// 		{
-// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-// 		}
-// 	}
-// 	xmlhttp.open("GET","currmission.php",true);
-// 	xmlhttp.send();
-// }
-
-//Afficher l'interface de création d'une nouvelle catégorie
-function showNewCat(newcat)
-{
-	if (newcat=="0")
-	{
-		document.getElementById("ProjetHint").innerHTML="";
-		return;
-	} 
-	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","newcategorie.php",true);
-	xmlhttp.send();
-}
-
-//Afficher l'interface de saisie d'une catégorie existante
-function showCurrCat(currcat)
-{
-	if (currcat=="1")
-	{
-		document.getElementById("ProjetHint").innerHTML="";
-		return;
-	} 
-	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","currcategorie.php",true);
-	xmlhttp.send();
-}
-
-//Afficher l'interface de création d'un nouveau type d'événement
-// function showNewTyp(newtyp)
-// {
-// 	if (newtyp=="0")
-// 	{
-// 		document.getElementById("ProjetHint").innerHTML="";
-// 		return;
-// 	} 
-// 	if (window.XMLHttpRequest)
-// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
-// 		xmlhttp=new XMLHttpRequest();
-// 	}
-// 	else
-// 	{// code for IE6, IE5
-// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-// 	}
-// 	xmlhttp.onreadystatechange=function()
-// 	{
-// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-// 		{
-// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-// 		}
-// 	}
-// 	xmlhttp.open("GET","newtype.php",true);
-// 	xmlhttp.send();
-// }
-
-//Afficher l'interface de saisie d'un type d'événement existant
-// function showCurrTyp(currtyp)
-// {
-// 	if (currtyp=="1")
-// 	{
-// 		document.getElementById("ProjetHint").innerHTML="";
-// 		return;
-// 	} 
-// 	if (window.XMLHttpRequest)
-// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
-// 		xmlhttp=new XMLHttpRequest();
-// 	}
-// 	else
-// 	{// code for IE6, IE5
-// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-// 	}
-// 	xmlhttp.onreadystatechange=function()
-// 	{
-// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-// 		{
-// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-// 		}
-// 	}
-// 	xmlhttp.open("GET","currtype.php",true);
-// 	xmlhttp.send();
-// }
-
-//Afficher l'interface de création d'un nouvel événement
-// function showNewEve(neweve)
-// {
-// 	if (neweve=="0")
-// 	{
-// 		document.getElementById("ProjetHint").innerHTML="";
-// 		return;
-// 	} 
-// 	if (window.XMLHttpRequest)
-// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
-// 		xmlhttp=new XMLHttpRequest();
-// 	}
-// 	else
-// 	{// code for IE6, IE5
-// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-// 	}
-// 	xmlhttp.onreadystatechange=function()
-// 	{
-// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-// 		{
-// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-// 		}
-// 	}
-// 	xmlhttp.open("GET","newevent.php",true);
-// 	xmlhttp.send();
-// }
-
-//Afficher l'interface de saisie d'un événement existant
-// function showCurrEve(curreve)
-// {
-// 	if (curreve=="1")
-// 	{
-// 		document.getElementById("ProjetHint").innerHTML="";
-// 		return;
-// 	} 
-// 	if (window.XMLHttpRequest)
-// 	{// code for IE7+, Firefox, Chrome, Opera, Safari
-// 		xmlhttp=new XMLHttpRequest();
-// 	}
-// 	else
-// 	{// code for IE6, IE5
-// 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-// 	}
-// 	xmlhttp.onreadystatechange=function()
-// 	{
-// 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-// 		{
-// 			document.getElementById("ProjetHint").innerHTML=xmlhttp.responseText;
-// 		}
-// 	}
-// 	xmlhttp.open("GET","currevent.php",true);
-// 	xmlhttp.send();
-// }
 
 
 

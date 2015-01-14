@@ -461,8 +461,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<?php
 			//MONTH
 			echo '<form action="frais.php" method="post"><select class="form-control form-control-small" name="affmonth" />';
-			$i=1;
-			while ($i < 13)
+			for ($i = 1; $i <= 12; $i++) 
 			{
 				{
 					if ($i < 10) { $tmo = "0".$i; } else { $tmo = $i; }
@@ -475,7 +474,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						echo '<option value='.$tmo.'>'.date("F",strtotime("2000-".$tmo."-10")).'</option>';
 					}
 				}
-				$i = $i + 1;
 			}
 			echo '</select>';
 			
@@ -646,7 +644,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 									}
 								}
 							echo '</form></td></tr>';
-							if ($i == 1) { $i = 2; } else { $i = 1; }
 						}
 					}
 					$reponsea->closeCursor();

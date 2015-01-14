@@ -81,8 +81,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					{
 					?>
 						<tr>
-							<td id="t-container<?php echo $i;?>"><?php echo $donnee[0];?></td>
-							<td id="t-container<?php echo $i;?>"><?php echo $donnee[1];?></td>
+							<td><?php echo $donnee[0];?></td>
+							<td><?php echo $donnee[1];?></td>
 							<?php if ($donnee[2] == 1) { ?>
 								<td>
 									<form action="catfrs.php" method="post">

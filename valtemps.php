@@ -23,9 +23,15 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<div class="background-temps background-image"></div>
 	<div class="overlay"></div>
 
-	<?php
-	include("valtemps-coeur.php");
+	<div id="filt" name="filt">
+		<?php include("valtemps-filter.php"); ?>
+	</div>
 
+	<div id="req" name="req">
+		<?php include("valtemps-req.php"); ?>
+	</div>
+
+	<?php 
 	include("footer.php");
 }
 else
