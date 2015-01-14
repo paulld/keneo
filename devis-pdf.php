@@ -6,10 +6,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 {
 	include_once('Langues.class.php');
 	date_default_timezone_set('Europe/Paris');
-	if (isset($_POST['devisNum']) AND isset($_POST['devisVers']))
+	if (isset($_POST['devisData']))
 	{
-		$devisNum = $_POST['devisNum'];
-		$devisVersion = $_POST['devisVers'];
+		$data = $_POST['devisData'];
+		list($devisNum, $devisVersion) = explode("||", $data);
 		$flag = $_SESSION['ID'].'-'.date("ymd").'-'.date("H").date("i");
 		$pseudo = $_SESSION['ID'];
 		$jourdhui = date("d/m/Y");
@@ -34,11 +34,19 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		ob_start();
 
 		?>
-		<page backimg="images/HeaderPDFfrais.png" backimgx="center" backimgy="top" backimgw="100%" backbottom="0" backtop="30mm" footer="date;heure;page">
+		<page backimgw="100%" backbottom="0" backtop="10mm" footer="date;heure;page">
 			<table cellspacing="0" style="width: 100%;">
 				<tr>
 					<td style="width: 5%;">&nbsp;</td>
-					<td style="width: 90%; font-size: 150%; color: #012E4F;" ><u>DEVIS - N&deg;<?php echo $devisNum.' ('.$devisVersion.')'; ?></u></td>
+					<td style="width: 90%; text-align: right;"><img src="images/LogoL.jpg" height="50" width="120" /></td>
+					<td style="width: 5%;">&nbsp;</td>
+				</tr>
+			</table>
+			<br/>
+			<table cellspacing="0" style="width: 100%;">
+				<tr>
+					<td style="width: 5%;">&nbsp;</td>
+					<td style="width: 90%; font-size: 120%; color: #439DD1;" ><strong>DEVIS - N&deg;<?php echo $devisNum.' ('.$devisVersion.')'; ?></strong></td>
 					<td style="width: 5%;">&nbsp;</td>
 				</tr>
 			</table>
@@ -58,30 +66,35 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo $client; ?></strong></td>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 				</tr>
+				<?php if($projet != "-") { ?>
 				<tr>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 					<td style="width: 20%; font-size: 100%; color: #012E4F;">Projet :</td>
 					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo $projet; ?></strong></td>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 				</tr>
+				<?php } if($competition != "-") { ?>
 				<tr>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 					<td style="width: 20%; font-size: 100%; color: #012E4F;">Comp&eacute;tition :</td>
 					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo $competition;?></strong></td>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 				</tr>
+				<?php } if($type != "-") { ?>
 				<tr>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 					<td style="width: 20%; font-size: 100%; color: #012E4F;">Type :</td>
 					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo $type; ?></strong></td>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 				</tr>
+				<?php } if($evenement != "-") { ?>
 				<tr>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 					<td style="width: 20%; font-size: 100%; color: #012E4F;">&Eacute;v&eacute;nement :</td>
 					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo $evenement; ?></strong></td>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 				</tr>
+				<?php } ?>
 			</table>
 			<br/>
 
@@ -97,7 +110,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			{
 				echo '<table cellspacing="0" style="width: 100%; border: 1px solid #ffffff; border-collapse: collapse; text-align: left; font-size: 10px">';
 				echo '<tr><td style="width: 5%;">&nbsp;</td>';
-				echo '<td align="center" style="width: 60%; border: 1px solid #ffffff; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">&nbsp;</td>';
+				echo '<td align="center" style="width: 60%; border: 0px; border-collapse: collapse; ">&nbsp;</td>';
 				echo '<td align="center" style="width: 10%; border: 1px solid #ffffff; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">Co&ucirc;t<br/>unitaire HT</td>';
 				echo '<td align="center" style="width: 10%; border: 1px solid #ffffff; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">&nbsp;<br/>Quantit&eacute;s</td>';
 				echo '<td align="center" style="width: 10%; border: 1px solid #ffffff; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">&nbsp;<br/>Total</td>';

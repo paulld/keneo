@@ -58,7 +58,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			 		{
 						echo '<div class="col-xs-6">';
 							echo '<div class="menu-item-outer">';
-								echo '<a href="'.$donnee['lien'].'"><span class="menu-link"></span></a>';
+								if ($_SESSION['matricule'] != 'FLC' OR $donnee['ID'] != 5)
+								{ echo '<a href="'.$donnee['lien'].'"><span class="menu-link"></span></a>'; } else
+								{ echo '<a href="#"><span class="menu-link"></span></a>'; }
 								echo '<i class="fa fa-'.$donnee['ID'].'"></i><p>'.$donnee['desc1'].'</p>';
 							echo '</div>';
 						echo '</div>';

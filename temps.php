@@ -2,7 +2,7 @@
 session_start();
 include("appel_db.php");
 
-if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass'])
+if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION['pass'] AND $_SESSION['matricule'] != 'FLC')
 {
 	include("headerlight.php");
 
@@ -796,6 +796,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 }
 else
 {
-	header("location:index.php");
+	header("location:accueil.php");
 }
 ?>
