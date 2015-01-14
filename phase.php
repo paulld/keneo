@@ -64,65 +64,75 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<h1>Phases</h1>
 		</div>
 
-		<table id="tablerestit" class="table table-striped temp-table">
-			<tr>
-				<td id="t-containertit">Phase</td>
-				<td id="t-containertit">Description</td>
-				<td id="t-containertit">&Agrave; la saisie</td>
-				<td id="t-containertit" colspan="2">Actions</td>
-			</tr>
-			<?php
-			$req="SELECT Phase, Description, actif, ID, inputOpen
-				FROM rob_phase
-				ORDER BY Description";
-			$reponse = $bdd->query($req);
-			$i=1;
-			while ($donnee = $reponse->fetch())
-			{
-				if ($donnee[2] == 1) { $verr =""; } else { $verr = " disabled"; }
-				echo '<form action="phase.php" method="post"><tr>';
-					echo '<td id="t-container'.$i.'"><input type="text" value="'.$donnee[0].'" name="modphase"'.$verr.' /></td>';
-					echo '<td id="t-container'.$i.'"><input type="text" value="'.$donnee[1].'" name="moddesc"'.$verr.' /></td>';
-					echo '<td id="t-container'.$i.'"><select name="modinputOpen"'.$verr.'>';
-						if ($donnee[4] == 1) { $optsel = " selected"; } else { $optsel = ""; }
-						echo '<option value="0">Inactif</option>';
-						echo '<option value="1"'.$optsel.'>Actif</option>';
-						echo '</select></td>';
-					echo '<td id="t-ico'.$i.'"><input type="hidden" value="'.$donnee[3].'" name="IDrock" />';
-						echo '<input id="btValid" name="modif" type="submit" Value="V" title="Modifier les informations"'.$verr.' />';
-					echo '</td>';
-					echo '<td id="t-ico'.$i.'">';
-					if ($donnee[2] == 1)
-					{ 
-						echo '<input id="btAct" name="IDinact" type="submit" Value="A" title="Desactiver le Phase" />';
-					} else {
-						echo '<input id="btInact" name="IDact" type="submit" Value="X" title="Activer le Phase" />';
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Phase</th>
+						<th>Description</th>
+						<th>&Agrave; la saisie</th>
+						<th colspan="2">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$req="SELECT Phase, Description, actif, ID, inputOpen
+						FROM rob_phase
+						ORDER BY Description";
+					$reponse = $bdd->query($req);
+					while ($donnee = $reponse->fetch())
+					{
+						if ($donnee[2] == 1) { $verr =""; } else { $verr = " disabled"; }
+						echo '<form action="phase.php" method="post"><tr>';
+							echo '<td><input class="form-control" type="text" value="'.$donnee[0].'" name="modphase"'.$verr.' /></td>';
+							echo '<td><input class="form-control" type="text" value="'.$donnee[1].'" name="moddesc"'.$verr.' /></td>';
+							echo '<td><select class="form-control" name="modinputOpen"'.$verr.'>';
+								if ($donnee[4] == 1) { $optsel = " selected"; } else { $optsel = ""; }
+								echo '<option value="0">Inactif</option>';
+								echo '<option value="1"'.$optsel.'>Actif</option>';
+								echo '</select></td>';
+							echo '<td><input type="hidden" value="'.$donnee[3].'" name="IDrock" />';
+								echo '<input class="btn btn-primary" name="modif" type="submit" Value="V" title="Valider les modifications"'.$verr.' />';
+							echo '</td>';
+							echo '<td>';
+							if ($donnee[2] == 1)
+							{ 
+								echo '<input class="btn btn-danger" id="btAct" name="IDinact" type="submit" Value="X" title="D&eacute;sactiver la Phase" />';
+							} else {
+								echo '<input class="btn btn-success" id="btInact" name="IDact" type="submit" Value="A" title="Activer la Phase" />';
+							}
+							echo '</td>';
+						echo '</tr></form>';
 					}
-					echo '</td>';
-				echo '</tr></form>';
-				if ($i == 1) { $i = 2; } else { $i = 1; }
-			}
-			$reponse->closeCursor();
-			?>
-		</table>
+					$reponse->closeCursor();
+					?>
+				</tbody>
+			</table>
+		</div>
 
 		<h2>Ajouter une nouvelle phase</h2>
-		<table id="tablerestit" class="table table-striped temp-table">
-			<tr>
-				<td id="t-containertit">Phase</td>
-				<td id="t-containertit">Description</td>
-				<td id="t-containertit">A la saisie</td>
-				<td id="t-containertit">Actions</td>
-			</tr>
+		<div class="table-responsive">
 			<form action="phase.php" method="post">
-			<tr>
-				<td id="t-container"><input id="w_inputtxt_90" type="text" size="20" name="newPhase" /></td>
-				<td id="t-container"><input id="w_inputtxt_90" type="text" size="50" name="newdesc" /></td>
-				<td id="t-container"><select name="newinputOpen"><option value="0">Inactif</option><option value="1">Actif</option></select></td>
-				<td id="t-container"><input id="w_input_90val" type="submit" Value="Ajouter" /></td>
-			</tr>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Phase</th>
+							<th>Description</th>
+							<th>A la saisie</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input class="form-control" type="text" size="20" name="newPhase" /></td>
+							<td><input class="form-control" type="text" size="50" name="newdesc" /></td>
+							<td><select class="form-control" name="newinputOpen"><option value="0">Inactif</option><option value="1">Actif</option></select></td>
+							<td><input class="btn btn-primary" type="submit" Value="Ajouter" /></td>
+						</tr>
+					</tbody>
+				</table>
 			</form>
-		</table>
+		</div>
 
 	</section>
 <?php
