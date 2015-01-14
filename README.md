@@ -20,3 +20,12 @@ Add (back) the following file and folders:
 + add trombi view ?
 + change size of buttons
 + utf-8
+
+
++ Look for: 
+    + $i=1;
+    + if ($i == 1) { $i = 2; } else { $i = 1; }
+    + id="t-container<?php echo $i;?>"
+    + id="t-ico<?php echo $i;?>"
+
++ change phase.php and ferie.php
