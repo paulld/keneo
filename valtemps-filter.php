@@ -45,19 +45,13 @@
 		<input class="form-control form-control-small" type="text" id="datejourfin" name="datejourfin" value="" onchange="showFilterValtps(0)" placeholder="Jusqu&#39;au..." title="Jusqu&#39;au..." />
 
 		<!-- COLLABORATEURS -->
-		<?php
-		if ($_SESSION['id_lev_tms'] == 6) { 
-			$fltuser = ''; 
-		} else { 
-			if ($_SESSION['id_lev_tms'] == 4) { 
-				$fltuser = ' AND T2.id_hier ='.$_SESSION['ID']; 
-			} 
-		}
-		?>
 		<select name="affcollab" class="form-control form-control-small" id="affcollab" onchange="showFilterValtps(0)">
 			<option value="99999">Collaborateurs (All)</option>
 			<?php
-				$req = "SELECT * FROM rob_user T1 INNER JOIN rob_user_rights T2 ON T1.ID = T2.ID WHERE T1.actif=1".$fltuser." ORDER BY nom, prenom";
+				$req = "SELECT * FROM rob_user T1 
+					INNER JOIN rob_user_rights T2 ON T1.ID = T2.ID 
+					INNER JOIN tmp_hier".$_SESSION['ID']." T8 ON T1.ID = T8.userID
+					WHERE T1.actif=1".$fltuser." ORDER BY nom, prenom";
 				$reqimput = $bdd->query($req);
 				while ($optimput = $reqimput->fetch()) {
 					echo '<option value='.$optimput['ID'].'>'.$optimput['nom'].' '.$optimput['prenom'].'</option>';

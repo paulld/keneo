@@ -131,22 +131,22 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					//date
 					echo '<td style="width: 7%; border: 1px solid #cccccc;">'.date("d/m/Y",strtotime($donneea[2])).'</td>';
 					//Nature
-					echo '<td style="width: 7%; border: 1px solid #cccccc;">'.$donneea[15].'</td>';
+					echo '<td style="width: 7%; border: 1px solid #cccccc;">'.utf8_encode($donneea[15]).'</td>';
 					//clients
-					echo '<td style="width: 18%; border: 1px solid #cccccc;">'.$donneea[3];
-						if ($donneea[16] != 0) { echo '<br/>| '.$donneea[4];
-							if ($donneea[17] != 0) { echo '<br/>|| '.$donneea[5];
-								if ($donneea[18] != 0) { echo '<BR/>||| '.$donneea[6]; } } }
+					echo '<td style="width: 18%; border: 1px solid #cccccc;">'.utf8_encode($donneea[3]);
+						if ($donneea[16] != 0) { echo '<br/>| '.utf8_encode($donneea[4]);
+							if ($donneea[17] != 0) { echo '<br/>|| '.utf8_encode($donneea[5]);
+								if ($donneea[18] != 0) { echo '<BR/>||| '.utf8_encode($donneea[6]); } } }
 					echo '</td>';
 					//Compétition
-					echo '<td style="width: 18%; border: 1px solid #cccccc;">'.$donneea[7];
-						if ($donneea[19] != 0) { echo '<br/>| '.$donneea[8];
-							if ($donneea[20] != 0) { echo '<br/>|| '.$donneea[9]; } }
+					echo '<td style="width: 18%; border: 1px solid #cccccc;">'.utf8_encode($donneea[7]);
+						if ($donneea[19] != 0) { echo '<br/>| '.utf8_encode($donneea[8]);
+							if ($donneea[20] != 0) { echo '<br/>|| '.utf8_encode($donneea[9]); } }
 					echo '</td>';
 					//Activité
-					echo '<td style="width: 9%; border: 1px solid #cccccc;">'.$donneea[21].'</td>';
+					echo '<td style="width: 9%; border: 1px solid #cccccc;">'.utf8_encode($donneea[21]).'</td>';
 					//info
-					echo '<td style="width: 9%; border: 1px solid #cccccc;">'.$donneea[10].'</td>';
+					echo '<td style="width: 9%; border: 1px solid #cccccc;">'.utf8_encode($donneea[10]).'</td>';
 					//valeurs
 					echo '<td style="width: 6%; border: 1px solid #cccccc;" align="right">'.number_format($donneea[11],2,".","").'</td>';
 					echo '<td style="width: 5%; border: 1px solid #cccccc;" align="right">'.number_format($donneea[12],2,".","").'</td>';

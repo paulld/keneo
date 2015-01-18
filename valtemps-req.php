@@ -36,7 +36,8 @@ if (isset($p1) AND $p1 != 99999) { $flt_clt = ' AND T1.imputID = '.$p1; } else {
 if (isset($p2) AND $p2 != 99999) { $flt_prj = ' AND T1.imputID2 = '.$p2; } else { $flt_prj = ''; }
 if (isset($v1) AND $v1 != 99999) { $flt_val = ' AND T1.validation = '.$v1; } else { if (isset($v1) AND $v1 == 99999) { $flt_val = ''; } else { $flt_val = ' AND T1.validation = 0'; } }
 if (isset($v2) AND $v2 != 99999) { $flt_col = ' AND T1.userID = '.$v2; } else { $flt_col = ''; }
-if ($_SESSION['id_lev_tms'] == 6) { $fltuser = ''; } else { if ($_SESSION['id_lev_tms'] == 4) { $fltuser = ' AND T7.id_hier ='.$_SESSION['ID']; } }
+//if ($_SESSION['id_lev_tms'] == 6) { $fltuser = ''; } else { if ($_SESSION['id_lev_tms'] == 4) { $fltuser = ' AND T7.id_hier ='.$_SESSION['ID']; } }
+$fltuser = '';
 
 
 // ================= REQUETE1 =============== 
@@ -49,6 +50,7 @@ $req = "SELECT T2.matricule trig, MONTH(T1.datejour) mois, YEAR(T1.datejour) ann
 	INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputIDl2 
 	INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputIDl3 
 	INNER JOIN rob_user_rights T7 ON T7.ID = T1.userID 
+	INNER JOIN tmp_hier".$_SESSION['ID']." T8 ON T1.userID = T8.userID
 	WHERE T1.imputIDl2 NOT IN (1,2,3,4,5,6,7,8,9) ".$flt_val.$fltuser.$flt_month.$flt_year.$flt_deb.$flt_fin
 	.$flt_clt.$flt_prj.$flt_col." 
 	GROUP BY T2.matricule, T3.description, T4.description, T5.description, T1.validation, T1.userID, T1.imputID, T1.imputIDl2, T1.imputIDl3 
@@ -123,6 +125,7 @@ $req = "SELECT T2.ID userID, T2.matricule trig, T1.datejour date, T1.info info, 
 	INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputIDl3 
 	INNER JOIN rob_activite T6 ON T6.ID = T1.activID 
 	INNER JOIN rob_user_rights T7 ON T7.ID = T1.userID 
+	INNER JOIN tmp_hier".$_SESSION['ID']." T8 ON T1.userID = T8.userID
 	WHERE recup <> 0".$fltuser.$flt_month.$flt_year.$flt_deb.$flt_fin
 	.$flt_clt.$flt_prj.$flt_col." 
 	ORDER BY T1.userID, T3.description, T4.description, T5.description, T1.datejour DESC  LIMIT 30";
@@ -196,6 +199,7 @@ $req = "SELECT T2.matricule trig, T1.datejour datejour, T1.valeur jour,
 	INNER JOIN rob_imputl2 T4 ON T4.ID = T1.imputIDl2 
 	INNER JOIN rob_imputl3 T5 ON T5.ID = T1.imputIDl3 
 	INNER JOIN rob_user_rights T7 ON T7.ID = T1.userID 
+	INNER JOIN tmp_hier".$_SESSION['ID']." T8 ON T1.userID = T8.userID
 	WHERE T1.imputIDl2 IN (1,2,3,4,5,6,8,9) ".$flt_val.$fltuser.$flt_month.$flt_year.$flt_deb.$flt_fin.$flt_col." 
 	ORDER BY T2.matricule, T1.datejour DESC, T3.description, T4.description, T5.description, T1.validation LIMIT 30";
 $result = $bdd->query($req);

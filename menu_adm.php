@@ -20,7 +20,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					{
 						$men= "SELECT * FROM rob_ssmenu T1 WHERE T1.actif=1 AND T1.ADM != 0 ORDER BY ADM";
 					} else {
-						$men= "SELECT T1.lien, T1.desc1 FROM rob_ssmenu T1
+						$men= "SELECT T1.lien, T1.desc1, T1.ID FROM rob_ssmenu T1
 						INNER JOIN rob_menu_rights T2 ON T1.ID = T2.ssmenu_id
 						WHERE T1.actif=1 AND T1.ADM != 0 AND T2.menu <= ".$_SESSION['id_lev_menu']."
 						ORDER BY ADM";

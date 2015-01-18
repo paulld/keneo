@@ -101,10 +101,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						echo '<tr>';
 						echo '<td style="width: 5%;">&nbsp;</td>';
 						echo '<td style="width: 10%; border: 1px solid #cccccc;">'.date("d/m/Y",strtotime($donneea[1])).'</td>';
-						echo '<td style="width: 20%; border: 1px solid #cccccc;">'.$donneea[2].'</td>';
-						echo '<td style="width: 15%; border: 1px solid #cccccc;">'.$donneea[3].'</td>';
-						echo '<td style="width: 15%; border: 1px solid #cccccc;">'.$donneea[4].'</td>';
-						echo '<td style="width: 10%; border: 1px solid #cccccc;">'.$donneea[5].'</td>';
+						echo '<td style="width: 20%; border: 1px solid #cccccc;">'.utf8_encode($donneea[2]).'</td>';
+						echo '<td style="width: 15%; border: 1px solid #cccccc;">'.utf8_encode($donneea[3]).'</td>';
+						echo '<td style="width: 15%; border: 1px solid #cccccc;">'.utf8_encode($donneea[4]).'</td>';
+						echo '<td style="width: 10%; border: 1px solid #cccccc;">'.utf8_encode($donneea[5]).'</td>';
 						echo '<td style="width: 10%; width: 10%; border: 1px solid #cccccc;" align="right">'.number_format($donneea[6],2,".","").'</td>';
 						echo '<td style="width: 5%;">&nbsp;</td>';
 						echo '</tr>';

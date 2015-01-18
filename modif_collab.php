@@ -29,7 +29,7 @@ include("appel_db.php");
 										INNER JOIN rob_level T4 ON T1.id_lev_exp = T4.ID
 										INNER JOIN rob_level T5 ON T1.id_lev_jrl = T5.ID
 										INNER JOIN rob_level T8 ON T1.id_lev_tms = T8.ID
-										INNER JOIN rob_user T6 ON T1.id_hier = T6.ID
+										LEFT JOIN rob_user T6 ON T1.id_hier = T6.ID
 										INNER JOIN rob_pole T7 ON T1.id_pole = T7.ID
 										INNER JOIN rob_user_info T9 ON T1.ID = T9.ID
 										INNER JOIN rob_user_abs T10 ON T1.ID = T10.ID
@@ -62,6 +62,8 @@ include("appel_db.php");
 											}
 											echo '</select></p>';
 											echo '<p><span>Responsable hi&eacute;rarchique :</span><select class="form-control form-control-small" name="resp">';
+											if ($_POST['IDmodif'] == 1)
+											{ echo '<option value=NULL selected>-</option>';  } else {
 											$reponse2 = $bdd->query("SELECT matricule, ID FROM rob_user ORDER BY matricule");
 											while ($donnee2 = $reponse2->fetch() ) {
 												if ($donnee2['matricule'] == $cur_nom[4]) { 
@@ -70,7 +72,7 @@ include("appel_db.php");
 													echo '<option value="'.$donnee2['ID'].'">'.$donnee2['matricule'].'</option>'; 
 												}
 											}
-											$reponse2->closeCursor();
+											$reponse2->closeCursor(); }
 											echo '</select></p>';
 											echo '<p><span>Affect&eacute; au p&ocirc;le :</span><select class="form-control form-control-small" name="pole">';
 											$reponse2 = $bdd->query("SELECT code, ID FROM rob_pole WHERE actif = 1");
@@ -119,7 +121,7 @@ include("appel_db.php");
 											}
 											$reponse2->closeCursor();
 											echo '</select></p>';
-											echo '<p><span>Droits sur les journaux :</span><select class="form-control form-control-small" name="jrl_lev">';
+											echo '<p><span>Droits sur les transactions :</span><select class="form-control form-control-small" name="jrl_lev">';
 											$req = "SELECT jrl, ID FROM rob_level WHERE actif = 1 AND jrl <> ''";
 											$reponse2 = $bdd->query($req);
 											while ($donnee2 = $reponse2->fetch() ) {
@@ -127,6 +129,18 @@ include("appel_db.php");
 													echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['jrl'].'</option>'; 
 												} else { 
 													echo '<option value="'.$donnee2['ID'].'">'.$donnee2['jrl'].'</option>'; 
+												}
+											}
+											$reponse2->closeCursor();
+											echo '</select></p>';
+											echo '<p><span>Niveau d\'autorisation :</span><select class="form-control form-control-small" name="auth_lev">';
+											$req = "SELECT grade, ID FROM rob_grade WHERE actif = 1 AND grade <> ''";
+											$reponse2 = $bdd->query($req);
+											while ($donnee2 = $reponse2->fetch() ) {
+												if ($donnee2['grade'] == $cur_nom[9]) { 
+													echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['grade'].'</option>'; 
+												} else { 
+													echo '<option value="'.$donnee2['ID'].'">'.$donnee2['grade'].'</option>'; 
 												}
 											}
 											$reponse2->closeCursor();

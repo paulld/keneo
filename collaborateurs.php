@@ -83,6 +83,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						id_lev_tms = ".$_POST['tms_lev'].",
 						id_lev_jrl = ".$_POST['jrl_lev'].",
 						id_hier = ".$_POST['resp'].",
+						id_auth = ".$_POST['auth_lev'].",
 						id_pole = ".$_POST['pole'].", 
 						extstd = ".$_POST['extstd']." 
 						WHERE ID = ".$_POST['IDmodif'];
@@ -93,6 +94,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						rtt = ".$_POST['absrtt']."
 						WHERE ID = ".$_POST['IDmodif'];
 					$bdd->query($req);
+					
 				}
 			}
 		}
@@ -107,12 +109,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	<section class="container section-container section-toggle" id="effectif-interne">
 		<div class="section-title" id="toggle-title">
 			<h1>
-				<i class="fa fa-chevron-down"></i>
+				<i class="fa fa-chevron-up"></i>
 				Team Keneo - Effectif interne
-				<i class="fa fa-chevron-down"></i>
+				<i class="fa fa-chevron-up"></i>
 			</h1>
 		</div>
-		<div id="toggle-content" style="display: none;">
+		<div id="toggle-content" ">
 			<div class="table-responsive">
 				<table class="table table-striped" id="effectif-interne-table">
 					<thead>
@@ -123,6 +125,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							<td>Timesheet</td>
 							<td>Frais</td>
 							<td>Journal</td>
+							<td>Grade</td>
 							<td>Resp.</td>
 							<td>Pole</td>
 							<td colspan="2">Actions</td>
@@ -130,35 +133,37 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					</thead>
 					<tbody>
 					<?php
-					$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, T2.actif, T2.ID
+					$req = "SELECT T2.nom nom, T2.prenom prenom, T2.matricule matricule, T6.matricule resp, T7.code pole, T3.menu menu, T8.tms tms, T4.exp exp, T5.jrl jrl, T2.actif actif, T2.ID userID, T9.grade auth
 							FROM rob_user_rights T1 
 							INNER JOIN rob_user T2 ON T1.ID = T2.ID
 							INNER JOIN rob_level T3 ON T1.id_lev_menu = T3.ID
 							INNER JOIN rob_level T4 ON T1.id_lev_exp = T4.ID
 							INNER JOIN rob_level T5 ON T1.id_lev_jrl = T5.ID
 							INNER JOIN rob_level T8 ON T1.id_lev_tms = T8.ID
-							INNER JOIN rob_user T6 ON T1.id_hier = T6.ID
+							LEFT JOIN rob_user T6 ON T1.id_hier = T6.ID
 							INNER JOIN rob_pole T7 ON T1.id_pole = T7.ID
+							INNER JOIN rob_grade T9 ON T1.id_auth = T9.ID
 							WHERE T1.id_lev_menu <= ".$_SESSION['id_lev_menu']." AND T7.actif = 1 AND extstd = 2 ORDER BY T2.nom";
 					$reponse = $bdd->query($req );
 					while ($donnee = $reponse->fetch() )
 					{
 						?>
 						<tr>
-							<td><?php echo $donnee[0].'. '.substr ($donnee[1],0,1);?></td>
-							<td><?php echo $donnee[2];?></td>
-							<td><?php echo $donnee[5];?></td>
-							<td><?php echo $donnee[6];?></td>
-							<td><?php echo $donnee[7];?></td>
-							<td><?php echo $donnee[8];?></td>
-							<td><?php echo $donnee[3];?></td>
-							<td><?php echo $donnee[4];?></td>
-							<?php if ($donnee[9] == 1)
+							<td><?php echo $donnee['nom'].'. '.substr ($donnee['prenom'],0,1);?></td>
+							<td><?php echo $donnee['matricule'];?></td>
+							<td><?php echo $donnee['menu'];?></td>
+							<td><?php echo $donnee['tms'];?></td>
+							<td><?php echo $donnee['exp'];?></td>
+							<td><?php echo $donnee['jrl'];?></td>
+							<td><?php echo $donnee['auth'];?></td>
+							<td><?php if ($donnee['resp'] == NULL) { echo "&nbsp;"; } else { echo $donnee['resp']; } ?></td>
+							<td><?php echo $donnee['pole'];?></td>
+							<?php if ($donnee['actif'] == 1)
 							{
 								?>
 								<form action="collaborateurs.php" method="post">
 									<td>
-										<input type="hidden" value="<?php echo $donnee[10];?>" name="IDinact" />
+										<input type="hidden" value="<?php echo $donnee['userID'];?>" name="IDinact" />
 										<button class="btn btn-small btn-default btn-icon btn-green" type="submit" title="D&eacute;sactiver un collaborateur"><i class="fa fa-toggle-on"></i></button>
 									</td>
 								</form>
@@ -169,7 +174,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								?>
 								<form action="collaborateurs.php" method="post">
 									<td>
-										<input type="hidden" value="<?php echo $donnee[10];?>" name="IDact" />
+										<input type="hidden" value="<?php echo $donnee['userID'];?>" name="IDact" />
 										<button class="btn btn-small btn-default btn-icon btn-red" type="submit" title="Activer un collaborateur"><i class="fa fa-toggle-off"></i></button>
 									</td>
 								</form>
@@ -178,13 +183,14 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							?>
 							<form action="modif_collab.php" method="post">
 								<td>
-									<input type="hidden" value="<?php echo $donnee[10];?>" name="IDmodif" />
+									<input type="hidden" value="<?php echo $donnee['userID'];?>" name="IDmodif" />
 									<button class="btn btn-small btn-default btn-icon btn-blue" type="submit" title="Modifier les informations" name="modif"><i class="fa fa-pencil-square-o"></i></button>
 								</td>
 							</form>
 						</tr>
 						<?php
 					}
+					$reponse->closeCursor();			
 					?>
 					</tbody>
 				</table>
@@ -218,7 +224,6 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					</thead>
 					<tbody>
 					<?php
-					$reponse->closeCursor();			
 					$req = "SELECT T2.nom, T2.prenom, T2.matricule, T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, T2.actif, T2.ID
 							FROM rob_user_rights T1 
 							INNER JOIN rob_user T2 ON T1.ID = T2.ID
