@@ -11,15 +11,15 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		$data = $_POST['devisData'];
 		list($devisNum, $devisVersion) = explode("||", $data);
 		$flag = $_SESSION['ID'].'-'.date("ymd").'-'.date("H").date("i");
-		$pseudo = $_SESSION['ID'];
-		$jourdhui = date("d/m/Y");
+		$userValid = $_SESSION['ID'];
+		$jourdhui = date("Y-m-d");
 		$req = "SELECT DISTINCT T1.dateTransac, T2.description client, T3.description projet, T4.description competition, T5.description type, T6.description evenement FROM rob_devis T1 
 		INNER JOIN rob_imputl1 T2 ON T2.ID = T1.imputID1 
 		INNER JOIN rob_imputl2 T3 ON T3.ID = T1.imputID2
 		INNER JOIN rob_compl1 T4 ON T4.ID = T1.compID1 
 		INNER JOIN rob_compl2 T5 ON T5.ID = T1.compID2
 		INNER JOIN rob_compl3 T6 ON T6.ID = T1.compID3
-		WHERE devisNum = '$devisNum' AND devisVersion = '$devisVersion' AND userID = '$pseudo' LIMIT 1";
+		WHERE devisNum = '$devisNum' AND devisVersion = '$devisVersion' LIMIT 1";
 		$reponsea = $bdd->query($req);
 		$donneea = $reponsea->fetch();
 		$dateTransac = $donneea['dateTransac'];
@@ -63,35 +63,35 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<tr>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 					<td style="width: 20%; font-size: 100%; color: #012E4F;">Client :</td>
-					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo $client; ?></strong></td>
+					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo utf8_encode($client); ?></strong></td>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 				</tr>
 				<?php if($projet != "-") { ?>
 				<tr>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 					<td style="width: 20%; font-size: 100%; color: #012E4F;">Projet :</td>
-					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo $projet; ?></strong></td>
+					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo utf8_encode($projet); ?></strong></td>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 				</tr>
 				<?php } if($competition != "-") { ?>
 				<tr>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 					<td style="width: 20%; font-size: 100%; color: #012E4F;">Comp&eacute;tition :</td>
-					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo $competition;?></strong></td>
+					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo utf8_encode($competition);?></strong></td>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 				</tr>
 				<?php } if($type != "-") { ?>
 				<tr>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 					<td style="width: 20%; font-size: 100%; color: #012E4F;">Type :</td>
-					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo $type; ?></strong></td>
+					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo utf8_encode($type); ?></strong></td>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 				</tr>
 				<?php } if($evenement != "-") { ?>
 				<tr>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 					<td style="width: 20%; font-size: 100%; color: #012E4F;">&Eacute;v&eacute;nement :</td>
-					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo $evenement; ?></strong></td>
+					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo utf8_encode($evenement); ?></strong></td>
 					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
 				</tr>
 				<?php } ?>
@@ -102,7 +102,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			//DETAIL
 			$req = "SELECT T1.descriptif descriptif, sum(T1.unitaire) unitaire, sum(T1.quantite) quantite, sum(T1.total) total, T11.Description nature1 FROM rob_devis T1 
 				INNER JOIN rob_nature1 T11 ON T11.ID = T1.nature1ID
-				WHERE T1.userID='$pseudo' AND T1.devisNum = '$devisNum' AND T1.devisVersion = '$devisVersion'
+				WHERE T1.devisNum = '$devisNum' AND T1.devisVersion = '$devisVersion'
 				GROUP BY T11.Description, T1.descriptif WITH ROLLUP";
 			$reponsea = $bdd->query($req);
 			$checkrep=$reponsea->rowCount();
@@ -117,20 +117,20 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				echo '<td style="width: 5%;">&nbsp;</td></tr>';
 				while ($donneea = $reponsea->fetch())
 				{
-					if ($donneea['descriptif'] != "") { $n = ""; $d = "border-bottom: 1px solid #cccccc; "; $e = " color: #012E4F;"; $f = ' - '.$donneea['descriptif']; }
-					if ($donneea['descriptif'] == "" AND $donneea['nature1'] != "") { $n = "Total "; $d = "border-bottom: 1px solid #cccccc; font-weight: bold; "; $e = " color: #012E4F;"; $f = $donneea['nature1']; }
+					if ($donneea['descriptif'] != "") { $n = ""; $d = "border-bottom: 1px solid #cccccc; "; $e = " color: #012E4F;"; $f = ' - '.utf8_encode($donneea['descriptif']); }
+					if ($donneea['descriptif'] == "" AND $donneea['nature1'] != "") { $n = "Total "; $d = "border-bottom: 1px solid #cccccc; font-weight: bold; "; $e = " color: #012E4F;"; $f = utf8_encode($donneea['nature1']); }
 					if ($donneea['nature1'] == "") { $n = "TOTAL GENERAL"; $d = "border: 1px solid #ffffff; font-weight: bold; "; $e = "background-color: #439DD1; color: #ffffff;"; $f = ""; } 
 					echo '<tr><td style="width: 5%;">&nbsp;</td>';
 					//Nature
 					echo '<td style="width: 60%; '.$d.$e.'">'.$n.$f.'</td>';
 					//valeurs
 					if ($donneea['descriptif'] != "") {
-					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['unitaire'],2,".","").'</td>';
-					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['quantite'],2,".","").'</td>';
-					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['total'],2,".","").'</td>'; } else {
+					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['unitaire'],2,","," ").'</td>';
+					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['quantite'],2,","," ").'</td>';
+					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['total'],2,","," ").'</td>'; } else {
 					echo '<td style="width: 10%; '.$d.$e.'" align="right">&nbsp;</td>';
 					echo '<td style="width: 10%; '.$d.$e.'" align="right">&nbsp;</td>';
-					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['total'],2,".","").'</td>';
+					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['total'],2,","," ").'</td>';
 					}
 					echo '<td style="width: 5%;">&nbsp;</td></tr>';
 				}
@@ -163,11 +163,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			$html2pdf->pdf->SetDisplayMode('fullpage');
 			//$html2pdf->pdf->SetProtection(array('print'), 'spipu');
 			$html2pdf->writeHTML($content, isset($_POST['vuehtml']));
-			$html2pdf->Output('frais-pdf.pdf');
+			$html2pdf->Output('devis-pdf.pdf');
 
 			//Ajout du flag et validation niveau 1
-			$req = "UPDATE rob_frais SET noteNum = '$flag', validation = 1 WHERE userID = '$pseudo' AND noteNum = ''";
-			$reponsea = $bdd->query($req);
+			$bdd->query("UPDATE rob_devis SET validation=6, userValid='$userValid', dateValid='$jourdhui' WHERE devisNum='$devisNum' AND devisVersion='$devisVersion'");
 		}
 		
 		catch(HTML2PDF_exception $e)

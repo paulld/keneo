@@ -7,10 +7,11 @@ if (isset($_POST['mot_de_passe']) AND $_POST['mot_de_passe'] != "")
  	$pseudo = $_POST['matricule'];
 	$pass = $_POST['mot_de_passe'];
 	$testpass='';
-	$req = "SELECT T1.ID, T1.nom, T1.prenom, T2.id_lev_menu, T2.id_hier, T2.id_pole, T2.id_lev_tms, T2.id_lev_exp, T2.resp_abs, T2.id_lev_jrl, T3.mail, T1.password
+	$req = "SELECT T1.ID, T1.nom, T1.prenom, T2.id_lev_menu, T2.id_hier, T2.id_pole, T2.id_lev_tms, T2.id_lev_exp, T2.resp_abs, T2.id_lev_jrl, T3.mail, T1.password, T2.id_auth, T4.seuil
 			FROM rob_user T1 
 			INNER JOIN rob_user_rights T2 ON T1.ID = T2.ID
 			INNER JOIN rob_user_info T3 ON T1.ID = T3.ID
+			INNER JOIN rob_grade T4 ON T2.id_auth = T4.ID
 			WHERE T1.matricule='$pseudo' and T1.password='$pass' and T1.actif=1";
  	$reponse = $bdd->query($req);
 	$checkdata = $reponse->rowCount();
@@ -31,9 +32,26 @@ if (isset($_POST['mot_de_passe']) AND $_POST['mot_de_passe'] != "")
 			$_SESSION['id_lev_jrl'] = $donnee[9];
 			$_SESSION['mail'] = $donnee[10];
 			$_SESSION['pass'] = $donnee[11];
+			$_SESSION['auth'] = $donnee[12];
+			$_SESSION['seuil'] = $donnee[13];
 		}
 		$_SESSION['mot_de_passe'] = $pass;
 		$_SESSION['matricule'] = $pseudo;
+		
+		//Table hiérarchie
+		$req = "CREATE TABLE IF NOT EXISTS tmp_hier".$_SESSION['ID']." (
+			`respID` int(11) NOT NULL,
+			`userID` int(11) NOT NULL
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+		$bdd->query($req);
+		$req = "TRUNCATE TABLE tmp_hier".$_SESSION['ID']."";
+		$bdd->query($req);
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT ".$_SESSION['ID'].", ID FROM rob_user_rights WHERE id_hier = ".$_SESSION['ID'].")";
+		$bdd->query($req);
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT ".$_SESSION['ID'].", a.ID FROM rob_user_rights a INNER JOIN tmp_hier".$_SESSION['ID']." b ON a.id_hier = b.userID)";
+		$bdd->query($req);
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." VALUES (".$_SESSION['ID'].", ".$_SESSION['ID'].")";
+		$bdd->query($req);
 	}
 	$reponse->closeCursor();
 }
