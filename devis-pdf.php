@@ -151,6 +151,11 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				</tr>
 			</table>
 		</page>
+		<page backimgw="100%" backbottom="10mm" backtop="10mm">
+		<?php
+			include("cgv.php");
+		?>
+		</page>
 
 		<?php
 		$content = ob_get_clean();

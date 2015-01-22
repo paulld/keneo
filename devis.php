@@ -614,7 +614,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							}
 							$reponseb->closeCursor();
 							//valeurs
-							echo '<td align="right">'.number_format($donneea['total'],2,","," ").'</td>';
+							echo '<td align="right">'.number_format($donneea['total'],2,".","").'</td>';
 							echo '</tr>';
 						}
 					}
