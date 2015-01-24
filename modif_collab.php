@@ -20,9 +20,9 @@ include("appel_db.php");
 							<?php
 							if (isset($_POST['IDmodif'])) {
 								$req = "SELECT T1.ID id, T2.nom nom, T2.prenom premom, T2.matricule matricule, 
-															 T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, 
-															 T9.telephone, T9.mobile, T9.mail, T9.pays, T9.ville, T9.CP, T9.adresse, 
-															 T10.recup, T10.cp, T10.rtt, T1.extstd
+											T6.matricule, T7.code, T3.menu, T8.tms, T4.exp, T5.jrl, 
+											T9.telephone, T9.mobile, T9.mail, T9.pays, T9.ville, T9.CP, T9.adresse, 
+											T10.recup, T10.cp, T10.rtt, T1.extstd, T1.id_auth auth
 										FROM rob_user_rights T1 
 										INNER JOIN rob_user T2 ON T1.ID = T2.ID
 										INNER JOIN rob_level T3 ON T1.id_lev_menu = T3.ID
@@ -133,14 +133,14 @@ include("appel_db.php");
 											}
 											$reponse2->closeCursor();
 											echo '</select></p>';
-											echo '<p><span>Niveau d\'autorisation :</span><select class="form-control form-control-small" name="auth_lev">';
-											$req = "SELECT grade, ID FROM rob_grade WHERE actif = 1 AND grade <> ''";
+											echo '<p><span>Autorisation :</span><select class="form-control form-control-small" name="auth_lev">';
+											$req = "SELECT seuil, ID FROM rob_grade WHERE actif = 1 AND seuil <> ''";
 											$reponse2 = $bdd->query($req);
 											while ($donnee2 = $reponse2->fetch() ) {
-												if ($donnee2['grade'] == $cur_nom[9]) { 
-													echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['grade'].'</option>'; 
+												if ($donnee2['seuil'] == $cur_nom['auth']) { 
+													echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['seuil'].'&euro;</option>'; 
 												} else { 
-													echo '<option value="'.$donnee2['ID'].'">'.$donnee2['grade'].'</option>'; 
+													echo '<option value="'.$donnee2['ID'].'">'.$donnee2['seuil'].'&euro;</option>'; 
 												}
 											}
 											$reponse2->closeCursor();

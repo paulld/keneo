@@ -35,7 +35,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					$cat = $_POST['cat'];
 					$desc = $_POST['desc'];
 					$desc = str_replace("'","\'",$desc);
-					$bdd->query("INSERT INTO rob_fournisseur VALUES('', '$code', '$desc', '$cat', 1)");
+					$telephone = $_POST['telephone'];
+					$mail = $_POST['mail'];
+					$bdd->query("INSERT INTO rob_fournisseur VALUES('', '$code', '$desc', '$cat', '', '00000', '', 'FRANCE', '$telephone', '', '$mail', 1)");
 				}
 			}
 			else
@@ -47,7 +49,17 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					$desc = $_POST['moddesc'];
 					$desc = str_replace("'","\'",$desc);
 					$cat = $_POST['modcat'];
-					$bdd->query("UPDATE rob_fournisseur SET code='$code', Description='$desc', typeFrnsID='$cat' WHERE ID='$modID'");
+					$adresse = $_POST['modadresse'];
+					$adresse = str_replace("'","\'",$adresse);
+					$ville = strtoupper($_POST['modville']);
+					$ville = str_replace("'","\'",$ville);
+					$pays = strtoupper($_POST['modpays']);
+					$pays = str_replace("'","\'",$pays);
+					$cp = $_POST['modcp'];
+					$telephone = $_POST['modtelephone'];
+					$fax = $_POST['modfax'];
+					$mail = $_POST['modmail'];
+					$bdd->query("UPDATE rob_fournisseur SET code='$code', Description='$desc', typeFrnsID='$cat', adresse='$adresse', ville='$ville', pays='$pays', cp='$cp', telephone='$telephone', fax='$fax', mail='$mail' WHERE ID='$modID'");
 				}
 			}
 		}
@@ -92,6 +104,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								</select>
 							</td>
 							<td>
+								<input class="form-control" type="text" size="50" name="mail" placeholder="E-mail" />
+							</td>
+							<td>
+								<input class="form-control" type="text" size="50" name="telephone" placeholder="T&eacute;l&eacute;phone" />
+							</td>
+							<td>
 								<input class="btn btn-primary" type="submit" Value="Ajouter" />
 							</td>
 						</tbody>
@@ -117,22 +135,26 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							<th>Code</th>
 							<th>Description</th>
 							<th>Type de fournisseur</th>
+							<th>Mail</th>
+							<th>Telephone</th>
 							<th colspan="2">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php
-						$req="SELECT T1.code, T1.Description, T1.actif, T1.ID, T2.categorie FROM rob_fournisseur T1
+						$req="SELECT T1.code, T1.Description, T1.actif, T1.ID, T2.categorie, T1.telephone, T1.mail FROM rob_fournisseur T1
 							INNER JOIN rob_catfrs T2 ON T1.typeFrnsID = T2.ID
 							ORDER BY T2.categorie, T1.Description";
 						$reponse = $bdd->query($req);
 						while ($donnee = $reponse->fetch() ) {
 						?>
 							<tr>
-								<td><?php echo $donnee[0];?></td>
-								<td><?php echo $donnee[1];?></td>
-								<td><?php echo $donnee[4];?></td>
-								<?php if ($donnee[2] == 1) { ?>
+								<td><?php echo $donnee['code'];?></td>
+								<td><?php echo $donnee['Description'];?></td>
+								<td><?php echo $donnee['categorie'];?></td>
+								<td><?php if ($donnee['mail'] == '') { echo '-'; } else { echo $donnee['mail']; } ?></td>
+								<td><?php if ($donnee['telephone'] == '') { echo '-'; } else { echo $donnee['telephone']; } ?></td>
+								<?php if ($donnee['actif'] == 1) { ?>
 									<td>
 										<form action="fournisseur.php" method="post">
 											<input type="hidden" value="<?php echo $donnee[3];?>" name="IDinact" />
