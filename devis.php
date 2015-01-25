@@ -183,7 +183,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						}
 					}
 					?>
-					<select class="form-control form-control-small" name="devisNum" id="devisNum" onchange="showDevisVersion(this.value)" >
+					<select class="form-control form-control-small form-control-auto" name="devisNum" id="devisNum" onchange="showDevisVersion(this.value)" >
 						<option value="none">Cr&eacute;er nouveau Num&eacute;ro de devis</option>
 						<?php
 						$req = "SELECT T1.devisNum devisNum FROM rob_devis T1
@@ -219,7 +219,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					<input type="hidden" id="ma_page" value="0" />
 					<span id="f-rf3" <?php if (isset($_POST['Reprise'])) { echo 'style="display: none;"'; } ?>>
 					<?php
-					echo ' <input class="form-control form-control-small" size="12" type="text" name="dateTransac" id="dateTransac" value="';
+					echo ' <input class="form-control form-control-small form-control-auto" size="12" type="text" name="dateTransac" id="dateTransac" value="';
 						if (isset($_POST['dateTransac']))
 						{
 							echo $_POST['dateTransac'];
@@ -240,7 +240,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					</span>
 				</div>
 				<div class="form-divider" id="f-rf1" <?php if (isset($_POST['Reprise'])) { echo 'style="display: none;"'; } ?>>
-					<select class="form-control form-control-small" name="client" id="client" onchange="showProjet(this.value)">
+					<select class="form-control form-control-small form-control-auto" name="client" id="client" onchange="showProjet(this.value)">
 						<option value="none">Client</option>
 						<?php
 						$reqimput = $bdd->query("SELECT * FROM rob_imputl1 WHERE actif=1 ORDER BY description");
@@ -287,7 +287,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					</span>
 				</div>
 				<div class="form-divider" id="f-rf2" <?php if (isset($_POST['Reprise'])) { echo 'style="display: none;"'; } ?>>
-					<select class="form-control form-control-small" name="competition" id="competition" onchange="showType(this.value)">
+					<select class="form-control form-control-small form-control-auto" name="competition" id="competition" onchange="showType(this.value)">
 						<option value="0">Comp&eacute;tition</option>
 						<?php
 						$reqimput = $bdd->query("SELECT * FROM rob_compl1 WHERE actif=1 ORDER BY description");
@@ -316,7 +316,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					</span>
 				</div>
 				<div class="form-divider">
-					<select class="form-control form-control-small" name="nature1" />
+					<select class="form-control form-control-small form-control-auto" name="nature1" />
 						<option value="none">Nature de prestation</option>
 						<?php
 						$reqimput = $bdd->query("SELECT ID, Description FROM rob_nature1 WHERE actif = 1 ORDER BY Description");
@@ -331,7 +331,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						$reqimput->closeCursor();
 						?>
 					</select>
-					<input class="form-control form-control-small" type="text" size="70" name="info" placeholder="Description"
+					<input class="form-control form-control-small form-control-auto" type="text" size="70" name="info" placeholder="Description"
 						<?php
 							if (isset($reprise)) { echo ' value="'.$rep_info.'" ';
 							} else {
@@ -341,11 +341,11 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					/>
 				</div>
 				<div>
-					<input class="form-control form-control-small" type="text" size="10" id="frsCtUnit" name="frsCtUnit" onkeyup="frscalc()" title="UnitHT" placeholder="Unit HT"<?php if (isset($reprise)) { echo ' value="'.$rep_unit.'"'; } ?> />
+					<input class="form-control form-control-small form-control-auto" type="text" size="10" id="frsCtUnit" name="frsCtUnit" onkeyup="frscalc()" title="UnitHT" placeholder="Unit HT"<?php if (isset($reprise)) { echo ' value="'.$rep_unit.'"'; } ?> />
 					<span class="form-operator">x</span>
-					<input class="form-control form-control-small" type="text" size="5" id="frsQty" name="frsQty" onkeyup="frscalc()" title="Qt" placeholder="Quantit&eacute;"<?php if (isset($reprise)) { echo ' value="'.$rep_nbre.'"'; } else { echo ' value="1"'; } ?> />
+					<input class="form-control form-control-small form-control-auto" type="text" size="5" id="frsQty" name="frsQty" onkeyup="frscalc()" title="Qt" placeholder="Quantit&eacute;"<?php if (isset($reprise)) { echo ' value="'.$rep_nbre.'"'; } else { echo ' value="1"'; } ?> />
 					<span class="form-operator">=</span>
-					<input class="form-control form-control-small" type="text" size="10" id="frstot" name="frstot" title="TotalHT" placeholder="Total HT" <?php if (isset($reprise)) { echo ' value="'.$rep_tota.'"'; } ?> disabled />
+					<input class="form-control form-control-small form-control-auto" type="text" size="10" id="frstot" name="frstot" title="TotalHT" placeholder="Total HT" <?php if (isset($reprise)) { echo ' value="'.$rep_tota.'"'; } ?> disabled />
 					<input type="hidden" id="frsCtTotHT" name="frsCtTotHT" readonly="readonly"<?php if (isset($reprise)) { echo ' value="'.$rep_tota.'"'; } ?> />
 				</div>
 				<div>
@@ -388,49 +388,47 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<div class="section-title">
 			<h1>Historique de mes devis</h1>
 		</div>
-		<div class="frais-filter">
+		<div class="row frais-filter">
+		<div class="col-sm-3">
+			<form action="devis.php" method="post" class="devis-filter-form-left">
+
+				<select class="form-control form-control-small form-control-auto" name="affmonth" />
+					<?php
+					//MONTH
+					for ($i = 1; $i <= 12; $i++) {
+						if ($i < 10) { $tmo = "0".$i; } else { $tmo = $i; }
+						if ($i == $month) {
+							echo '<option value='.$tmo.' selected>'.date("F",strtotime("2000-".$tmo."-10")).'</option>';
+						} else {
+							echo '<option value='.$tmo.'>'.date("F",strtotime("2000-".$tmo."-10")).'</option>';
+						}
+					} ?>
+				</select>
+				<select class="form-control form-control-small form-control-auto" name="affyear">
+				<?php
+				//YEAR
+				$reponsey = $bdd->query("SELECT * FROM rob_period ORDER BY year");
+				while ($option = $reponsey->fetch()) {
+					if ($option['year'] == $year) {
+						echo '<option value='.$option['year'].' selected>'.$option['year'].'</option>';
+					} else {
+						echo '<option value='.$option['year'].'>'.$option['year'].'</option>';
+					}
+				}
+				$reponsey->closeCursor();
+				echo '</select>';
+				
+				//MATRICULE
+				echo '<input type="hidden" name="affcoll" value='.$_SESSION['ID'].' />';
+				
+				//VISUALISER SES DEVIS
+				?>
+				<button type="submit" class="btn btn-primary btn-small" name="toutdevis"><i class="fa fa-search"></i> Visualiser tous les devis</button>
+			</form>
+		</div>
+		<div class="col-sm-9 frais-filter-group-right">
 			<?php
-			//MONTH
-			echo '<form action="devis.php" method="post"><select class="form-control form-control-small" name="affmonth" />';
-			for ($i = 1; $i <= 12; $i++) 
-			{
-				{
-					if ($i < 10) { $tmo = "0".$i; } else { $tmo = $i; }
-					if ($i == $month)
-					{
-						echo '<option value='.$tmo.' selected>'.date("F",strtotime("2000-".$tmo."-10")).'</option>';
-					}
-					else
-					{
-						echo '<option value='.$tmo.'>'.date("F",strtotime("2000-".$tmo."-10")).'</option>';
-					}
-				}
-			}
-			echo '</select>';
-			
-			//YEAR
-			echo '<select class="form-control form-control-small" name="affyear">';
-			$reponsey = $bdd->query("SELECT * FROM rob_period ORDER BY year");
-			while ($option = $reponsey->fetch())
-			{
-				if ($option['year'] == $year)
-				{
-					echo '<option value='.$option['year'].' selected>'.$option['year'].'</option>';
-				}
-				else
-				{
-					echo '<option value='.$option['year'].'>'.$option['year'].'</option>';
-				}
-			}
-			$reponsey->closeCursor();
-			echo '</select>';
-			
-			//MATRICULE
-			echo '<input type="hidden" name="affcoll" value='.$_SESSION['ID'].' />';
-			
-			//VISUALISER SES DEVIS
-			echo '<input type="submit" id="buttonval" class="btn btn-primary" name="toutdevis" value="Visualiser tous les devis"></form>';
-			
+
 			//VALIDER LE DEVIS
 			$reqB = "CREATE TEMPORARY TABLE IF NOT EXISTS tmp_full AS (SELECT T1.devisNum devisNum, T1.devisVersion devisVersion, T1.validation validation, SUM(T1.total) total
 				FROM rob_devis T1
@@ -448,18 +446,18 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			$req2 = "DROP TEMPORARY TABLE tmp_full";
 			$bdd->query($req2);
 
-			if ($checkrow != 0)
-			{
-				echo '<form action="devis.php" method="post" class="form-right" >';
-					echo '<select class="form-control form-control-small" name="devisData" />';
-						while ($optimput = $reqimput->fetch())
-						{
+			if ($checkrow != 0) {
+				echo '<form action="devis.php" method="post" class="devis-filter-form-right" >';
+					echo '<select class="form-control form-control-small form-control-auto" name="devisData" />';
+						while ($optimput = $reqimput->fetch()) {
 							echo '<option value='.$optimput['devisNum'].'||'.$optimput['devisVersion'].'>'.$optimput['devisNum'].'||'.$optimput['devisVersion'].'</option>';
 						}
 						$reqimput->closeCursor();
-					echo '</select>';
-					echo '<input type="submit" id="buttonval" class="btn btn-primary" name="ValiderDevis" value="Valider le devis" />';
-				echo '</form>';
+						?>
+					</select>
+					<button type="submit" class="btn btn-primary btn-small" name="ValiderDevis"><i class="fa fa-check"></i> Valider le devis</button>
+				</form>
+				<?php
 			}
 			$reqimput->closeCursor();
 			
@@ -475,14 +473,13 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			$checkrow = $reqimput->rowCount();
 			if ($checkrow != 0)
 			{
-				echo '<form action="devis-pdf.php" method="post" class="form-right" target="_blank">';
-					echo '<select class="form-control form-control-small" name="devisData" />';
-						while ($optimput = $reqimput->fetch())
-						{
+				echo '<form action="devis-pdf.php" method="post" class="devis-filter-form-right" target="_blank">';
+					echo '<select class="form-control form-control-small form-control-auto" name="devisData" />';
+						while ($optimput = $reqimput->fetch()) {
 							echo '<option value='.$optimput['devisNum'].'||'.$optimput['devisVersion'].'>'.$optimput['devisNum'].'||'.$optimput['devisVersion'].'</option>';
 						}
 					echo '</select>';
-					echo '<input type="submit" id="buttonval" class="btn btn-primary" name="EditerDevis" value="&Eacute;diter le devis" />';
+					echo '<button type="submit" class="btn btn-primary btn-small" name="EditerDevis"><i class="fa fa-file-pdf-o"></i> &Eacute;diter le devis</button>';
 				echo '</form>';
 			}
 			$reqimput->closeCursor();
@@ -492,18 +489,19 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			$checkrow = $reqimput->rowCount();
 			if ($checkrow != 0)
 			{
-				echo '<form action="devis.php" method="post" class="form-right" >';
-					echo '<select class="form-control form-control-small" name="devisData" />';
+				echo '<form action="devis.php" method="post" class="devis-filter-form-right" >';
+					echo '<select class="form-control form-control-small form-control-auto" name="devisData" />';
 						while ($optimput = $reqimput->fetch())
 						{
 							echo '<option value='.$optimput['devisNum'].'||'.$optimput['devisVersion'].'>'.$optimput['devisNum'].'||'.$optimput['devisVersion'].'</option>';
 						}
 					echo '</select>';
-					echo '<input type="submit" id="buttonval" class="btn btn-primary" name="ArchiverDevis" value="Archiver le devis" />';
+					echo '<button type="submit" class="btn btn-primary btn-small" name="ArchiverDevis"><i class="fa fa-archive"></i> Archiver le devis</button>';
 				echo '</form>';
 			}
 			$reqimput->closeCursor();
 			?>
+		</div>
 		</div>
 		
 		<h2><?php echo $titrestrict; ?></h2>
@@ -526,18 +524,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					if ($month < 12) { $tmpmonth = $month + 1; $tmpyear = $year; } else {$tmpmonth = 1; $tmpyear = $year + 1; }
 					if ($tmpmonth < 10) { $tmpmonth = "0".$tmpmonth; }
 					$enddate = $tmpyear.'-'.$tmpmonth.'-01';
-					if (isset($_POST['collaborateur']))
-					{
+					if (isset($_POST['collaborateur'])) {
 						$pseudo=$_POST['collaborateur'];
-					}
-					else
-					{
-						if (isset($_POST['affcoll']))
-						{
+					} else {
+						if (isset($_POST['affcoll'])) {
 							$pseudo=$_POST['affcoll'];
-						}
-						else
-						{
+						} else {
 							$pseudo=$_SESSION['ID'];
 						}
 					}
@@ -592,25 +584,31 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								ORDER BY T11.Description, T1.descriptif, T2.matricule";
 							$reponseb = $bdd->query($req2);
 							$checkrep2=$reponseb->rowCount();
-							if ($checkrep2 != 0)
-							{
-								echo '<td align="left">';
-								while ($donneeb = $reponseb->fetch())
-								{
-									echo '<form action="devis.php" method="post" class="duplicate-edit-remove">';
-										echo '<button type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>';
-										echo '<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>';
-										echo '<button type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>';
-										echo '<strong>'.$donneeb['nature1'].'</strong> : '.$donneeb['descriptif'].' ('.$donneeb['matricule'].')';
-										echo '<input type="hidden" value="'.$donneeb['devisNum'].'" name="supprdevisNum" />';
-										echo '<input type="hidden" value="'.$donneeb['devisVersion'].'" name="supprdevisVersion" />';
-										echo '<input type="hidden" value="'.$pseudo.'" name="affcoll" />';
-										echo '<input type="hidden" value="'.$year.'" name="affyear" />';
-										echo '<input type="hidden" value="'.$month.'" name="affmonth" />';
-										echo '<input type="hidden" value="'.$donneeb['ID'].'" name="modid" />';
-									echo '</form>';
-								}
-								echo '</td>';
+							if ($checkrep2 != 0) {
+								?>
+								<td align="left">
+									<?php while ($donneeb = $reponseb->fetch()) { ?>
+										<form action="devis.php" method="post" class="duplicate-edit-remove devis-form">
+											<div class="devis-form-left">
+												<?php
+													echo '<strong>'.$donneeb['nature1'].'</strong> : '.$donneeb['descriptif'].' ('.$donneeb['matricule'].')';
+													echo '<input type="hidden" value="'.$donneeb['devisNum'].'" name="supprdevisNum" />';
+													echo '<input type="hidden" value="'.$donneeb['devisVersion'].'" name="supprdevisVersion" />';
+													echo '<input type="hidden" value="'.$pseudo.'" name="affcoll" />';
+													echo '<input type="hidden" value="'.$year.'" name="affyear" />';
+													echo '<input type="hidden" value="'.$month.'" name="affmonth" />';
+													echo '<input type="hidden" value="'.$donneeb['ID'].'" name="modid" />';
+												?>
+											</div>
+											<div class="devis-form-right">
+												<button type="submit" Value="M" title="Modifier les informations de cette ligne" name="Modif" onclick="return(confirm(\'Les donn&eacute;es seront reprises dans le formulaire et cette ligne sera supprim&eacute;e. &Ecirc;tes vous s&ucirc;r?\'))"><i class="fa fa-pencil-square-o"></i></button>
+												<button type="submit" Value="D" title="Dupliquer les informations de cette ligne" name="Reprise"><i class="fa fa-files-o"></i></button>
+												<button type="submit" Value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>
+											</div>
+										</form>
+									<?php } ?>
+								</td>
+							<?php 
 							}
 							$reponseb->closeCursor();
 							//valeurs
