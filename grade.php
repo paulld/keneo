@@ -61,12 +61,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		</div>
 
 		<div class="table-responsive">
-			<table class="table table-striped">
+			<table class="table">
 				<thead>
 					<tr>
 						<th>Grade</th>
 						<th>Seuil</th>
-						<th colspan="2">Actions</th>
+						<th colspan="2" class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -75,25 +75,34 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						FROM rob_grade
 						ORDER BY grade";
 					$reponse = $bdd->query($req);
-					while ($donnee = $reponse->fetch())
-					{
+					while ($donnee = $reponse->fetch()) {
 						if ($donnee['actif'] == 1) { $verr =""; } else { $verr = " disabled"; }
-						echo '<form action="grade.php" method="post"><tr>';
+						?>
+						<form action="grade.php" method="post">
+							<tr>
+							<?php
 							echo '<td><input class="form-control" type="text" value="'.$donnee['grade'].'" name="modgrade"'.$verr.' /></td>';
 							echo '<td><input class="form-control" type="text" value="'.$donnee['seuil'].'" name="modseuil"'.$verr.' /></td>';
-							echo '<td><input type="hidden" value="'.$donnee['ID'].'" name="IDrock" />';
-								echo '<input class="btn btn-primary" name="modif" type="submit" Value="V" title="Valider les modifications"'.$verr.' />';
-							echo '</td>';
-							echo '<td>';
-							if ($donnee['actif'] == 1)
-							{ 
-								echo '<input class="btn btn-danger" id="btAct" name="IDinact" type="submit" Value="X" title="D&eacute;sactiver le grade" />';
-							} else {
-								echo '<input class="btn btn-success" id="btInact" name="IDact" type="submit" Value="A" title="Activer le grade" />';
-							}
-							echo '</td>';
-						echo '</tr></form>';
-					}
+							?>
+							<td class="text-center">
+								<?php
+								echo '<input type="hidden" value="'.$donnee['ID'].'" name="IDrock" />'; 
+									// echo '<input class="btn btn-primary" name="modif" type="submit" Value="V" title="Valider les modifications"'.$verr.'/>'; 
+								echo '<button class="btn btn-icon btn-blue" name="modif" type="submit" title="Valider les modifications"'.$verr.'><i class="fa fa-floppy-o"></i></button>'; 
+								?>
+							</td>
+							<td class="text-center">
+								<?php if ($donnee['actif'] == 1) { ?>
+									<!-- <input class="btn btn-danger" id="btAct" name="IDinact" type="submit" Value="X" title="D&eacute;sactiver le grade" /> -->
+									<button class="btn btn-icon btn-green" id="btAct" name="IDinact" type="submit" title="D&eacute;sactiver le Grade"><i class="fa fa-toggle-on"></i></button>
+								<?php } else { ?>
+									<!-- <input class="btn btn-success" id="btInact" name="IDact" type="submit" Value="A" title="Activer le grade" /> -->
+									<button class="btn btn-icon btn-red" id="btInact" name="IDact" type="submit" title="Activer le Grade"><i class="fa fa-toggle-off"></i></button>
+								<?php } ?>
+								</td>
+							</tr>
+						</form>
+					<?php }
 					$reponse->closeCursor();
 					?>
 				</tbody>

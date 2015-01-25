@@ -399,7 +399,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					/>
 				</div>
 				<div>
-					<input class="btn btn-small btn-primary" type="submit" Value="Enregistrer" name="Valider" />
+					<button class="btn btn-small btn-primary" type="submit" name="Valider"><i class="fa fa-floppy-o"></i> Enregistrer</button>
 				</div>
 			</div>
 		</form>
@@ -498,18 +498,20 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			echo '<input type="hidden" name="affcoll" value='.$_SESSION['ID'].' />';
 			
 			//VISUALISER SES FRAIS
-			echo '<input type="submit" class="btn btn-small btn-primary" name="toutfrais" value="Visualiser tous les frais"></form>';
-			
+			echo '<button type="submit" class="btn btn-small btn-primary" name="toutfrais"><i class="fa fa-search"></i> Visualiser tous les frais</button></form>';
+		
 			if ($txtsitu == 1) {
 				//RECHARGE LA PAGE
 				echo '<form action="frais.php" method="post" class="form-right">';
-				echo '<input class="btn btn-small btn-primary" type="submit" Value="Voir les frais en attente" />';
+				echo '<button class="btn btn-small btn-primary" type="submit"><i class="fa fa-clock-o"></i> Voir les frais en attente</button>';
 				echo '</form>';
 			} else {
 				//CREER NOTE DE FRAIS
 				echo '<form action="frais-pdf.php" method="post" target="_blank" class="form-right">';
-				echo '<input type="hidden" name="matricule" value="'.$matricule.'" /><input type="submit" class="btn btn-small btn-primary" Value="Cr&eacute;er la note des frais en attente" name="frais-pdf" onclick="return(confirm(\'En cr&eacute;ant votre PDF, vous allez g&eacute;n&eacute;rer un num&eacute;ro de frais pour tout vos frais en cours, non flagg&eacute;. \'))" />';
-				echo '</form>'; }
+				echo '<input type="hidden" name="matricule" value="'.$matricule.'" />';
+				echo '<button type="submit" class="btn btn-small btn-primary" name="frais-pdf" onclick="return(confirm(\'En cr&eacute;ant votre PDF, vous allez g&eacute;n&eacute;rer un num&eacute;ro de frais pour tout vos frais en cours, non flagg&eacute;. \'))"><i class="fa fa-file-pdf-o"></i> Cr&eacute;er la note des frais en attente</button>';
+				echo '</form>'; 
+			}
 			?>
 		</div>
 		

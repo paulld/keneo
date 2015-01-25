@@ -65,7 +65,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		</div>
 
 		<div class="table-responsive">
-			<table class="table table-striped">
+			<table class="table">
 				<thead>
 					<tr>
 						<th>Phase</th>
@@ -83,27 +83,34 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					while ($donnee = $reponse->fetch())
 					{
 						if ($donnee[2] == 1) { $verr =""; } else { $verr = " disabled"; }
-						echo '<form action="phase.php" method="post"><tr>';
-							echo '<td><input class="form-control" type="text" value="'.$donnee[0].'" name="modphase"'.$verr.' /></td>';
-							echo '<td><input class="form-control" type="text" value="'.$donnee[1].'" name="moddesc"'.$verr.' /></td>';
-							echo '<td><select class="form-control" name="modinputOpen"'.$verr.'>';
-								if ($donnee[4] == 1) { $optsel = " selected"; } else { $optsel = ""; }
-								echo '<option value="0">Inactif</option>';
-								echo '<option value="1"'.$optsel.'>Actif</option>';
-								echo '</select></td>';
-							echo '<td><input type="hidden" value="'.$donnee[3].'" name="IDrock" />';
-								echo '<input class="btn btn-primary" name="modif" type="submit" Value="V" title="Valider les modifications"'.$verr.' />';
-							echo '</td>';
-							echo '<td>';
-							if ($donnee[2] == 1)
-							{ 
-								echo '<input class="btn btn-danger" id="btAct" name="IDinact" type="submit" Value="X" title="D&eacute;sactiver la Phase" />';
-							} else {
-								echo '<input class="btn btn-success" id="btInact" name="IDact" type="submit" Value="A" title="Activer la Phase" />';
-							}
-							echo '</td>';
-						echo '</tr></form>';
-					}
+						?>
+						<form action="phase.php" method="post">
+							<tr>
+							<?php
+								echo '<td><input class="form-control" type="text" value="'.$donnee[0].'" name="modphase"'.$verr.' /></td>';
+								echo '<td><input class="form-control" type="text" value="'.$donnee[1].'" name="moddesc"'.$verr.' /></td>';
+								echo '<td><select class="form-control" name="modinputOpen"'.$verr.'>';
+									if ($donnee[4] == 1) { $optsel = " selected"; } else { $optsel = ""; }
+									echo '<option value="0">Inactif</option>';
+									echo '<option value="1"'.$optsel.'>Actif</option>';
+									echo '</select></td>';
+								echo '<td><input type="hidden" value="'.$donnee[3].'" name="IDrock" />';
+									// echo '<input class="btn btn-primary" name="modif" type="submit" Value="V" title="Valider les modifications"'.$verr.' />';
+									echo '<button class="btn btn-icon btn-blue" name="modif" type="submit" title="Valider les modifications"'.$verr.'><i class="fa fa-floppy-o"></i></button>'; 
+									?>
+								</td>
+								<td>
+								<?php if ($donnee[2] == 1) { ?>
+									<!-- <input class="btn btn-danger" id="btAct" name="IDinact" type="submit" Value="X" title="D&eacute;sactiver la Phase" /> -->
+									<button class="btn btn-icon btn-green" id="btAct" name="IDinact" type="submit" title="D&eacute;sactiver la Phase"><i class="fa fa-toggle-on"></i></button>
+								<?php } else { ?>
+									<!-- <input class="btn btn-success" id="btInact" name="IDact" type="submit" Value="A" title="Activer la Phase" /> -->
+									<button class="btn btn-icon btn-red" id="btInact" name="IDact" type="submit" title="Activer la Phase"><i class="fa fa-toggle-off"></i></button>
+								<?php } ?>
+								</td>
+							</tr>
+						</form>
+					<?php }
 					$reponse->closeCursor();
 					?>
 				</tbody>

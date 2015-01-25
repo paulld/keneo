@@ -50,7 +50,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					</select>
 				</div>
 				<div class="col-sm-5 col-xs-5 text-left">
-					<input class="btn btn-small btn-primary" type="submit" Value="Valider la note" name="Valider" />
+					<button class="btn btn-small btn-primary" type="submit" name="Valider"><i class="fa fa-check"></i> Valider la note</button>
 				</div>
 			</div>
 		</form>
@@ -72,7 +72,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					<input class="form-control form-control-centered" type="text" name="flagrej" />
 				</div>
 				<div class="col-sm-5 col-xs-5 text-left">
-					<input class="btn btn-small btn-primary" type="submit" Value="Rejeter la note" name="Rejeter" />
+					<button class="btn btn-small btn-primary" type="submit" name="Rejeter"><i class="fa fa-ban"></i> Rejeter la note</button>
 				</div>
 			</div>
 		</form>

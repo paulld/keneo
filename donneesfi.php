@@ -156,9 +156,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 										<input class="form-control form-control-inner-small" type="text" name="validFrom" value="<?php echo date("d/m/Y",strtotime($donnee['validFrom']));?>" /></td>
 									<td>
 										<input class="form-control form-control-inner-small" type="text" name="validTo" value="<?php echo date("d/m/Y",strtotime($donnee['validTo']));?>" /></td>
-									<td>
+									<td class="text-center">
 										<input type="hidden" value="<?php echo $donnee['ID'];?>" name="IDmodif" />
-										<input class="btn btn-primary form-control-inner-small" type="submit" Value="MaJ" />
+										<!-- <input class="btn btn-primary form-control-inner-small" type="submit" Value="MaJ" /> -->
+										<button class="btn btn-primary form-control-inner-small btn-icon btn-blue" type="submit"> <i class="fa fa-floppy-o"></i></button>
 									</td>
 								</tr>
 							</form>
@@ -215,9 +216,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 										<input class="form-control form-control-inner-small" type="text" name="validFrom" value="<?php echo date("d/m/Y",strtotime($donnee['validFrom']));?>" /></td>
 									<td>
 										<input class="form-control form-control-inner-small" type="text" name="validTo" value="<?php echo date("d/m/Y",strtotime($donnee['validTo']));?>" /></td>
-									<td>
+									<td class="text-center">
 										<input type="hidden" value="<?php echo $donnee['ID'];?>" name="IDmodif" />
-										<input class="btn btn-primary form-control-inner-small" type="submit" Value="MaJ" />
+										<!-- <input class="btn btn-primary form-control-inner-small" type="submit" Value="MaJ" /> -->
+										<button class="btn btn-primary form-control-inner-small btn-icon btn-blue" type="submit"> <i class="fa fa-floppy-o"></i></button>
 									</td>
 								</tr>
 							</form>

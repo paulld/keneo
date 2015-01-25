@@ -91,7 +91,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								<input class="form-control" type="text" size="50" name="desc" placeholder="Description" />
 							</td>
 							<td>
-								<select name="cat" class="form-control" >
+								<select name="cat" class="form-control form-control-auto" >
 									<option>Type de fournisseur</option>
 									<?php
 										$affcollab = $bdd->query("SELECT * FROM rob_catfrs WHERE actif='1' ORDER BY categorie");
