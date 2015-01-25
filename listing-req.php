@@ -137,20 +137,20 @@ $req = "SELECT T1.ID ID, T10.Phase Phase, T1.classID classID, T1.userID user, T1
 				echo '<td id="t-container'.$i.'" width="70px">'.date("d/m/Y", strtotime($donneea['dateTransac'])).'</td>';
 				//nature
 				echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['nature1']);
-					if ($donneea['nature2ID'] != 0) { echo '<br/>&harr;'.utf8_encode($donneea['nature2']); }
-						//if ($donneea['profilID'] != 0) { echo '<br/>&nbsp;&harr;'.utf8_encode($donneea['profil']);
-						//	if ($donneea['collaborateurID'] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.utf8_encode($donneea['nom']).' '.substr(utf8_encode($donneea[27]),0,1).'.'; } } }
+					if ($donneea['nature2ID'] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90"></i>'.utf8_encode($donneea['nature2']); }
+						//if ($donneea['profilID'] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90 level-2"></i>'.utf8_encode($donneea['profil']);
+						//	if ($donneea['collaborateurID'] != 0) { echo '<BR/><i class="fa fa-level-up fa-rotate-90 level-3"></i>'.utf8_encode($donneea['nom']).' '.substr(utf8_encode($donneea[27]),0,1).'.'; } } }
 				echo '</td>';
 				//clients
 				echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['imput1']);
-					if ($donneea['imputID2'] != 0) { echo '<br/>&harr;'.utf8_encode($donneea['imput2']); 
-						if ($donneea['imputID3'] != 0) { echo '<br/>&nbsp;&harr;'.utf8_encode($donneea['imput3']); } }
-						//	if ($donneea['imputID4'] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.utf8_encode($donneea['imput4']); } } }
+					if ($donneea['imputID2'] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90"></i>'.utf8_encode($donneea['imput2']); 
+						if ($donneea['imputID3'] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90 level-2"></i>'.utf8_encode($donneea['imput3']); } }
+						//	if ($donneea['imputID4'] != 0) { echo '<BR/><i class="fa fa-level-up fa-rotate-90 level-3"></i>'.utf8_encode($donneea['imput4']); } } }
 				echo '</td>';
 				//Compétition
 				echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['comp1']);
-					if ($donneea['compID2'] != 0) { echo '<br/>&harr;'.utf8_encode($donneea['comp2']);
-						if ($donneea['compID3'] != 0) { echo '<br/>&nbsp;&harr;'.utf8_encode($donneea['comp3']); } }
+					if ($donneea['compID2'] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90"></i>'.utf8_encode($donneea['comp2']);
+						if ($donneea['compID3'] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90 level-2"></i>'.utf8_encode($donneea['comp3']); } }
 				echo '</td>';
 				//info
 				echo '<td id="t-container'.$i.'">'.utf8_encode($donneea['descriptif']).'</td>';

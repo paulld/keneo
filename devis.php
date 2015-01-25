@@ -568,14 +568,14 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							echo '<td><i class="fa fa-circle fa-circle-'.$val.'"></i></td>';
 							//clients
 							echo '<td>'.$donneea['client'];
-								if ($donneea['projetID'] != 0) { echo '<br/>&harr;'.$donneea['projet'];
-									if ($donneea['missionID'] != 0) { echo '<br/>&nbsp;&harr;'.$donneea['mission'];
-										if ($donneea['categorieID'] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.$donneea['categorie']; } } }
+								if ($donneea['projetID'] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90"></i>'.$donneea['projet'];
+									if ($donneea['missionID'] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90 level-2"></i>'.$donneea['mission'];
+										if ($donneea['categorieID'] != 0) { echo '<BR/><i class="fa fa-level-up fa-rotate-90 level-3"></i>'.$donneea['categorie']; } } }
 							echo '</td>';
 							//Compétition
 							echo '<td>'.$donneea['type'];
-								if ($donneea['competitionID'] != 0) { echo '<br/>&harr;'.$donneea['competition'];
-									if ($donneea['evenementID'] != 0) { echo '<br/>&nbsp;&harr;'.$donneea['evenement'].'</td>'; } }
+								if ($donneea['competitionID'] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90"></i>'.$donneea['competition'];
+									if ($donneea['evenementID'] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90 level-2"></i>'.$donneea['evenement'].'</td>'; } }
 							echo '</td>';
 							$req2 = "SELECT T1.ID ID, T11.Description nature1, T1.descriptif descriptif, T2.matricule matricule, T1.unitaire unitaire, T1.quantite quantite, T1.total total, T1.devisNum devisNum, T1.devisVersion devisVersion FROM rob_devis T1 
 								INNER JOIN rob_nature1 T11 ON T11.ID = T1.nature1ID
