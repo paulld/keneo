@@ -600,14 +600,14 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							echo '<td>'.$donneea[15].'</td>';
 							//clients
 							echo '<td>'.$donneea[3];
-								if ($donneea[16] != 0) { echo '<br/>&harr;'.$donneea[4];
-									if ($donneea[17] != 0) { echo '<br/>&nbsp;&harr;'.$donneea[5];
-										if ($donneea[18] != 0) { echo '<BR/>&nbsp;&nbsp;&harr;'.$donneea[6]; } } }
+								if ($donneea[16] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90"></i>'.$donneea[4];
+									if ($donneea[17] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90 level-2"></i>'.$donneea[5];
+										if ($donneea[18] != 0) { echo '<BR/><i class="fa fa-level-up fa-rotate-90 level-3"></i>'.$donneea[6]; } } }
 							echo '</td>';
 							//Compétition
 							echo '<td>'.$donneea[7];
-								if ($donneea[19] != 0) { echo '<br/>&harr;'.$donneea[8];
-									if ($donneea[20] != 0) { echo '<br/>&nbsp;&harr;'.$donneea[9].'</td>'; } }
+								if ($donneea[19] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90"></i>'.$donneea[8];
+									if ($donneea[20] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90 level-2"></i>'.$donneea[9].'</td>'; } }
 							echo '</td>';
 							//activité
 							echo '<td>'.$donneea[23].'</td>';

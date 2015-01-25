@@ -130,6 +130,18 @@ select.form-control.form-control-auto {
   padding-right: 13px;
 }
 
+/* LEVEL DOWN ARROWS */
+
+.fa.fa-level-up {
+  margin-right: 8px;
+}
+.fa.fa-level-up.level-2 {
+  margin-left: 10px;
+}
+.fa.fa-level-up.level-3 {
+  margin-left: 20px;
+}
+
 /* NAVBAR WITH TABS (TRANSACTION...) */
 
 .nav-tabs-outer {
