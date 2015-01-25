@@ -66,11 +66,31 @@ body {
   background-size: cover;
 }
 .background-donnees-fi {
-  background: url('../assets/images/background-lake.jpg') no-repeat center center fixed;
+  background: url('../assets/images/background-wall.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.background-tabbord {
+  background: url('../assets/images/background-lake3.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 .background-tables {
   background: url('../assets/images/background-lake.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.background-reporting {
+  background: url('../assets/images/background-sea3.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.background-export-excel {
+  background: url('../assets/images/background-sea2.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.background-choix-ticket {
+  background: url('../assets/images/background-lake2.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+.background-deadline {
+  background: url('../assets/images/background-forest.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 

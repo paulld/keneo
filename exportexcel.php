@@ -7,7 +7,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	include("headerlight.php");
 	?>
 
-	<div class="background-temps background-image"></div>
+	<div class="background-export-excel background-image"></div>
 	<div class="overlay"></div>
 
 	<?php
