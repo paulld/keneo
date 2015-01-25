@@ -232,7 +232,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							}
 						} else {
 							?>
-							<tr><td colspan="5">Pas de relation existante</td></tr>';
+							<tr><td colspan="9">Pas de relation existante</td></tr>
 							<?php
 						}
 						$reponse->closeCursor();

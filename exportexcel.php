@@ -21,7 +21,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<div class="form-inner">
 				<input class="form-control form-control-small form-control-centered" type="text" id="datejourdeb" name="datejourdeb" placeholder="A partir du..." />
 				<input class="form-control form-control-small form-control-centered" type="text" id="datejourfin" name="datejourfin" placeholder="Jusqu&#39;au..." />
-				<input class="btn btn-small btn-primary" type="submit" Value="Extraire" name="Valider" />
+				<button class="btn btn-small btn-primary" type="submit" name="Valider"><i class="fa fa-file-excel-o"></i> Extraire</button>
 			</div>
 		</form>
 	</section>
@@ -38,12 +38,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			
 			<input class="form-control form-control-small form-control-centered" type="text" id="datejourstrt" name="datejourstrt" placeholder="A partir du..." />
 			<input class="form-control form-control-small form-control-centered" type="text" id="datejourend" name="datejourend" placeholder="Jusqu&#39;au..." />
-			<!-- option -->
 			<select class="form-control form-control-small form-control-centered" name="validation">
 				<option value="2">Valid&eacute;s seulement</option>
 				<option value="1">Valid&eacute;es et en attente de validation</option>
 				<option value="0">Tous les frais</option>
-			</select><input class="btn btn-small btn-primary" type="submit" Value="Extraire" name="Valider" />
+			</select>
+			<button class="btn btn-small btn-primary" type="submit" name="Valider"><i class="fa fa-file-excel-o"></i> Extraire</button>
 			
 			</div>
 		</form>

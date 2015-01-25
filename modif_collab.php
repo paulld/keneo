@@ -183,8 +183,9 @@ include("appel_db.php");
 
 											<?php
 									}
-										echo '<input type="hidden" value="'.$_POST['IDmodif'].'" name="IDmodif" /><input class="btn btn-small btn-primary btn-param" type="submit" Value="Enregistrer les modifications" name="Valider" />';
+										echo '<input type="hidden" value="'.$_POST['IDmodif'].'" name="IDmodif" />';
 										?>
+										<button class="btn btn-small btn-primary btn-param" type="submit" name="Valider"><i class="fa fa-floppy-o"></i> Enregistrer les modifications</button>
 									</form>
 									<?php
 								} else {

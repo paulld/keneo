@@ -80,8 +80,10 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 								</td>
 								<td style="width: 92px;">
 									<input type="hidden" value="<?php echo $donnee[0];?>" name="moddateFerie" />
-									<input class="btn btn-success" id="btValid" type="submit" value="V" title="Valider la modification" name="modif">
-									<input class="btn btn-danger" id="btSuppr" type="submit" value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))" />
+									<!-- <input class="btn btn-success" id="btValid" type="submit" value="V" title="Valider la modification" name="modif"> -->
+									<button class="btn btn-icon btn-blue" id="btValid" type="submit" title="Valider la modification" name="modif"><i class="fa fa-floppy-o"></i></button>
+									<!-- <input class="btn btn-danger" id="btSuppr" type="submit" value="S" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))" /> -->
+									<button class="btn btn-icon btn-red" id="btSuppr" type="submit" title="Supprimer la ligne" name="Suppr" onclick="return(confirm(\'Etes-vous sur de vouloir supprimer cette entree?\'))"><i class="fa fa-trash-o"></i></button>
 								</td>
 							</tr>
 						</form>

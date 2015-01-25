@@ -349,7 +349,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					<input type="hidden" id="frsCtTotHT" name="frsCtTotHT" readonly="readonly"<?php if (isset($reprise)) { echo ' value="'.$rep_tota.'"'; } ?> />
 				</div>
 				<div>
-					<input class="btn btn-small btn-primary" type="submit" Value="Enregistrer" name="Valider" />
+					<button class="btn btn-small btn-primary" type="submit" name="Valider"><i class="fa fa-floppy-o"></i> Enregistrer</button>
 				</div>
 			</div>
 		</form>

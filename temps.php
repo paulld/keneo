@@ -514,9 +514,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					/>
 				</div>
 				<div>
-					<?php
-					echo '<input class="btn btn-small btn-primary" type="submit" Value="Enregistrer" name="Valider" />';
-					?> 
+					<button class="btn btn-small btn-primary" type="submit" name="Valider"><i class="fa fa-floppy-o"></i> Enregistrer</button>
 				</div>
 			</div>
 		</form>
@@ -625,9 +623,11 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			
 			//MATRICULE
 			echo '<input type="hidden" name="affcoll" value='.$_SESSION['ID'].' />';
-			echo '<input type="submit" class="btn btn-small btn-primary" value="Mettre a jour">';
 			?>
-			<a href="temps-pdf.php?month=<?php echo $month; ?>&amp;year=<?php echo $year; ?>&amp;matricule=<?php echo $matricule; ?>" target="_blank"><i class="fa fa-file-pdf-o" title="<?php echo 'Extraire '.$month.'.'.$year.' sous PDF'; ?>"></i></a>
+			<!-- <input type="submit" class="btn btn-small btn-primary" value="Mettre a jour"> -->
+			<button type="submit" class="btn btn-small btn-primary"><i class="fa fa-search"></i> Visualiser</button>
+
+			<a href="temps-pdf.php?month=<?php echo $month; ?>&amp;year=<?php echo $year; ?>&amp;matricule=<?php echo $matricule; ?>" target="_blank"><i class="fa fa-file-pdf-o temps-pdf" title="<?php echo 'Extraire '.$month.'.'.$year.' sous PDF'; ?>"></i></a>
 		</form>
 	</div>
 		

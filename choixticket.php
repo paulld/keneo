@@ -44,8 +44,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<input class="form-control form-control-small form-control-centered" type="text" id="datejourdeb" name="datejourdeb" placeholder="A partir du..." />
 				<input class="form-control form-control-small form-control-centered" type="text" id="datejourfin" name="datejourfin" placeholder="Jusqu&#39;au..." />
 				<input type="checkbox" name="remb" /> 
-				<span>Inclure les tickets restaurant d&eacute;j&agrave; "rembours&eacute;s"</span>
-				<input class="btn btn-small btn-primary" type="submit" Value="Extraire" name="Valider" />
+				<span>Inclure les tickets restaurant d&eacute;j&agrave; "rembours&eacute;s" &nbsp;</span>
+				<!-- <input class="btn btn-small btn-primary" type="submit" Value="Extraire" name="Valider" /> -->
+				<button class="btn btn-small btn-primary" type="submit" name="Valider"><i class="fa fa-file-excel-o"></i> Extraire</button>
 			</div>
 		</form>
 		
@@ -53,7 +54,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<form action="choixticket.php" method="post" target="_blank">
 			<div class="form-inner">
 				<input class="form-control form-control-small form-control-centered" type="text" id="deadline1" name="deadline1" />
-				<input class="btn btn-small btn-primary" type="submit" Value="Verrouiller" name="Valider" onclick="return(confirm(\'Etes-vous s&ucirc;r de vouloir d&eacute;clarer tous les tickets restaurant jusqu &agrave; cette date comme rembours&eacute;s?\'))" />
+				<!-- <input class="btn btn-small btn-primary" type="submit" Value="Verrouiller" name="Valider" onclick="return(confirm(\'Etes-vous s&ucirc;r de vouloir d&eacute;clarer tous les tickets restaurant jusqu &agrave; cette date comme rembours&eacute;s?\'))" /> -->
+				<button class="btn btn-small btn-primary" type="submit" name="Valider" onclick="return(confirm(\'Etes-vous s&ucirc;r de vouloir d&eacute;clarer tous les tickets restaurant jusqu &agrave; cette date comme rembours&eacute;s?\'))"><i class="fa fa-lock"></i> V&eacute;rrouiller</button>
 				<?php $majinfo; ?> 
 			</div>
 		</form>
@@ -62,7 +64,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		<form action="choixticket.php" method="post" target="_blank">
 			<div class="form-inner">
 				<input type="hidden" name="deverr" />
-				<input class="btn btn-small btn-primary" type="submit" Value="Deverrouiller" name="Valider" onclick="return(confirm(\'Etes-vous s&ucirc;r de vouloir d&eacute;clarer tous les tickets restaurant comme non rembours&eacute;s?\'))" />
+				<!-- <input class="btn btn-small btn-primary" type="submit" Value="Deverrouiller" name="Valider" onclick="return(confirm(\'Etes-vous s&ucirc;r de vouloir d&eacute;clarer tous les tickets restaurant comme non rembours&eacute;s?\'))" /> -->
+				<button class="btn btn-small btn-primary" type="submit" name="Valider" onclick="return(confirm(\'Etes-vous s&ucirc;r de vouloir d&eacute;clarer tous les tickets restaurant comme non rembours&eacute;s?\'))"><i class="fa fa-unlock"></i> D&eacute;v&eacute;rrouiller</button>
 				<?php $majinfo2; ?> 
 			</div>
 		</form>
