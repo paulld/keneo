@@ -120,7 +120,8 @@ input.checkbox {
 .form-placeholder {
   color: #555555;
 }
-.form-control.form-control-auto {
+input.form-control.form-control-auto,
+select.form-control.form-control-auto {
   width: auto;
 }
 .label-empty {
@@ -278,7 +279,50 @@ p.new-picture-label {
   margin-right: 5px;
   margin-left: -5px;
 }
-
+.devis-form {
+  width: 318px; 
+  padding: 3px 0;
+}
+.devis-form-left {
+  display: inline-block;
+  width: 250px;
+  vertical-align: top;
+}
+.devis-form-right {
+  display: inline-block;
+  width: 64px;
+  vertical-align: top;
+}
+.devis-form.duplicate-edit-remove button:nth-of-type(2) {
+  margin: 0 3px;
+}
+.devis-form.duplicate-edit-remove:nth-child(n+2) {
+  border-top: 1px solid rgba(210,210,210,.7);
+}
+.frais-filter-group-right {
+  text-align: right;
+}
+.devis-filter-form-left,
+.devis-filter-form-right {
+  /*float: right;*/
+  width: 205px;
+  margin-bottom: 20px;
+}
+.devis-filter-form-left select.form-control {
+  width: 90px;
+}
+.devis-filter-form-left select.form-control:nth-of-type(2) {
+  margin-right: 0;
+}
+.devis-filter-form-right select.form-control, 
+.devis-filter-form-right input.btn,
+.devis-filter-form-right button.btn {
+  width: 185px;
+}
+.devis-filter-form-left button.btn i,
+.devis-filter-form-right button.btn i {
+  margin-right: 5px;
+}
 
 /* HISTORIQUE TEMPS, FRAIS... */
 
