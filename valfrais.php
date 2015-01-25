@@ -28,7 +28,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 
 		
   <!-- =================== SAISIE ================= -->
-	<div class="background-temps background-image"></div>
+	<div class="background-frais background-image"></div>
 	<div class="overlay"></div>
 
 	<section class="container section-container" id="historique-temps">
