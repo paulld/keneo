@@ -13,21 +13,27 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		$flag = $_SESSION['ID'].'-'.date("ymd").'-'.date("H").date("i");
 		$userValid = $_SESSION['ID'];
 		$jourdhui = date("Y-m-d");
-		$req = "SELECT DISTINCT T1.dateTransac, T2.description client, T3.description projet, T4.description competition, T5.description type, T6.description evenement FROM rob_devis T1 
+		$req = "SELECT DISTINCT T1.dateTransac, T2.description client, T2.adresse adresse, T2.cp cp, T2.ville ville, T2.pays pays, T3.description projet, T4.description competition, T5.description type, T6.description evenement, T7.mail contact FROM rob_devis T1 
 		INNER JOIN rob_imputl1 T2 ON T2.ID = T1.imputID1 
 		INNER JOIN rob_imputl2 T3 ON T3.ID = T1.imputID2
 		INNER JOIN rob_compl1 T4 ON T4.ID = T1.compID1 
 		INNER JOIN rob_compl2 T5 ON T5.ID = T1.compID2
 		INNER JOIN rob_compl3 T6 ON T6.ID = T1.compID3
+		INNER JOIN rob_user_info T7 ON T2.respFactID = T7.ID 
 		WHERE devisNum = '$devisNum' AND devisVersion = '$devisVersion' LIMIT 1";
 		$reponsea = $bdd->query($req);
 		$donneea = $reponsea->fetch();
 		$dateTransac = $donneea['dateTransac'];
 		$client = $donneea['client'];
+		$adresse = $donneea['adresse'];
+		$cp = $donneea['cp'];
+		$ville = $donneea['ville'];
+		$pays = $donneea['pays'];
 		$projet = $donneea['projet'];
 		$competition = $donneea['competition'];
 		$type = $donneea['type'];
 		$evenement = $donneea['evenement'];
+		$contact = $donneea['contact'];
 		$reponsea->closeCursor();
 		
 		// get the HTML
@@ -38,102 +44,88 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			<table cellspacing="0" style="width: 100%;">
 				<tr>
 					<td style="width: 5%;">&nbsp;</td>
-					<td style="width: 90%; text-align: right;"><img src="images/LogoL.jpg" height="50" width="120" /></td>
+					<td style="width: 55%; text-align: left;"><img src="images/LogoL.jpg" height="85" width="204" /></td>
+					<td style="width: 35%; font-size: 120%; color: #439DD1; text-align: right;"><strong>DEVIS <?php echo $devisNum; ?></strong></td>
 					<td style="width: 5%;">&nbsp;</td>
 				</tr>
-			</table>
-			<br/>
-			<table cellspacing="0" style="width: 100%;">
 				<tr>
 					<td style="width: 5%;">&nbsp;</td>
-					<td style="width: 90%; font-size: 120%; color: #439DD1;" ><strong>DEVIS - N&deg;<?php echo $devisNum.' ('.$devisVersion.')'; ?></strong></td>
+					<td style="width: 55%; font-size: 80%; color: #012E4F;">
+						<br/><br/>SARL au capital de 500 000,00 &euro;<br/>
+						Siret: 50363776100035<br/>
+						Code APE: 7022Z<br/>
+						N&deg; TVA: FR70503637761<br/><br/>
+						892 rue Yves Kermen<br/>
+						92650 Boulogne-Billancourt Cedex<br/>
+						Tel: +33(0)1 47 79 47 30 - Fax: +33(0)1 46 21 06 88<br/>
+						www.keneo.fr<br/><br/>
+						Votre contact chez Keneo: <?php echo utf8_encode($contact); ?></td>
+					<td style="width: 35%; font-size: 80%; color: #012E4F;">
+						<strong><?php echo utf8_encode($client); ?></strong><br/>
+						<?php echo utf8_encode($adresse); ?><br/>
+						<?php echo utf8_encode($cp).' '.utf8_encode($ville); ?><br/>
+						<?php echo utf8_encode($pays); ?></td>
 					<td style="width: 5%;">&nbsp;</td>
 				</tr>
 			</table>
 			<br/>
 			<br/>
 
-			<table cellspacing="0" style="width: 100%; text-align: left; font-size: 12px">
+			<table cellspacing="0" style="width: 100%; text-align: center; font-size: 12px;">
 				<tr>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
-					<td style="width: 20%; font-size: 100%; color: #012E4F;">Date :</td>
-					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo date("d/m/Y",strtotime($dateTransac)); ?></strong></td>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
+					<td style="width: 5%;">&nbsp;</td>
+					<td style="width: 10%; font-size: 100%; color: #012E4F; border: 1px solid #cccccc; border-collapse: collapse;"><strong>DATE</strong></td>
+					<td style="width: 30%; font-size: 100%; color: #012E4F; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc; border-collapse: collapse;"><strong>PROJET</strong></td>
+					<td style="width: 36%; font-size: 100%; color: #012E4F; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc; border-collapse: collapse;"><strong>COMP&Eacute;TITION</strong></td>
+					<td style="width: 14%; font-size: 100%; color: #012E4F; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc; border-collapse: collapse;"><strong>VERSION</strong></td>
+					<td style="width: 5%;">&nbsp;</td>
 				</tr>
 				<tr>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
-					<td style="width: 20%; font-size: 100%; color: #012E4F;">Client :</td>
-					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo utf8_encode($client); ?></strong></td>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
+					<td style="width: 5%;">&nbsp;</td>
+					<td style="width: 10%; font-size: 100%; color: #012E4F; border-bottom: 1px solid #cccccc; border-left: 1px solid #cccccc; border-right: 1px solid #cccccc; border-collapse: collapse;"><?php echo date("d/m/Y",strtotime($dateTransac)); ?></td>
+					<td style="width: 30%; font-size: 100%; color: #012E4F; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc; border-collapse: collapse;"><?php echo utf8_encode($projet); ?></td>
+					<td style="width: 36%; font-size: 100%; color: #012E4F; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc; border-collapse: collapse;"><?php echo utf8_encode($competition);?></td>
+					<td style="width: 14%; font-size: 100%; color: #012E4F; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc; border-collapse: collapse;"><?php echo utf8_encode($devisVersion); ?></td>
+					<td style="width: 5%;">&nbsp;</td>
 				</tr>
-				<?php if($projet != "-") { ?>
-				<tr>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
-					<td style="width: 20%; font-size: 100%; color: #012E4F;">Projet :</td>
-					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo utf8_encode($projet); ?></strong></td>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
-				</tr>
-				<?php } if($competition != "-") { ?>
-				<tr>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
-					<td style="width: 20%; font-size: 100%; color: #012E4F;">Comp&eacute;tition :</td>
-					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo utf8_encode($competition);?></strong></td>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
-				</tr>
-				<?php } if($type != "-") { ?>
-				<tr>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
-					<td style="width: 20%; font-size: 100%; color: #012E4F;">Type :</td>
-					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo utf8_encode($type); ?></strong></td>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
-				</tr>
-				<?php } if($evenement != "-") { ?>
-				<tr>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
-					<td style="width: 20%; font-size: 100%; color: #012E4F;">&Eacute;v&eacute;nement :</td>
-					<td style="width: 70%; font-size: 100%; color: #012E4F;"><strong><?php echo utf8_encode($evenement); ?></strong></td>
-					<td style="width: 5%; font-size: 100%;">&nbsp;</td>
-				</tr>
-				<?php } ?>
 			</table>
 			<br/>
 
 			<?php
 			//DETAIL
-			$req = "SELECT T1.descriptif descriptif, sum(T1.unitaire) unitaire, sum(T1.quantite) quantite, sum(T1.total) total, T11.Description nature1 FROM rob_devis T1 
-				INNER JOIN rob_nature1 T11 ON T11.ID = T1.nature1ID
+			$req = "SELECT T1.descriptif descriptif, T1.unitaire unitaire, T1.quantite quantite, T1.total total FROM rob_devis T1 
 				WHERE T1.devisNum = '$devisNum' AND T1.devisVersion = '$devisVersion'
-				GROUP BY T11.Description, T1.descriptif WITH ROLLUP";
+				ORDER BY T1.ID";
 			$reponsea = $bdd->query($req);
 			$checkrep=$reponsea->rowCount();
 			if ($checkrep != 0)
 			{
 				echo '<table cellspacing="0" style="width: 100%; border: 1px solid #ffffff; border-collapse: collapse; text-align: left; font-size: 10px">';
 				echo '<tr><td style="width: 5%;">&nbsp;</td>';
-				echo '<td align="center" style="width: 60%; border: 0px; border-collapse: collapse; ">&nbsp;</td>';
-				echo '<td align="center" style="width: 10%; border: 1px solid #ffffff; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">Co&ucirc;t<br/>unitaire HT</td>';
-				echo '<td align="center" style="width: 10%; border: 1px solid #ffffff; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">&nbsp;<br/>Quantit&eacute;s</td>';
-				echo '<td align="center" style="width: 10%; border: 1px solid #ffffff; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">&nbsp;<br/>Total</td>';
+				echo '<td align="center" style="width: 60%; border-right: 1px solid #ffffff; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">D&eacute;signation</td>';
+				echo '<td align="center" style="width: 10%; border-right: 1px solid #ffffff; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">Co&ucirc;t<br/>unitaire HT</td>';
+				echo '<td align="center" style="width: 10%; border-right: 1px solid #ffffff; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">Quantit&eacute;s</td>';
+				echo '<td align="center" style="width: 10%; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;">Total HT</td>';
 				echo '<td style="width: 5%;">&nbsp;</td></tr>';
+				echo '<tr><td style="width: 5%;">&nbsp;</td><td colspan="3">&nbsp;</td><td style="width: 10%; background-color: #eeeeee;">&nbsp;</td><td style="width: 5%;">&nbsp;</td></tr>';
+				$totdevis=0;
 				while ($donneea = $reponsea->fetch())
 				{
-					if ($donneea['descriptif'] != "") { $n = ""; $d = "border-bottom: 1px solid #cccccc; "; $e = " color: #012E4F;"; $f = ' - '.utf8_encode($donneea['descriptif']); }
-					if ($donneea['descriptif'] == "" AND $donneea['nature1'] != "") { $n = "Total "; $d = "border-bottom: 1px solid #cccccc; font-weight: bold; "; $e = " color: #012E4F;"; $f = utf8_encode($donneea['nature1']); }
-					if ($donneea['nature1'] == "") { $n = "TOTAL GENERAL"; $d = "border: 1px solid #ffffff; font-weight: bold; "; $e = "background-color: #439DD1; color: #ffffff;"; $f = ""; } 
+					if ($donneea['descriptif'] == "") { $d = "border-bottom: 1px solid #cccccc; font-weight: bold; "; $e = " color: #012E4F;"; $f = "Total"; }
 					echo '<tr><td style="width: 5%;">&nbsp;</td>';
-					//Nature
-					echo '<td style="width: 60%; '.$d.$e.'">'.$n.$f.'</td>';
-					//valeurs
-					if ($donneea['descriptif'] != "") {
-					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['unitaire'],2,","," ").'</td>';
-					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['quantite'],2,","," ").'</td>';
-					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['total'],2,","," ").'</td>'; } else {
-					echo '<td style="width: 10%; '.$d.$e.'" align="right">&nbsp;</td>';
-					echo '<td style="width: 10%; '.$d.$e.'" align="right">&nbsp;</td>';
-					echo '<td style="width: 10%; '.$d.$e.'" align="right">'.number_format($donneea['total'],2,","," ").'</td>';
-					}
+					echo '<td style="width: 60%; color: #012E4F;">- '.utf8_encode($donneea['descriptif']).'</td>';
+					echo '<td style="width: 10%; color: #012E4F;" align="right">'.number_format($donneea['unitaire'],2,","," ").'</td>';
+					echo '<td style="width: 10%; color: #012E4F;" align="right">'.number_format($donneea['quantite'],2,","," ").'</td>';
+					echo '<td style="width: 10%; color: #012E4F; background-color: #eeeeee;" align="right">'.number_format($donneea['total'],2,","," ").'</td>';
+					$totdevis = $totdevis + $donneea['total'];
 					echo '<td style="width: 5%;">&nbsp;</td></tr>';
 				}
+				echo '<tr><td style="width: 5%;">&nbsp;</td><td colspan="3">&nbsp;</td><td style="width: 10%; background-color: #eeeeee;">&nbsp;</td><td style="width: 5%;">&nbsp;</td></tr>';
+				echo '<tr><td style="width: 5%;">&nbsp;</td>';
+				echo '<td style="border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;" colspan="2">Total '.$devisNum.'</td>';
+				echo '<td style="width: 10%; border-right: 1px solid #ffffff; background-color: #439DD1;  border-collapse: collapse;">&nbsp;<br/>&nbsp;</td>';
+				echo '<td style="width: 10%; border-collapse: collapse; font-weight: bold; background-color: #439DD1; color: #ffffff;" align="right">'.number_format($totdevis,2,","," ").'</td>';
+				echo '<td style="width: 5%;">&nbsp;</td></tr>';
 				echo '</table>';
 			}
 			$reponsea->closeCursor();

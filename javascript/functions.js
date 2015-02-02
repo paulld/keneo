@@ -158,6 +158,7 @@ $(function() {
 	});
 
 
+	$( "#dateFact" ).datepicker(datepickerOptions);
 	$( "#dateTransac" ).datepicker(datepickerOptions);
 	$( "#datefrais" ).datepicker(datepickerOptions);
 	$( "#deadline1" ).datepicker(datepickerOptions);

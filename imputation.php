@@ -36,7 +36,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					$desc = $_POST['desc'];
 					$respfact = $_POST['respfact'];
 					$desc = str_replace("'","\'",$desc);
-					$bdd->query("INSERT INTO rob_imputl1 VALUES('', '$code', '$desc', '$respfact', 1, '$plan')");
+					$bdd->query("INSERT INTO rob_imputl1 VALUES('', '$code', '$desc', '$respfact', '', '', '', '', '', '', '', '', 1, '$plan')");
 				}
 			}
 			else
@@ -49,7 +49,29 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					$desc = $_POST['moddesc'];
 					$respfact = $_POST['modrespfact'];
 					$desc = str_replace("'","\'",$desc);
-					$bdd->query("UPDATE rob_imputl1 SET description='$desc', respfactID='$respfact', plan='$plan', code='$code' WHERE ID='$modID'");
+					$adresse = $_POST['modadresse'];
+					$adresse = str_replace("'","\'",$adresse);
+					$cp = $_POST['modcp'];
+					$ville = strtoupper($_POST['modville']);
+					$pays = strtoupper($_POST['modpays']);
+					$telephone = $_POST['modtelephone'];
+					$fax = $_POST['modfax'];
+					$mail = $_POST['modmail'];
+					$ntva = $_POST['modntva'];
+					$bdd->query("UPDATE rob_imputl1 
+						SET description='$desc', 
+							respfactID='$respfact', 
+							plan='$plan', 
+							code='$code',
+							adresse = '$adresse',
+							cp = '$cp',
+							ville = '$ville',
+							pays = '$pays',
+							telephone = '$telephone',
+							fax = '$fax',
+							mail = '$mail',
+							ntva = '$ntva'
+						WHERE ID='$modID'");
 				}
 			}
 		}
@@ -114,7 +136,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						<th>Client</th>
 						<th>Description</th>
 						<th>Alias</th>
-						<th>Responsable facturation</th>
+						<th>Responsable</th>
 						<th colspan="3">Actions</th>
 					</tr>
 				</thead>

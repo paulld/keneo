@@ -46,11 +46,25 @@ if (isset($_POST['mot_de_passe']) AND $_POST['mot_de_passe'] != "")
 		$bdd->query($req);
 		$req = "TRUNCATE TABLE tmp_hier".$_SESSION['ID']."";
 		$bdd->query($req);
-		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT ".$_SESSION['ID'].", ID FROM rob_user_rights WHERE id_hier = ".$_SESSION['ID'].")";
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT 0, ID FROM rob_user_rights WHERE id_hier = ".$_SESSION['ID'].")";
+		$bdd->query($req); // enfants directs
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT 0, a.ID FROM rob_user_rights a INNER JOIN tmp_hier".$_SESSION['ID']." b ON a.id_hier = b.userID)";
+		$bdd->query($req); // enfants de niveau 2
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT 0, a.ID FROM rob_user_rights a INNER JOIN tmp_hier".$_SESSION['ID']." b ON a.id_hier = b.userID)";
+		$bdd->query($req); // enfants de niveau 3
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT 0, a.ID FROM rob_user_rights a INNER JOIN tmp_hier".$_SESSION['ID']." b ON a.id_hier = b.userID)";
+		$bdd->query($req); // enfants de niveau 4
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT 0, a.ID FROM rob_user_rights a INNER JOIN tmp_hier".$_SESSION['ID']." b ON a.id_hier = b.userID)";
+		$bdd->query($req); // enfants de niveau 5
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT 0, a.ID FROM rob_user_rights a INNER JOIN tmp_hier".$_SESSION['ID']." b ON a.id_hier = b.userID)";
+		$bdd->query($req); // enfants de niveau 6
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT 0, a.ID FROM rob_user_rights a INNER JOIN tmp_hier".$_SESSION['ID']." b ON a.id_hier = b.userID)";
+		$bdd->query($req); // enfants de niveau 7
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." VALUES (0, ".$_SESSION['ID'].")";
+		$bdd->query($req); // sois-même
+		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT ".$_SESSION['ID'].", userID FROM tmp_hier".$_SESSION['ID']." GROUP BY respID, userID)";
 		$bdd->query($req);
-		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." (SELECT ".$_SESSION['ID'].", a.ID FROM rob_user_rights a INNER JOIN tmp_hier".$_SESSION['ID']." b ON a.id_hier = b.userID)";
-		$bdd->query($req);
-		$req = "INSERT INTO tmp_hier".$_SESSION['ID']." VALUES (".$_SESSION['ID'].", ".$_SESSION['ID'].")";
+		$req = "DELETE FROM tmp_hier".$_SESSION['ID']." WHERE respID = 0";
 		$bdd->query($req);
 	}
 	$reponse->closeCursor();

@@ -133,14 +133,14 @@ include("appel_db.php");
 											}
 											$reponse2->closeCursor();
 											echo '</select></p>';
-											echo '<p><span>Autorisation :</span><select class="form-control form-control-small" name="auth_lev">';
-											$req = "SELECT seuil, ID FROM rob_grade WHERE actif = 1 AND seuil <> ''";
+											echo '<p><span>Grade :</span><select class="form-control form-control-small" name="auth_lev">';
+											$req = "SELECT grade, ID FROM rob_grade WHERE actif = 1 ORDER BY seuil, ID";
 											$reponse2 = $bdd->query($req);
 											while ($donnee2 = $reponse2->fetch() ) {
-												if ($donnee2['seuil'] == $cur_nom['auth']) { 
-													echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['seuil'].'&euro;</option>'; 
+												if ($donnee2['ID'] == $cur_nom['auth']) { 
+													echo '<option value="'.$donnee2['ID'].'" selected>'.$donnee2['grade'].'</option>'; 
 												} else { 
-													echo '<option value="'.$donnee2['ID'].'">'.$donnee2['seuil'].'&euro;</option>'; 
+													echo '<option value="'.$donnee2['ID'].'">'.$donnee2['grade'].'</option>'; 
 												}
 											}
 											$reponse2->closeCursor();

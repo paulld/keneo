@@ -10,7 +10,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 	$probldata = 0;
 	if (isset($_POST['Valider']))
 	{
-		if (isset($_POST['client']) AND isset($_POST['dateTransac']) AND isset($_POST['competition']) AND isset($_POST['nature1']) OR isset($_POST['devisNum']))
+		if (isset($_POST['client']) AND isset($_POST['dateTransac']) AND isset($_POST['dateFact']) AND isset($_POST['competition']) AND isset($_POST['nature1']) OR isset($_POST['devisNum']))
 		{
 			if ($_POST['client'] != "none" AND $_POST['projet'] != "none" AND $_POST['nature1'] != "none" OR isset($_POST['devisNum']))
 			{
@@ -18,7 +18,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				//Check sur projet et client
 				if ($_POST['devisNum'] == "none")
 				{
-					$devisNum = 'D'.$_POST['client'].'-'.$_POST['projet'].'-'.date('ymd',mktime(0,0,0,substr($_POST['dateTransac'],3,2),substr($_POST['dateTransac'],0,2),substr($_POST['dateTransac'],6,4)));;
+					$devisNum = 'D'.$_POST['client'].'-'.$_POST['projet'].'-'.date('ymd',mktime(0,0,0,substr($_POST['dateTransac'],3,2),substr($_POST['dateTransac'],0,2),substr($_POST['dateTransac'],6,4)));
 					$userID = $_POST['userID'];
 					if ($comptchg == 0)
 					{
@@ -29,26 +29,28 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						$competition = $_POST['competition'];
 						if (isset($_POST['typecomp'])) { $typecomp = $_POST['typecomp']; } else { $typecomp = 0; }
 						if (isset($_POST['evnmt'])) { $evnmt = $_POST['evnmt']; } else { $evnmt = 0; }
+						$dateFact = date('Y-m-d',mktime(0,0,0,substr($_POST['dateFact'],3,2),substr($_POST['dateFact'],0,2),substr($_POST['dateFact'],6,4)));
 						$dateTransac = date('Y-m-d',mktime(0,0,0,substr($_POST['dateTransac'],3,2),substr($_POST['dateTransac'],0,2),substr($_POST['dateTransac'],6,4)));
 					}
 				} else {
 					$devisNum = $_POST['devisNum'];
-					$req = "SELECT imputID1, imputID2, imputID3, imputID4, compID1, compID2, compID3, dateTransac, userID FROM rob_devis
+					$req = "SELECT imputID1, imputID2, imputID3, imputID4, compID1, compID2, compID3, dateTransac, dateFact, userID FROM rob_devis
 						WHERE devisNum = '$devisNum' LIMIT 1";
 					$repreq = $bdd->query($req);
 					$checkrow=$repreq->rowCount();
 					if ($checkrow != 0)
 					{
 						$repdon = $repreq->fetch();
-						$client = $repdon[0];
-						$projet = $repdon[1];
-						$mission = $repdon[2];
-						$categorie = $repdon[3];
-						$competition = $repdon[4];
-						$typecomp = $repdon[5];
-						$evnmt = $repdon[6];
-						$dateTransac = $repdon[7];
-						$userID = $repdon[8];
+						$client = $repdon['imputID1'];
+						$projet = $repdon['imputID2'];
+						$mission = $repdon['imputID3'];
+						$categorie = $repdon['imputID4'];
+						$competition = $repdon['compID1'];
+						$typecomp = $repdon['compID2'];
+						$evnmt = $repdon['compID3'];
+						$dateTransac = $repdon['dateTransac'];
+						$dateFact = $repdon['dateFact'];
+						$userID = $repdon['userID'];
 					}
 					$repreq->closeCursor();
 					// echo $_POST['devisNum'];
@@ -58,12 +60,12 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				{
 					if ($_POST['devisVersion'] == "none")
 					{
-						$devisVersion = 'V'.date('ymd');
+						$devisVersion = 'V'.date('ymdHi');
 					} else {
 						$devisVersion = $_POST['devisVersion'];
 					}
 				} else {
-					$devisVersion = 'V'.date('ymd');
+					$devisVersion = 'V'.date('ymdHi');
 				}
 				
 				//insertion dans la table et mise à jour d'éventuelles lignes existantes
@@ -77,7 +79,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					$frsCtUnit = $_POST['frsCtUnit'];
 					$frsQty = $_POST['frsQty'];
 					$frsCtTotHT = $_POST['frsCtTotHT'];
-					$bdd->query("INSERT INTO rob_devis VALUES ('', '$userID', '$dateTransac', '$client', '$projet', '$mission', '$categorie', '$nature1', 0, '$competition', '$typecomp', '$evnmt', '$info', '$devisNum', '$devisVersion', '$respID', '$aujourdhui', 0, 1, '$aujourdhui', '$frsCtUnit', '$frsQty', '$frsCtTotHT')");
+					$txTVA = 3;
+					$bdd->query("INSERT INTO rob_devis VALUES ('', '$userID', '$dateTransac', '$dateFact', '$client', '$projet', '$mission', '$categorie', '$nature1', 0, '$competition', '$typecomp', '$evnmt', '$info', '$devisNum', '$devisVersion', '$respID', '$aujourdhui', 0, 1, '$aujourdhui', '$frsCtUnit', '$frsQty', '$frsCtTotHT', '$txTVA')");
 
 					$bdd->query("UPDATE rob_devis SET validation=1 WHERE devisNum='$devisNum' AND devisVersion='$devisVersion'");
 				}
@@ -103,22 +106,23 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			{
 				$reprise = $_POST['modid'];
 				$repdon = $repreq->fetch();
-				$rep_idl1 = $repdon[0];
-				$rep_idl2 = $repdon[1];
-				$rep_idl3 = $repdon[2];
-				$rep_idl4 = $repdon[3];
-				$rep_idc1 = $repdon[4];
-				$rep_idc2 = $repdon[5];
-				$rep_idc3 = $repdon[6];
-				$rep_info = $repdon[7];
-				$rep_nat1 = $repdon[8];
-				$rep_dajr = date("d/m/Y",strtotime($repdon[9]));
-				$rep_unit = $repdon[10];
-				$rep_nbre = $repdon[11];
-				$rep_tota = $repdon[12];
-				$rep_devisNum = $repdon[13];
-				$rep_devisVers = $repdon[14];
-				$rep_userID = $repdon[15];
+				$rep_idl1 = $repdon['imputID1'];
+				$rep_idl2 = $repdon['imputID2'];
+				$rep_idl3 = $repdon['imputID3'];
+				$rep_idl4 = $repdon['imputID4'];
+				$rep_idc1 = $repdon['compID1'];
+				$rep_idc2 = $repdon['compID2'];
+				$rep_idc3 = $repdon['compID3'];
+				$rep_info = $repdon['descriptif'];
+				$rep_nat1 = $repdon['nature1ID'];
+				$rep_dajr = date("d/m/Y",strtotime($repdon['dateTransac']));
+				$rep_dafc = date("d/m/Y",strtotime($repdon['dateFact']));
+				$rep_unit = $repdon['unitaire'];
+				$rep_nbre = $repdon['quantite'];
+				$rep_tota = $repdon['total'];
+				$rep_devisNum = $repdon['devisNum'];
+				$rep_devisVers = $repdon['devisVersion'];
+				$rep_userID = $repdon['userID'];
 			}
 			$repreq->closeCursor();
 		}
@@ -134,7 +138,15 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		{
 			$data = $_POST['devisData'];
 			list($devisNum, $devisVersion) = explode("||", $data);
-			$bdd->query("UPDATE rob_devis SET validation=9, actif=0 WHERE devisNum='$devisNum' AND devisVersion='$devisVersion'");
+			$bdd->query("UPDATE rob_devis SET validation=9, actif=0 WHERE devisNum='$devisNum' AND devisVersion='$devisVersion' AND validation=6");
+		}
+		if (isset($_POST['SoumettreDevis']))
+		{
+			$data = $_POST['devisData'];
+			list($devisNum, $devisVersion) = explode("||", $data);
+			$aujourdhui = date("Y-m-d");
+			$userValid = $_SESSION['ID'];
+			$bdd->query("UPDATE rob_devis SET validation=3, userValid='$userValid', dateValid='$aujourdhui' WHERE devisNum='$devisNum' AND devisVersion='$devisVersion' AND validation=1");
 		}
 		if (isset($_POST['ValiderDevis']))
 		{
@@ -142,7 +154,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 			list($devisNum, $devisVersion) = explode("||", $data);
 			$aujourdhui = date("Y-m-d");
 			$userValid = $_SESSION['ID'];
-			$bdd->query("UPDATE rob_devis SET validation=5, userValid='$userValid', dateValid='$aujourdhui' WHERE devisNum='$devisNum' AND devisVersion='$devisVersion'");
+			$bdd->query("UPDATE rob_devis SET validation=5, userValid='$userValid', dateValid='$aujourdhui' WHERE devisNum='$devisNum' AND devisVersion='$devisVersion' AND validation=3");
 		}
 	}
 	?>
@@ -186,10 +198,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					<select class="form-control form-control-small form-control-auto" name="devisNum" id="devisNum" onchange="showDevisVersion(this.value)" >
 						<option value="none">Cr&eacute;er nouveau Num&eacute;ro de devis</option>
 						<?php
-						$req = "SELECT T1.devisNum devisNum FROM rob_devis T1
-							INNER JOIN tmp_hier".$_SESSION['ID']." T2 ON T1.userID = T2.userID 
-							WHERE T1.actif = 1 AND validation < 9
-							GROUP BY T1.devisNum
+						$req = "SELECT DISTINCT devisNum devisNum FROM rob_devis 
+							WHERE actif = 1 AND validation < 9 AND userID = ".$_SESSION['ID']."
 							ORDER BY devisNum";
 						$reqimput = $bdd->query($req);
 						while ($optimput = $reqimput->fetch())
@@ -236,6 +246,19 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							}
 						}
 						echo '" title="date d\'&eacute;tablissement du devis" />';
+					echo ' <input class="form-control form-control-small form-control-auto" size="12" type="text" name="dateFact" id="dateFact" value="';
+						if (isset($_POST['dateFact']))
+						{
+							echo $_POST['dateFact'];
+						}
+						else
+						{
+							if (isset($reprise))
+							{
+								echo $rep_dafc;
+							}
+						}
+						echo '" title="date de facturation pr&eacute;vue" placeholder="Factur&eacute; le" />';
 					?> 
 					</span>
 				</div>
@@ -385,13 +408,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 		
 	<!-- =================== RESTITUTION: TABLEAU ================= -->
 	<section class="container section-container" id="historique-frais">
-		<div class="section-title">
-			<h1>Historique de mes devis</h1>
-		</div>
-		<div class="row frais-filter">
-		<div class="col-sm-3">
-			<form action="devis.php" method="post" class="devis-filter-form-left">
-
+		<div class="frais-filter">
+			<form action="devis.php" method="post">
 				<select class="form-control form-control-small form-control-auto" name="affmonth" />
 					<?php
 					//MONTH
@@ -426,91 +444,11 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<button type="submit" class="btn btn-primary btn-small" name="toutdevis"><i class="fa fa-search"></i> Visualiser tous les devis</button>
 			</form>
 		</div>
-		<div class="col-sm-9 frais-filter-group-right">
-			<?php
-
-			//VALIDER LE DEVIS
-			$reqB = "CREATE TEMPORARY TABLE IF NOT EXISTS tmp_full AS (SELECT T1.devisNum devisNum, T1.devisVersion devisVersion, T1.validation validation, SUM(T1.total) total
-				FROM rob_devis T1
-				INNER JOIN tmp_hier".$_SESSION['ID']." T2 ON T1.userID = T2.userID 
-				WHERE T1.actif = 1 AND validation < 5
-				GROUP BY T1.devisNum, T1.devisVersion, T1.validation
-				ORDER BY devisNum DESC, devisVersion DESC)";
-			$bdd->query($reqB);
-				
-			$req1 = "SELECT devisNum, devisVersion, validation, total FROM tmp_full 
-				WHERE total <= ".$_SESSION['seuil']." OR validation IN (SELECT ID FROM rob_grade WHERE total <= seuil)";
-			$reqimput = $bdd->query($req1);
-			$checkrow = $reqimput->rowCount();
-				
-			$req2 = "DROP TEMPORARY TABLE tmp_full";
-			$bdd->query($req2);
-
-			if ($checkrow != 0) {
-				echo '<form action="devis.php" method="post" class="devis-filter-form-right" >';
-					echo '<select class="form-control form-control-small form-control-auto" name="devisData" />';
-						while ($optimput = $reqimput->fetch()) {
-							echo '<option value='.$optimput['devisNum'].'||'.$optimput['devisVersion'].'>'.$optimput['devisNum'].'||'.$optimput['devisVersion'].'</option>';
-						}
-						$reqimput->closeCursor();
-						?>
-					</select>
-					<button type="submit" class="btn btn-primary btn-small" name="ValiderDevis"><i class="fa fa-check"></i> Valider le devis</button>
-				</form>
-				<?php
-			}
-			$reqimput->closeCursor();
-			
-			//EDITER LE DEVIS
-			$req = "SELECT T1.devisNum devisNum, T1.devisVersion devisVersion, T1.validation validation, SUM(T1.total) total
-				FROM rob_devis T1
-				INNER JOIN tmp_hier".$_SESSION['ID']." T2 ON T1.userID = T2.userID 
-				WHERE T1.actif = 1 AND (validation = 5 OR validation = 6)
-				GROUP BY T1.devisNum, T1.devisVersion, T1.validation
-				ORDER BY devisNum DESC, devisVersion DESC";
-			$bdd->query($req);
-			$reqimput = $bdd->query($req);
-			$checkrow = $reqimput->rowCount();
-			if ($checkrow != 0)
-			{
-				echo '<form action="devis-pdf.php" method="post" class="devis-filter-form-right" target="_blank">';
-					echo '<select class="form-control form-control-small form-control-auto" name="devisData" />';
-						while ($optimput = $reqimput->fetch()) {
-							echo '<option value='.$optimput['devisNum'].'||'.$optimput['devisVersion'].'>'.$optimput['devisNum'].'||'.$optimput['devisVersion'].'</option>';
-						}
-					echo '</select>';
-					echo '<button type="submit" class="btn btn-primary btn-small" name="EditerDevis"><i class="fa fa-file-pdf-o"></i> &Eacute;diter le devis</button>';
-				echo '</form>';
-			}
-			$reqimput->closeCursor();
-			
-			//ARCHIVER LE DEVIS
-			$reqimput = $bdd->query("SELECT DISTINCT devisNum, devisVersion FROM rob_devis WHERE actif = 1 AND validation = 6 ORDER BY devisNum DESC, devisVersion DESC");
-			$checkrow = $reqimput->rowCount();
-			if ($checkrow != 0)
-			{
-				echo '<form action="devis.php" method="post" class="devis-filter-form-right" >';
-					echo '<select class="form-control form-control-small form-control-auto" name="devisData" />';
-						while ($optimput = $reqimput->fetch())
-						{
-							echo '<option value='.$optimput['devisNum'].'||'.$optimput['devisVersion'].'>'.$optimput['devisNum'].'||'.$optimput['devisVersion'].'</option>';
-						}
-					echo '</select>';
-					echo '<button type="submit" class="btn btn-primary btn-small" name="ArchiverDevis"><i class="fa fa-archive"></i> Archiver le devis</button>';
-				echo '</form>';
-			}
-			$reqimput->closeCursor();
-			?>
-		</div>
-		</div>
-		
-		<h2><?php echo $titrestrict; ?></h2>
 		<div class="table-responsive">
 			<table id="tablerestit" class="table table-striped">
 				<thead>
 					<tr>
 						<th>Devis</th>
-						<th></th>
 						<th>Client/ Projet/ Mission/ Cat&eacute;gorie</th>
 						<th>Comp&eacute;tition/ Type/ &Eacute;v&eacute;nement</th>
 						<th>Contenu</th>
@@ -533,8 +471,9 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							$pseudo=$_SESSION['ID'];
 						}
 					}
-					if (isset($_POST['toutdevis'])) { $txtrestrict="T1.dateTransac >= '$startdate' AND T1.dateTransac < '$enddate'"; 
-					} else { $txtrestrict="T1.validation < 9"; }
+					if (isset($_POST['toutdevis'])) { $txtrestrict="T1.dateTransac >= '$startdate' AND T1.dateTransac < '$enddate' AND (T1.userID != ".$_SESSION['ID']." AND T1.validation = 3 OR T1.userID != ".$_SESSION['ID'].")"; 
+					} else { $txtrestrict="(T1.userID != ".$_SESSION['ID']." AND T1.validation = 3 OR T1.userID = ".$_SESSION['ID'].")"; }
+					$txtrestrict2=" AND T1.validation < 9";
 					$req = "SELECT T1.ID ID, T1.dateTransac dateTransac, 
 						T3.Description client, T4.Description projet, T5.Description mission, T6.Description categorie, 
 						T7.Description type, T8.Description competition, T9.Description evenement, sum(T1.total) total, T1.devisNum devisNum, T1.devisVersion devisVersion,
@@ -547,7 +486,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 						INNER JOIN rob_compl1 T7 ON T7.ID = T1.compID1 
 						INNER JOIN rob_compl2 T8 ON T8.ID = T1.compID2 
 						INNER JOIN rob_compl3 T9 ON T9.ID = T1.compID3 
-						WHERE ".$txtrestrict."
+						WHERE ".$txtrestrict.$txtrestrict2."
 						GROUP BY T1.devisNum, T1.devisVersion 
 						ORDER BY T1.devisNum DESC, T1.devisVersion DESC, T3.code, T4.code";
 						//echo $req;
@@ -558,14 +497,40 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					{
 						while ($donneea = $reponsea->fetch())
 						{
-							if ($donneea['validation'] >= 5) {
-								$val = "validate";
-							} else {
-								$val = "no-validate";
-							}
 							echo '<tr>';
-							echo '<td align="left">N&deg;: '.$donneea['devisNum'].'<br/>Version: '.$donneea['devisVersion'].'<br/>Date: '.date("d/m/Y", strtotime($donneea['dateTransac'])).'</td>';
-							echo '<td><i class="fa fa-circle fa-circle-'.$val.'"></i></td>';
+							echo '<td align="left">'.$donneea['devisNum'].'<br/>
+								'.$donneea['devisVersion'].'<br/>
+								Date: '.date("d/m/Y", strtotime($donneea['dateTransac'])).'<br/>';
+								
+								if ($donneea['validation'] == 1) {
+								echo '<form action="devis.php" method="post" class="devis-filter-form-left" >';
+									echo '<input type="hidden" name="devisData" value='.$donneea['devisNum'].'||'.$donneea['devisVersion'].' />';
+									echo '<button type="submit" class="btn btn-primary btn-small" name="SoumettreDevis" onclick="return(confirm(\'Etes-vous sur de vouloir soumettre a validation ce devis?\'))"><i class="fa fa-thumbs-o-up"></i>Soumettre</button>';
+									echo '</form>';
+								} else {
+									if ($donneea['validation'] == 3) {
+									if ($donneea['total'] <= $_SESSION['seuil']) {
+										echo '<form action="devis.php" method="post" class="devis-filter-form-left" >';
+											echo '<input type="hidden" name="devisData" value='.$donneea['devisNum'].'||'.$donneea['devisVersion'].' />';
+											echo '<button type="submit" class="btn btn-primary btn-small" name="ValiderDevis" onclick="return(confirm(\'Etes-vous sur de vouloir valider ce devis?\'))"><i class="fa fa-check"></i>Valider</button>';
+											echo '</form>';
+										} else { echo '<i class="fa fa-thumbs-o-up"></i> Devis Soumis'; }
+									} else {
+										if ($donneea['validation'] >= 5) {
+											echo '<form action="devis-pdf.php" method="post" class="devis-filter-form-left" target="_blank" >';
+												echo '<input type="hidden" name="devisData" value='.$donneea['devisNum'].'||'.$donneea['devisVersion'].' />';
+												echo '<button type="submit" class="btn btn-primary btn-small" name="EditerDevis" title="&Eacute;diter le devis"><i class="fa fa-file-pdf-o"></i> &Eacute;diter</button>';
+												if ($donneea['validation'] == 6) {
+													echo '</form><form action="devis.php" method="post" class="devis-filter-form-left" >';
+													echo '<input type="hidden" name="devisData" value='.$donneea['devisNum'].'||'.$donneea['devisVersion'].' />';
+													echo '<button type="submit" class="btn btn-primary btn-small" name="ArchiverDevis" title="Devis accept&eacute;"><i class="fa fa-play-circle"></i> Accept&eacute;</button>';
+												}
+												echo '</form>';
+										}
+									}
+								}
+								
+								echo '</td>';
 							//clients
 							echo '<td>'.$donneea['client'];
 								if ($donneea['projetID'] != 0) { echo '<br/><i class="fa fa-level-up fa-rotate-90"></i>'.$donneea['projet'];

@@ -33,7 +33,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				else
 				{
 					$seuil = $_POST['newSeuil'];
-					$bdd->query("INSERT INTO rob_grade VALUES('', '$grade', '$seuil', 1)");
+					$seuil2 = $_POST['newSeuil2'];
+					$bdd->query("INSERT INTO rob_grade VALUES('', '$grade', '$seuil', '$seuil2', 1)");
 				}
 			}
 			else
@@ -43,7 +44,8 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					$modID = $_POST['IDrock'];
 					$grade = $_POST['modgrade'];
 					$seuil = $_POST['modseuil'];
-					$bdd->query("UPDATE rob_grade SET grade='$grade', seuil='$seuil' WHERE ID='$modID'");
+					$seuil2 = $_POST['modseuil2'];
+					$bdd->query("UPDATE rob_grade SET grade='$grade', seuil='$seuil', seuil2='$seuil2' WHERE ID='$modID'");
 				}
 			}
 		}
@@ -65,15 +67,15 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 				<thead>
 					<tr>
 						<th>Grade</th>
-						<th>Seuil</th>
+						<th>Seuil devis</th>
+						<th>Seuil BDC</th>
 						<th colspan="2" class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-					$req="SELECT grade, seuil, actif, ID
-						FROM rob_grade
-						ORDER BY grade";
+					$req="SELECT grade, seuil, seuil2, actif, ID
+						FROM rob_grade ORDER BY seuil,ID";
 					$reponse = $bdd->query($req);
 					while ($donnee = $reponse->fetch()) {
 						if ($donnee['actif'] == 1) { $verr =""; } else { $verr = " disabled"; }
@@ -83,6 +85,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							<?php
 							echo '<td><input class="form-control" type="text" value="'.$donnee['grade'].'" name="modgrade"'.$verr.' /></td>';
 							echo '<td><input class="form-control" type="text" value="'.$donnee['seuil'].'" name="modseuil"'.$verr.' /></td>';
+							echo '<td><input class="form-control" type="text" value="'.$donnee['seuil2'].'" name="modseuil2"'.$verr.' /></td>';
 							?>
 							<td class="text-center">
 								<?php
@@ -116,14 +119,16 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					<thead>
 						<tr>
 							<th>Grade</th>
-							<th>Seuil</th>
+							<th>Seuil devis</th>
+							<th>Seuil BDC</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td><input class="form-control" type="text" size="20" name="newGrade" /></td>
-							<td><input class="form-control" type="text" size="50" name="newSeuil" /></td>
+							<td><input class="form-control" type="text" size="50" name="newGrade" /></td>
+							<td><input class="form-control" type="text" size="20" name="newSeuil" /></td>
+							<td><input class="form-control" type="text" size="20" name="newSeuil2" /></td>
 							<td><input class="btn btn-primary" type="submit" Value="Ajouter" /></td>
 						</tr>
 					</tbody>

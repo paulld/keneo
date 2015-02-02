@@ -125,7 +125,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							<td>Timesheet</td>
 							<td>Frais</td>
 							<td>Journal</td>
-							<td align="center">Autorisation</td>
+							<td>Grade</td>
 							<td>Resp.</td>
 							<td>Pole</td>
 							<td colspan="2">Actions</td>
@@ -133,7 +133,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 					</thead>
 					<tbody>
 					<?php
-					$req = "SELECT T2.nom nom, T2.prenom prenom, T2.matricule matricule, T6.matricule resp, T7.code pole, T3.menu menu, T8.tms tms, T4.exp exp, T5.jrl jrl, T2.actif actif, T2.ID userID, T9.seuil auth
+					$req = "SELECT T2.nom nom, T2.prenom prenom, T2.matricule matricule, T6.matricule resp, T7.code pole, T3.menu menu, T8.tms tms, T4.exp exp, T5.jrl jrl, T2.actif actif, T2.ID userID, T9.grade auth
 							FROM rob_user_rights T1 
 							INNER JOIN rob_user T2 ON T1.ID = T2.ID
 							INNER JOIN rob_level T3 ON T1.id_lev_menu = T3.ID
@@ -155,7 +155,7 @@ if (isset($_SESSION['mot_de_passe']) AND $_SESSION['mot_de_passe'] == $_SESSION[
 							<td><?php echo $donnee['tms'];?></td>
 							<td><?php echo $donnee['exp'];?></td>
 							<td><?php echo $donnee['jrl'];?></td>
-							<td align="center"><?php echo $donnee['auth']."&euro;";?></td>
+							<td><?php echo $donnee['auth'];?></td>
 							<td><?php if ($donnee['resp'] == NULL) { echo "&nbsp;"; } else { echo $donnee['resp']; } ?></td>
 							<td><?php echo $donnee['pole'];?></td>
 							<?php if ($donnee['actif'] == 1)
