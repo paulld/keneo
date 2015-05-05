@@ -414,6 +414,45 @@ tr.tr-highlight {
   font-size: 11px;
 }
 
+
+/* FINANCIAL TABLE */
+
+.table.table-financial td,
+.table.table-financial th {
+  text-align: right;
+  padding-right: 15px;
+}
+.table-financial > thead > tr > th:first-child,
+.table-financial > tbody > tr > td:first-child {
+  text-align: left;
+}
+.table-financial > thead > tr:first-child > th,
+.table-financial > tbody > tr > td:first-child {
+  background-color: #bbbbbb;
+}
+.table-financial > thead > tr:first-child > th:last-child,
+.table-financial > tbody > tr.table-subtotal > td,
+.table-financial > tbody > tr.table-total > td,
+.table-financial > tbody > tr > td:last-child {
+  background-color: hsl(202,67%,50%);
+  color: #ffffff;
+}
+.table-financial > thead > tr:first-child > th,
+.table-financial > tbody > tr.table-subtotal > td {
+  font-weight: bold;
+}
+.table.table-financial .table-currency {
+  font-weight: lighter;
+  font-style: italic;
+}
+.table.table-financial tr.table-label > td {
+  font-weight: inherit;
+  font-style: italic;
+  background-color: transparent;
+  color: inherit;
+}
+
+
 /* TOGGLE UP/DOWN SECTION */
 
 .section-title i {
